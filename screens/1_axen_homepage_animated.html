@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>AXEN | Where AI Builds Business</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400..800;1,400..800&amp;family=Inter:wght@100..900&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "tertiary": "#ffffff",
+                    "surface-bright": "#3a3939",
+                    "primary-fixed-dim": "#c6c6c7",
+                    "on-surface-variant": "#c4c7c8",
+                    "dim-gray": "#6B6B70",
+                    "on-tertiary": "#2f3131",
+                    "inverse-primary": "#5d5f5f",
+                    "on-primary-fixed-variant": "#454747",
+                    "on-tertiary-fixed": "#1a1c1c",
+                    "error": "#ffb4ab",
+                    "surface-tint": "#c6c6c7",
+                    "secondary-container": "#474742",
+                    "surface-container-highest": "#353434",
+                    "on-primary-fixed": "#1a1c1c",
+                    "surface-container-high": "#1A1A1A",
+                    "surface": "#050505",
+                    "on-tertiary-container": "#636565",
+                    "secondary-fixed": "#e5e2db",
+                    "outline": "#232326",
+                    "surface-container-low": "#1c1b1b",
+                    "inverse-on-surface": "#313030",
+                    "on-background": "#e5e2e1",
+                    "tertiary-container": "#e2e2e2",
+                    "on-error": "#690005",
+                    "on-surface": "#e5e2e1",
+                    "on-secondary-container": "#b7b5af",
+                    "outline-variant": "#444748",
+                    "primary-container": "#e2e2e2",
+                    "surface-container-lowest": "#0e0e0e",
+                    "primary-fixed": "#e2e2e2",
+                    "primary": "#ffffff",
+                    "tertiary-fixed": "#e2e2e2",
+                    "on-secondary-fixed": "#1c1c18",
+                    "on-secondary-fixed-variant": "#474742",
+                    "on-primary-container": "#636565",
+                    "on-error-container": "#ffdad6",
+                    "secondary-fixed-dim": "#c9c6c0",
+                    "surface-container": "#201f1f",
+                    "on-secondary": "#31312c",
+                    "on-tertiary-fixed-variant": "#454747",
+                    "inverse-surface": "#e5e2e1",
+                    "on-primary": "#2f3131",
+                    "secondary": "#c9c6c0",
+                    "surface-variant": "#353434",
+                    "tertiary-fixed-dim": "#c6c6c7",
+                    "error-container": "#93000a",
+                    "background": "#141313",
+                    "surface-dim": "#141313"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "margin-mobile": "20px",
+                    "margin-desktop": "64px",
+                    "max-width": "1440px",
+                    "gutter": "24px"
+            },
+            "fontFamily": {
+                    "eyebrow": ["Inter"],
+                    "display-lg": ["EB Garamond"],
+                    "headline-md": ["EB Garamond"],
+                    "display-lg-mobile": ["EB Garamond"],
+                    "ui-label": ["Inter"],
+                    "body-lg": ["Inter"],
+                    "body-md": ["Inter"]
+            },
+            "fontSize": {
+                    "eyebrow": ["12px", {"lineHeight": "16px", "letterSpacing": "0.2em", "fontWeight": "500"}],
+                    "display-lg": ["96px", {"lineHeight": "1.0", "letterSpacing": "-0.02em", "fontWeight": "400"}],
+                    "headline-md": ["48px", {"lineHeight": "1.2", "fontWeight": "400"}],
+                    "display-lg-mobile": ["48px", {"lineHeight": "1.1", "fontWeight": "400"}],
+                    "ui-label": ["14px", {"lineHeight": "20px", "fontWeight": "500"}],
+                    "body-lg": ["18px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                    "body-md": ["16px", {"lineHeight": "1.6", "fontWeight": "400"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        body {
+            background-color: #050505;
+            color: #FAFAFA;
+            font-family: 'Inter', sans-serif;
+            overflow-x: hidden;
+        }
+        .serif { font-family: 'EB Garamond', serif; }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 24;
+        }
+        .marquee {
+            display: flex;
+            overflow: hidden;
+            user-select: none;
+            gap: 4rem;
+            mask-image: linear-gradient(to right, transparent, black 15%, black 85%, transparent);
+        }
+        .marquee-content {
+            flex-shrink: 0;
+            display: flex;
+            justify-content: space-around;
+            min-width: 100%;
+            gap: 4rem;
+            animation: scroll 30s linear infinite;
+        }
+        @keyframes scroll {
+            from { transform: translateX(0); }
+            to { transform: translateX(-100%); }
+        }
+        
+        /* Reveal Animations */
+        .reveal-up {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
+        }
+        .reveal-up.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Entrance Animations Stagger */
+        .entrance-fade-up {
+            opacity: 0;
+            transform: translateY(20px);
+            animation: entranceFadeUp 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+        }
+        @keyframes entranceFadeUp {
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Nav Cluster Styling */
+        #nav-cluster {
+            transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
+        }
+        #nav-menu-panel {
+            transform-origin: top right;
+            transition: all 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
+            opacity: 0;
+            transform: translateY(-10px) scale(0.95);
+            pointer-events: none;
+        }
+        #nav-menu-panel.open {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+            pointer-events: auto;
+        }
+
+        /* Menu Links Stagger */
+        .menu-link {
+            opacity: 0;
+            transform: translateY(10px);
+            transition: all 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
+        }
+        #nav-menu-panel.open .menu-link {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Interactive Elements */
+        .magnetic-btn {
+            transition: transform 0.2s cubic-bezier(0.33, 1, 0.68, 1);
+        }
+        .card-hover {
+            transition: transform 0.5s cubic-bezier(0.2, 0.8, 0.2, 1), border-color 0.5s ease;
+        }
+        .card-hover:hover {
+            transform: translateY(-8px);
+            border-color: rgba(255,255,255,0.4);
+        }
+
+        /* Background Layer */
+        #background-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            pointer-events: none;
+            opacity: 0.3;
+        }
+    </style>
+</head>
+<body class="bg-surface text-on-surface">
+<!-- Background Animation Placeholder -->
+<div id="background-canvas">
+    {{DATA:ANIMATION:ANIMATION_1}}
+</div>
+<!-- Navigation Cluster -->
+<div class="fixed top-[40px] right-[40px] z-[100] flex flex-col items-end gap-4" id="nav-cluster">
+<!-- Resting State Buttons -->
+<div class="flex items-center gap-3">
+<button class="w-[48px] h-[48px] rounded-full bg-surface-container border border-white/20 flex items-center justify-center hover:bg-surface-container-high transition-colors">
+<span class="material-symbols-outlined text-primary text-xl">volume_up</span>
+</button>
+<button class="magnetic-btn px-6 h-[48px] bg-primary text-surface rounded-full font-ui-label text-ui-label font-bold tracking-tight hover:opacity-90 transition-opacity">
+            LET'S TALK
+        </button>
+<button class="px-6 h-[48px] border border-white/20 rounded-full flex items-center gap-2 text-primary font-ui-label text-ui-label font-medium hover:bg-white/5 transition-colors" id="menu-toggle">
+<span id="menu-text">MENU</span>
+<span class="text-xl leading-none" id="menu-icon">☰</span>
+</button>
+</div>
+<!-- Menu Open State Panel -->
+<div class="w-[400px] md:w-[480px] bg-white rounded-[20px] p-12 text-surface shadow-2xl flex flex-col" id="nav-menu-panel">
+<!-- Links -->
+<nav class="flex flex-col gap-4">
+<a class="menu-link font-display-lg text-[48px] md:text-[56px] text-surface hover:opacity-50 transition-opacity serif leading-none" href="#" style="transition-delay: 0.1s;">Work</a>
+<a class="menu-link font-display-lg text-[48px] md:text-[56px] text-surface hover:opacity-50 transition-opacity serif leading-none" href="#" style="transition-delay: 0.15s;">Services</a>
+<a class="menu-link font-display-lg text-[48px] md:text-[56px] text-surface hover:opacity-50 transition-opacity serif leading-none" href="#" style="transition-delay: 0.2s;">About</a>
+<a class="menu-link font-display-lg text-[48px] md:text-[56px] text-surface hover:opacity-50 transition-opacity serif leading-none" href="#" style="transition-delay: 0.25s;">Insights</a>
+<a class="menu-link font-display-lg text-[48px] md:text-[56px] text-surface hover:opacity-50 transition-opacity serif leading-none" href="#" style="transition-delay: 0.3s;">Contact</a>
+</nav>
+<div class="h-16"></div>
+<!-- Business Enquiry -->
+<div class="mb-10 menu-link" style="transition-delay: 0.35s;">
+<p class="font-eyebrow text-[11px] text-dim-gray uppercase tracking-widest mb-4">BUSINESS ENQUIRY</p>
+<div class="flex flex-col gap-1">
+<a class="font-body-md text-surface hover:underline" href="mailto:hello@axen.engine">E. hello@axen.engine</a>
+<span class="font-body-md text-surface">P. +91 22 0000 0000</span>
+</div>
+</div>
+<!-- Social -->
+<div class="mb-12 menu-link" style="transition-delay: 0.4s;">
+<p class="font-eyebrow text-[11px] text-dim-gray uppercase tracking-widest mb-4">SOCIAL</p>
+<div class="grid grid-cols-2 gap-x-12 gap-y-2">
+<a class="font-body-md text-surface hover:underline" href="#">LinkedIn</a>
+<a class="font-body-md text-surface hover:underline" href="#">Dribbble</a>
+<a class="font-body-md text-surface hover:underline" href="#">Facebook</a>
+<a class="font-body-md text-surface hover:underline" href="#">Instagram</a>
+</div>
+</div>
+<!-- Story Link -->
+<button class="menu-link w-fit px-6 py-3 border border-surface/20 rounded-full font-ui-label text-[12px] uppercase tracking-widest hover:bg-surface hover:text-white transition-all text-surface flex items-center gap-2" style="transition-delay: 0.45s;">
+            ✦ THE AXEN NAME STORY
+        </button>
+</div>
+</div>
+<main>
+<!-- HERO SECTION -->
+<section class="relative min-h-screen flex flex-col justify-center px-margin-desktop pt-20 overflow-hidden">
+<div class="max-w-max-width mx-auto w-full grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+<div class="z-10">
+<p class="entrance-fade-up font-eyebrow text-eyebrow text-primary mb-8 tracking-[0.3em] uppercase" style="animation-delay: 0.1s;">✦ UNDERSTAND · BUILD · SCALE</p>
+<h1 class="entrance-fade-up font-display-lg-mobile md:font-display-lg text-display-lg-mobile md:text-display-lg serif leading-none text-primary mb-8" style="animation-delay: 0.3s;">
+                    Where AI Builds<br/>Business
+                </h1>
+<p class="entrance-fade-up font-body-lg text-body-lg text-dim-gray max-w-lg mb-10" style="animation-delay: 0.5s;">
+                    AI agents, automations, websites, and digital systems built for clarity, scale, and impact.
+                </p>
+<div class="entrance-fade-up flex flex-wrap gap-4" style="animation-delay: 0.7s;">
+<button class="magnetic-btn px-8 py-4 bg-primary text-on-primary rounded-full font-ui-label text-ui-label hover:opacity-90 transition-all">Build With AXEN</button>
+<button class="px-8 py-4 border border-outline text-primary rounded-full font-ui-label text-ui-label hover:bg-white/5 transition-all">See Work</button>
+</div>
+</div>
+<div class="entrance-fade-up relative w-full aspect-square lg:aspect-video flex items-center justify-center" style="animation-delay: 0.4s;">
+<div class="relative z-10 w-full h-full rounded-2xl border border-outline bg-surface-container-low overflow-hidden group shadow-2xl">
+<img class="w-full h-full object-cover grayscale opacity-80 group-hover:scale-105 transition-transform duration-700" data-alt="A hyper-realistic 3D isometric mockup of a futuristic AI dashboard displayed on a floating glass pane." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBRyV3nWgJgmlcNpcz5TXh40gLX4eVOtc5WsccVKDlPHh5rzlV1Qkrm3QXTlvNoGSn_ysj3JWhgoSg5b0ssg2fNK-y4PHHywNateW3eJfgfma493yksy1UHuQhot9fHmsa6-ZV_lnVaeNGm206m1YGnir5SbzAW6GpRzC-OikIoAY0S4RuZvvo2Uy5ReUmsveSl8oI64A7_6XwT9-Xh6OZ6iX6j1ROJ0VoN5x3wBaT59GcDzW3kgNjRyw"/>
+<div class="absolute inset-0 bg-gradient-to-t from-surface to-transparent opacity-40"></div>
+</div>
+</div>
+</div>
+<div class="absolute bottom-12 right-margin-desktop hidden md:block entrance-fade-up" style="animation-delay: 1s;">
+<p class="font-ui-label text-ui-label text-dim-gray">Est. 2024 — building AI systems</p>
+</div>
+</section>
+<!-- ABOUT TEASER -->
+<section class="py-32 px-margin-desktop bg-surface border-t border-outline relative z-10">
+<div class="max-w-max-width mx-auto">
+<p class="font-eyebrow text-eyebrow text-dim-gray mb-12 uppercase reveal-up">✦ ABOUT</p>
+<div class="grid grid-cols-1 md:grid-cols-12 gap-gutter">
+<div class="md:col-span-8">
+<h2 class="font-headline-md text-headline-md serif text-primary leading-tight mb-8 reveal-up">
+                        We bridge the gap between complex engineering and human clarity. AXEN builds the intelligent infrastructure that allows visionary teams to scale without friction.
+                    </h2>
+<a class="reveal-up inline-flex items-center gap-2 font-ui-label text-ui-label text-primary hover:gap-4 transition-all" href="#">
+                        more about us <span class="material-symbols-outlined">arrow_forward</span>
+</a>
+</div>
+</div>
+</div>
+</section>
+<!-- KEY FACTS / BENTO GRID -->
+<section class="py-32 px-margin-desktop bg-surface-container-lowest/50 relative z-10">
+<div class="max-w-max-width mx-auto">
+<div class="grid grid-cols-1 md:grid-cols-4 gap-gutter">
+<!-- Marquee Card -->
+<div class="reveal-up md:col-span-4 bg-surface-container-high border border-outline rounded-xl py-12 px-8 overflow-hidden">
+<div class="marquee">
+<div class="marquee-content font-headline-md serif text-dim-gray uppercase tracking-widest opacity-50">
+<span>OPENAI</span>
+<span>N8N</span>
+<span>NEXT.JS</span>
+<span>AWS</span>
+<span>ANTHROPIC</span>
+<span>PINECONE</span>
+</div>
+<div aria-hidden="true" class="marquee-content font-headline-md serif text-dim-gray uppercase tracking-widest opacity-50">
+<span>OPENAI</span>
+<span>N8N</span>
+<span>NEXT.JS</span>
+<span>AWS</span>
+<span>ANTHROPIC</span>
+<span>PINECONE</span>
+</div>
+</div>
+</div>
+<!-- Stat 1 -->
+<div class="reveal-up bg-surface-container-high border border-outline rounded-xl p-10 flex flex-col justify-between card-hover">
+<span class="font-display-lg serif text-primary leading-none count-up" data-target="50">0</span>
+<p class="font-ui-label text-ui-label text-dim-gray mt-4">projects delivered</p>
+</div>
+<!-- Video/Motion Card -->
+<div class="reveal-up md:col-span-2 bg-surface-container-high border border-outline rounded-xl overflow-hidden relative group card-hover">
+<div class="absolute inset-0 bg-black/40 z-10"></div>
+<img class="w-full h-full object-cover" data-alt="A minimalist motion graphic demonstrating a fluid AI data processing sequence." src="https://lh3.googleusercontent.com/aida-public/AB6AXuA7dS01w7WeRJO7cLSvEqwrKfZhjNlk57_LEf2UvfontgoOylw67Zvc714wiSGpzXRtJ2tbrH_dRrB7dHbW8oJNX3S9tutdQkagyHgxjPJAO-pYgX4xvcdyZTkxcY_hxoDK9KNX_JZT6IYwMQUVu4E1ACx510H6ezBgTeLv1zyCvLa0ZxPy4Zj8rKA5lvJlbvh8eby8ieou7AVF4Rd-F8ZW09jyR-t5AQKCgm7y-jfO10ZtVHKSt9RFng"/>
+<div class="absolute bottom-6 left-6 z-20">
+<div class="w-12 h-12 rounded-full bg-white flex items-center justify-center text-surface cursor-pointer hover:scale-110 transition-transform">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">play_arrow</span>
+</div>
+</div>
+</div>
+<!-- Stat 2 -->
+<div class="reveal-up bg-surface-container-high border border-outline rounded-xl p-10 flex flex-col justify-between card-hover">
+<span class="font-display-lg serif text-primary leading-none count-up" data-suffix="%" data-target="90">0</span>
+<p class="font-ui-label text-ui-label text-dim-gray mt-4">client retention</p>
+</div>
+<!-- Stat 3 -->
+<div class="reveal-up bg-surface-container-high border border-outline rounded-xl p-10 flex flex-col justify-between card-hover">
+<span class="font-display-lg serif text-primary leading-none count-up" data-target="20">0</span>
+<p class="font-ui-label text-ui-label text-dim-gray mt-4">automation partners</p>
+</div>
+<!-- Closer Card -->
+<div class="reveal-up md:col-span-3 bg-primary text-on-primary rounded-xl p-10 flex items-center justify-between card-hover">
+<h3 class="font-headline-md serif">Different skills. One standard.</h3>
+<span class="material-symbols-outlined text-4xl hidden md:block">architecture</span>
+</div>
+</div>
+</div>
+</section>
+<!-- SERVICES PREVIEW -->
+<section class="py-32 px-margin-desktop bg-surface relative z-10">
+<div class="max-w-max-width mx-auto">
+<div class="flex justify-between items-end mb-16">
+<div class="reveal-up">
+<p class="font-eyebrow text-eyebrow text-dim-gray mb-4 uppercase">✦ WHAT WE DO BEST</p>
+<h2 class="font-headline-md text-headline-md serif text-primary">Core Capabilities</h2>
+</div>
+<a class="reveal-up hidden md:flex items-center gap-2 font-ui-label text-ui-label text-dim-gray hover:text-primary transition-colors" href="#">
+                    View all services <span class="material-symbols-outlined">arrow_forward</span>
+</a>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-gutter">
+<div class="reveal-up bg-surface-container-lowest border border-outline rounded-xl p-10 card-hover" style="transition-delay: 0.1s;">
+<span class="material-symbols-outlined text-primary mb-8 text-4xl">neurology</span>
+<h3 class="font-headline-md text-3xl serif text-primary mb-4">AI &amp; Automation</h3>
+<p class="font-body-md text-body-md text-dim-gray mb-8">Intelligent agents that handle complex workflows and decision-making at scale.</p>
+</div>
+<div class="reveal-up bg-surface-container-lowest border border-outline rounded-xl p-10 card-hover" style="transition-delay: 0.2s;">
+<span class="material-symbols-outlined text-primary mb-8 text-4xl">layers</span>
+<h3 class="font-headline-md text-3xl serif text-primary mb-4">Web &amp; Product Design</h3>
+<p class="font-body-md text-body-md text-dim-gray mb-8">Architecturally sound interfaces designed for professional clarity and speed.</p>
+</div>
+<div class="reveal-up bg-surface-container-lowest border border-outline rounded-xl p-10 card-hover" style="transition-delay: 0.3s;">
+<span class="material-symbols-outlined text-primary mb-8 text-4xl">terminal</span>
+<h3 class="font-headline-md text-3xl serif text-primary mb-4">Development &amp; Systems</h3>
+<p class="font-body-md text-body-md text-dim-gray mb-8">Custom software solutions engineered for maximum reliability and future growth.</p>
+</div>
+</div>
+</div>
+</section>
+<!-- WORK PREVIEW -->
+<section class="py-32 px-margin-desktop bg-surface-container-low/50 relative z-10">
+<div class="max-w-max-width mx-auto">
+<p class="reveal-up font-eyebrow text-eyebrow text-dim-gray mb-12 uppercase">✦ SELECTED WORK</p>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-10">
+<div class="reveal-up group cursor-pointer" style="transition-delay: 0.1s;">
+<div class="aspect-[4/5] bg-surface rounded-xl overflow-hidden mb-6 border border-outline">
+<img class="w-full h-full object-cover grayscale transition-transform duration-700 group-hover:scale-110" data-alt="Vault FinTech" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC7a2bJshpTfgY8PcypVZYLknPXEwsAt6aXyOfCGRFGbi_TxJmipzhbpMIm4Zfhim3hcI1NEUq1GT15zspWI3wHYHx5bsvog7JGaegzYBcMPT24Rx3eEAMnpPWww2Aws90-R9Lp7IxiK1J0bU7CuDLtYS5ldE84y0PTb_k3nBPOazPVURMtCzMyDBd5h16qD0MjdB32A9GUKIWcR4ggJWWbyXl-K81vqkSZOC2K41zInKE55oor-iWWXg"/>
+</div>
+<h4 class="font-headline-md text-2xl serif text-primary mb-2">Vault FinTech</h4>
+</div>
+<div class="reveal-up group cursor-pointer" style="transition-delay: 0.2s;">
+<div class="aspect-[4/5] bg-surface rounded-xl overflow-hidden mb-6 border border-outline">
+<img class="w-full h-full object-cover grayscale transition-transform duration-700 group-hover:scale-110" data-alt="Arc Systems" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDfCb4Snq8zi2e1HKKZcyF1yTtbB94yy7anx5TdX5gCjbIOfsulq5rK3gDBtRRMEg1L4Zp6KRvkhUMMaRUJ6moWsA5RXLXB6kADuSEH6HcbJUPtnpAj1u46GKaLMEH8ab_MvIoVZ2q9mzIPs_WJWAl7IIpAdVUZ1ROa0OKMmNozmDPCPrpNhmcchjes-Ipa2GFXPBE0epmdQEw2hJSr46pFHxkRkUi8sQDuwoysaQwuB3eQpmfRpvYV9Q"/>
+</div>
+<h4 class="font-headline-md text-2xl serif text-primary mb-2">Arc Systems</h4>
+</div>
+<div class="reveal-up group cursor-pointer" style="transition-delay: 0.3s;">
+<div class="aspect-[4/5] bg-surface rounded-xl overflow-hidden mb-6 border border-outline">
+<img class="w-full h-full object-cover grayscale transition-transform duration-700 group-hover:scale-110" data-alt="Lumen AI" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBt8_OHE3HI2NzIH0EtEMq1GzAfURCd4tlwz_7kr-EXLZ-F3Kk3Lp45JD4gk65fA_K9eHmKvOV_C-kp07ecud9iGLhxz6VJ9W0TA0DvPdVZEKl0ORp-46GEZBd3g24hub2stq35c3jOUaP-FeVYVTt0cSI2_x9o8LFoczj2hjdxu2h-W9MI9-ta5wAFNXRmLRdC60CCUdvqtarsgj3uDuLOve8dPnCWltvfYSZpKyV5QtupTaNATRvGcw"/>
+</div>
+<h4 class="font-headline-md text-2xl serif text-primary mb-2">Lumen AI</h4>
+</div>
+</div>
+</div>
+</section>
+<!-- CTA BANNER -->
+<section class="py-40 px-margin-desktop bg-surface relative overflow-hidden z-10">
+<div class="max-w-4xl mx-auto text-center relative z-10">
+<p class="reveal-up font-eyebrow text-eyebrow text-primary mb-8 uppercase tracking-[0.4em]">✦ START SOMETHING</p>
+<h2 class="reveal-up font-display-lg-mobile md:font-display-lg text-display-lg-mobile md:text-display-lg serif text-primary mb-12">Let's build something.</h2>
+<button class="reveal-up magnetic-btn px-12 py-5 bg-primary text-on-primary rounded-full font-ui-label text-ui-label text-lg hover:scale-105 transition-all">Build With AXEN</button>
+</div>
+</section>
+</main>
+<footer class="w-full px-margin-desktop py-20 max-w-max-width mx-auto border-t border-outline bg-surface grid grid-cols-1 md:grid-cols-4 gap-gutter relative z-10">
+<div class="flex flex-col gap-6">
+<div class="font-headline-md text-headline-md text-primary">AXEN</div>
+<p class="font-body-md text-body-md text-dim-gray max-w-[200px]">Engineered for clarity. Built for the future.</p>
+</div>
+<div class="flex flex-col gap-4">
+<h5 class="font-ui-label text-ui-label text-primary uppercase tracking-wider mb-2">Navigation</h5>
+<a class="text-dim-gray hover:text-primary transition-colors" href="#">Work</a>
+<a class="text-dim-gray hover:text-primary transition-colors" href="#">Services</a>
+<a class="text-dim-gray hover:text-primary transition-colors" href="#">About</a>
+</div>
+<div class="flex flex-col gap-4">
+<h5 class="font-ui-label text-ui-label text-primary uppercase tracking-wider mb-2">Company</h5>
+<a class="text-dim-gray hover:text-primary transition-colors" href="#">Insights</a>
+<a class="text-dim-gray hover:text-primary transition-colors" href="#">Privacy</a>
+</div>
+<div class="flex flex-col gap-6">
+<h5 class="font-ui-label text-ui-label text-primary uppercase tracking-wider mb-2">Social</h5>
+<div class="flex gap-4">
+<a class="text-dim-gray hover:text-primary transition-colors" href="#">𝕏</a>
+<a class="text-dim-gray hover:text-primary transition-colors" href="#">LinkedIn</a>
+</div>
+<p class="font-body-md text-dim-gray mt-4">© 2024 AXEN.</p>
+</div>
+</footer>
+<script>
+    // Menu Toggle Logic
+    const menuToggle = document.getElementById('menu-toggle');
+    const menuPanel = document.getElementById('nav-menu-panel');
+    const menuText = document.getElementById('menu-text');
+    const menuIcon = document.getElementById('menu-icon');
+
+    menuToggle.addEventListener('click', () => {
+        const isOpen = menuPanel.classList.toggle('open');
+        menuText.textContent = isOpen ? 'CLOSE' : 'MENU';
+        menuIcon.textContent = isOpen ? '×' : '☰';
+        
+        if(isOpen) {
+            menuToggle.classList.add('bg-surface', 'text-white');
+        } else {
+            menuToggle.classList.remove('bg-surface', 'text-white');
+        }
+    });
+
+    // Close menu when clicking outside
+    document.addEventListener('click', (e) => {
+        if (!menuPanel.contains(e.target) && !menuToggle.contains(e.target)) {
+            menuPanel.classList.remove('open');
+            menuText.textContent = 'MENU';
+            menuIcon.textContent = '☰';
+            menuToggle.classList.remove('bg-surface', 'text-white');
+        }
+    });
+
+    // Reveal on Scroll
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('active');
+                // Trigger stat counting if it's a count-up element or contains one
+                const counters = entry.target.querySelectorAll('.count-up');
+                if (entry.target.classList.contains('count-up')) {
+                    animateValue(entry.target);
+                } else if (counters.length) {
+                    counters.forEach(c => animateValue(c));
+                }
+            }
+        });
+    }, { threshold: 0.1 });
+    document.querySelectorAll('.reveal-up').forEach(el => observer.observe(el));
+
+    // Stat Counter Animation
+    function animateValue(obj) {
+        if (obj.classList.contains('counted')) return;
+        obj.classList.add('counted');
+        const start = 0;
+        const end = parseInt(obj.getAttribute('data-target'));
+        const duration = 2000;
+        const suffix = obj.getAttribute('data-suffix') || '+';
+        let startTimestamp = null;
+        const step = (timestamp) => {
+            if (!startTimestamp) startTimestamp = timestamp;
+            const progress = Math.min((timestamp - startTimestamp) / duration, 1);
+            obj.innerHTML = Math.floor(progress * (end - start) + start) + suffix;
+            if (progress < 1) {
+                window.requestAnimationFrame(step);
+            }
+        };
+        window.requestAnimationFrame(step);
+    }
+
+    // Magnetic Button Effect
+    document.querySelectorAll('.magnetic-btn').forEach(btn => {
+        btn.addEventListener('mousemove', (e) => {
+            const rect = btn.getBoundingClientRect();
+            const x = e.clientX - rect.left - rect.width / 2;
+            const y = e.clientY - rect.top - rect.height / 2;
+            btn.style.transform = `translate(${x * 0.15}px, ${y * 0.15}px)`;
+        });
+        btn.addEventListener('mouseleave', () => {
+            btn.style.transform = `translate(0, 0)`;
+        });
+    });
+
+    // Ensure fixed cluster is stable
+    window.addEventListener('scroll', () => {
+        const cluster = document.getElementById('nav-cluster');
+        // Optional: reduce opacity of cluster background on scroll or scale slightly
+    });
+
+</script>
+</body></html>

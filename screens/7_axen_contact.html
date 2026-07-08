@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>AXEN | Let's Talk</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=EB+Garamond:wght@400;500&amp;family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:wght@100..900&amp;family=Inter:wght@100..900&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "surface-bright": "#3a3939",
+                    "secondary-fixed-dim": "#c9c6c0",
+                    "secondary": "#c9c6c0",
+                    "error": "#ffb4ab",
+                    "on-error": "#690005",
+                    "surface-container-high": "#2a2a2a",
+                    "on-primary-fixed": "#1a1c1c",
+                    "on-surface": "#e5e2e1",
+                    "outline": "#232326",
+                    "on-error-container": "#ffdad6",
+                    "on-secondary": "#31312c",
+                    "background": "#141313",
+                    "on-tertiary-fixed-variant": "#454747",
+                    "surface-container": "#201f1f",
+                    "on-background": "#e5e2e1",
+                    "secondary-fixed": "#e5e2db",
+                    "primary": "#ffffff",
+                    "dim-gray": "#6B6B70",
+                    "surface-container-highest": "#232326",
+                    "on-primary-container": "#636565",
+                    "secondary-container": "#474742",
+                    "on-tertiary-fixed": "#1a1c1c",
+                    "surface-container-low": "#0D0D0D",
+                    "surface-tint": "#c6c6c7",
+                    "on-secondary-fixed": "#1c1c18",
+                    "on-secondary-container": "#b7b5af",
+                    "error-container": "#93000a",
+                    "surface-variant": "#353434",
+                    "primary-fixed-dim": "#c6c6c7",
+                    "inverse-surface": "#e5e2e1",
+                    "on-secondary-fixed-variant": "#474742",
+                    "on-tertiary-container": "#636565",
+                    "surface-container-lowest": "#0e0e0e",
+                    "tertiary": "#ffffff",
+                    "inverse-primary": "#5d5f5f",
+                    "primary-container": "#e2e2e2",
+                    "surface": "#050505",
+                    "surface-dim": "#141313",
+                    "tertiary-container": "#e2e2e2",
+                    "on-tertiary": "#2f3131",
+                    "outline-variant": "#444748",
+                    "on-surface-variant": "#A0A0A5",
+                    "primary-fixed": "#e2e2e2",
+                    "tertiary-fixed": "#e2e2e2",
+                    "tertiary-fixed-dim": "#c6c6c7",
+                    "on-primary": "#2f3131",
+                    "inverse-on-surface": "#313030",
+                    "on-primary-fixed-variant": "#454747"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "max-width": "1440px",
+                    "margin-mobile": "20px",
+                    "margin-desktop": "64px",
+                    "gutter": "24px"
+            },
+            "fontFamily": {
+                    "display-lg-mobile": ["EB Garamond"],
+                    "body-lg": ["Inter"],
+                    "ui-label": ["Inter"],
+                    "eyebrow": ["Inter"],
+                    "body-md": ["Inter"],
+                    "display-lg": ["EB Garamond"],
+                    "headline-md": ["EB Garamond"]
+            },
+            "fontSize": {
+                    "display-lg-mobile": ["48px", {"lineHeight": "1.1", "fontWeight": "400"}],
+                    "body-lg": ["18px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                    "ui-label": ["14px", {"lineHeight": "20px", "fontWeight": "500"}],
+                    "eyebrow": ["12px", {"lineHeight": "16px", "letterSpacing": "0.2em", "fontWeight": "500"}],
+                    "body-md": ["16px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                    "display-lg": ["96px", {"lineHeight": "1.0", "letterSpacing": "-0.02em", "fontWeight": "400"}],
+                    "headline-md": ["48px", {"lineHeight": "1.2", "fontWeight": "400"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        body {
+            background-color: #050505;
+            color: #e5e2e1;
+            -webkit-font-smoothing: antialiased;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 24;
+        }
+        .scroll-reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .scroll-reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .form-focus-ring:focus {
+            box-shadow: 0 0 0 1px #ffffff;
+            border-color: #ffffff;
+        }
+        #menu-panel {
+            clip-path: circle(0% at 100% 0%);
+            transition: clip-path 0.6s cubic-bezier(0.19, 1, 0.22, 1);
+        }
+        #menu-panel.open {
+            clip-path: circle(150% at 100% 0%);
+        }
+    </style>
+</head>
+<body class="font-body-md text-body-md overflow-x-hidden">
+<!-- Updated Navigation Shell -->
+<nav class="fixed top-0 left-0 w-full z-[100] flex justify-between items-center px-margin-desktop h-24 pointer-events-none">
+<a class="font-headline-md text-3xl font-bold text-primary tracking-tighter pointer-events-auto" href="/">AXEN</a>
+<div class="flex items-center space-x-3 pointer-events-auto">
+<!-- Sound Toggle -->
+<button class="w-12 h-12 flex items-center justify-center rounded-full bg-surface-container-high border border-outline hover:border-primary transition-colors group">
+<span class="material-symbols-outlined text-primary text-[20px]">volume_up</span>
+</button>
+<!-- Let's Talk Pill -->
+<button class="px-8 h-12 bg-primary text-surface rounded-full font-ui-label text-ui-label font-bold transition-all duration-300 hover:scale-105">
+                LET'S TALK
+            </button>
+<!-- Menu Pill -->
+<button class="px-8 h-12 border border-outline hover:border-primary bg-surface-container-high/50 backdrop-blur-md text-primary rounded-full font-ui-label text-ui-label font-bold transition-all flex items-center space-x-2 group" onclick="toggleMenu()">
+<span>MENU</span>
+<span class="material-symbols-outlined text-[18px] group-hover:rotate-90 transition-transform">menu</span>
+</button>
+</div>
+</nav>
+<!-- Fullscreen Menu Panel -->
+<div class="fixed inset-0 z-[90] bg-primary text-surface overflow-hidden pointer-events-none" id="menu-panel">
+<div class="h-full flex flex-col justify-center px-margin-desktop max-w-max-width mx-auto pointer-events-auto">
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-20 items-end">
+<div class="space-y-4">
+<a class="block font-display-lg text-[120px] leading-[0.9] hover:italic transition-all" href="#">Work</a>
+<a class="block font-display-lg text-[120px] leading-[0.9] hover:italic transition-all" href="#">Services</a>
+<a class="block font-display-lg text-[120px] leading-[0.9] hover:italic transition-all" href="#">About</a>
+<a class="block font-display-lg text-[120px] leading-[0.9] hover:italic transition-all" href="#">Insights</a>
+<a class="block font-display-lg text-[120px] leading-[0.9] italic" href="/contact.html">Contact</a>
+</div>
+<div class="lg:pb-10 lg:pl-20 border-l border-surface/10 space-y-12">
+<div>
+<span class="font-eyebrow text-surface/50 mb-4 block">SOCIAL</span>
+<div class="space-y-2">
+<a class="block font-body-lg hover:underline underline-offset-4" href="#">LinkedIn</a>
+<a class="block font-body-lg hover:underline underline-offset-4" href="#">X / Twitter</a>
+<a class="block font-body-lg hover:underline underline-offset-4" href="#">Instagram</a>
+</div>
+</div>
+<div>
+<span class="font-eyebrow text-surface/50 mb-4 block">ENQUIRIES</span>
+<a class="font-headline-md text-3xl" href="mailto:hello@axen.engine">hello@axen.engine</a>
+</div>
+</div>
+</div>
+</div>
+</div>
+<main class="relative pt-40 pb-20">
+<!-- Ambient Background -->
+<div class="fixed inset-0 pointer-events-none -z-10 opacity-20"></div>
+<div class="max-w-max-width mx-auto px-margin-desktop">
+<!-- Hero Header -->
+<section class="max-w-4xl scroll-reveal">
+<span class="font-eyebrow text-eyebrow text-on-surface-variant mb-6 block uppercase tracking-[0.3em]">✦ GET IN TOUCH</span>
+<h1 class="font-display-lg text-display-lg text-primary mb-8 leading-tight">Let's start something.</h1>
+<p class="font-body-lg text-body-lg text-on-surface-variant max-w-xl">
+                    We partner with teams ready to build real AI systems, not experiments.
+                </p>
+</section>
+<!-- Multi-Step Form Section -->
+<section class="mt-24 grid grid-cols-1 lg:grid-cols-12 gap-gutter items-start">
+<div class="lg:col-span-8 scroll-reveal">
+<div class="bg-surface-container-low border border-outline rounded-xl p-10 lg:p-16 relative overflow-hidden">
+<!-- Step Indicator -->
+<div class="flex justify-between items-center mb-12">
+<span class="font-ui-label text-ui-label text-primary tracking-widest font-bold">01 / 05</span>
+<div class="h-px bg-outline flex-grow mx-6">
+<div class="h-full bg-primary w-1/5"></div>
+</div>
+</div>
+<!-- Step 1 Content -->
+<div class="space-y-12">
+<div class="grid grid-cols-1 md:grid-cols-2 gap-10">
+<div class="relative">
+<label class="font-eyebrow text-[10px] text-on-surface-variant uppercase mb-2 block">Full Name</label>
+<input class="w-full bg-transparent border-b border-outline py-4 font-body-md text-primary placeholder:text-dim-gray focus:outline-none focus:border-primary transition-colors" placeholder="John Doe" type="text"/>
+</div>
+<div class="relative">
+<label class="font-eyebrow text-[10px] text-on-surface-variant uppercase mb-2 block">Email Address</label>
+<input class="w-full bg-transparent border-b border-outline py-4 font-body-md text-primary placeholder:text-dim-gray focus:outline-none focus:border-primary transition-colors" placeholder="john@example.com" type="email"/>
+</div>
+</div>
+<div class="relative">
+<label class="font-eyebrow text-[10px] text-on-surface-variant uppercase mb-2 block">Company / Brand</label>
+<input class="w-full bg-transparent border-b border-outline py-4 font-body-md text-primary placeholder:text-dim-gray focus:outline-none focus:border-primary transition-colors" placeholder="Your organization" type="text"/>
+</div>
+</div>
+<!-- Action Buttons -->
+<div class="mt-16 flex justify-between items-center">
+<button class="font-ui-label text-ui-label text-dim-gray opacity-50 cursor-not-allowed flex items-center" disabled="">
+<span class="material-symbols-outlined mr-2">arrow_back</span>
+                                Back
+                            </button>
+<button class="px-10 py-4 bg-primary text-surface rounded-full font-ui-label text-ui-label font-bold hover:scale-[1.02] transition-transform flex items-center">
+                                Continue
+                                <span class="material-symbols-outlined ml-2">arrow_forward</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Direct Contact Sidebar -->
+<div class="lg:col-span-4 space-y-12 lg:pl-12 scroll-reveal">
+<div>
+<span class="font-eyebrow text-[10px] text-on-surface-variant uppercase mb-4 block">Headquarters</span>
+<p class="font-body-md text-primary mb-2">Remote-first, based in Mumbai</p>
+<p class="font-body-md text-dim-gray leading-relaxed">
+                            A-102, Innovation Square, BKC<br/>Mumbai, Maharashtra 400051
+                        </p>
+</div>
+<div>
+<span class="font-eyebrow text-[10px] text-on-surface-variant uppercase mb-4 block">Direct Lines</span>
+<a class="block font-body-lg text-primary hover:text-dim-gray transition-colors mb-2" href="mailto:hello@axen.engine">hello@axen.engine</a>
+<a class="block font-body-lg text-primary hover:text-dim-gray transition-colors" href="tel:+912200000000">+91 22 0000 0000</a>
+</div>
+<div class="pt-8 border-t border-outline">
+<span class="font-eyebrow text-[10px] text-on-surface-variant uppercase mb-4 block">Join Us</span>
+<p class="font-body-md text-dim-gray mb-4">Looking to collaborate on world-class AI engineering?</p>
+<a class="font-ui-label text-ui-label text-primary underline underline-offset-4 decoration-dim-gray hover:decoration-primary transition-all" href="mailto:talent@axen.engine">talent@axen.engine</a>
+</div>
+</div>
+</section>
+<!-- FAQ Accordion -->
+<section class="mt-40 max-w-4xl scroll-reveal">
+<span class="font-eyebrow text-eyebrow text-on-surface-variant mb-6 block uppercase">✦ COMMON QUERIES</span>
+<h2 class="font-headline-md text-headline-md text-primary mb-12">Engineered Clarity</h2>
+<div class="border-t border-outline">
+<!-- Q1 (Expanded State) -->
+<div class="border-b border-outline group">
+<button class="w-full py-8 flex justify-between items-center text-left" onclick="toggleFaq(this)">
+<span class="font-body-lg text-primary">What kind of work do you take on?</span>
+<span class="material-symbols-outlined text-dim-gray transition-transform duration-300 rotate-45">add</span>
+</button>
+<div class="max-h-96 transition-all duration-500 overflow-hidden">
+<p class="pb-8 text-on-surface-variant font-body-md leading-relaxed max-w-2xl">
+                                we specialize in production-grade AI infrastructure, custom LLM fine-tuning, and architecting data pipelines that drive meaningful business outcomes. We focus on complexity that requires high engineering standards rather than simple API integrations.
+                            </p>
+</div>
+</div>
+<!-- Other Qs -->
+<div class="border-b border-outline group">
+<button class="w-full py-8 flex justify-between items-center text-left" onclick="toggleFaq(this)">
+<span class="font-body-lg text-primary">Who do you usually work with?</span>
+<span class="material-symbols-outlined text-dim-gray transition-transform duration-300">add</span>
+</button>
+<div class="max-h-0 transition-all duration-500 overflow-hidden">
+<p class="pb-8 text-on-surface-variant font-body-md">We partner with Fortune 500 enterprises and Series B+ startups who view AI as a core strategic pillar, not a marketing checkbox.</p>
+</div>
+</div>
+<div class="border-b border-outline group">
+<button class="w-full py-8 flex justify-between items-center text-left" onclick="toggleFaq(this)">
+<span class="font-body-lg text-primary">How do projects typically begin?</span>
+<span class="material-symbols-outlined text-dim-gray transition-transform duration-300">add</span>
+</button>
+<div class="max-h-0 transition-all duration-500 overflow-hidden">
+<p class="pb-8 text-on-surface-variant font-body-md">Every engagement starts with a technical discovery phase to validate feasibility and define specific ROI metrics.</p>
+</div>
+</div>
+<div class="border-b border-outline group">
+<button class="w-full py-8 flex justify-between items-center text-left" onclick="toggleFaq(this)">
+<span class="font-body-lg text-primary">Do you partner with agencies long-term?</span>
+<span class="material-symbols-outlined text-dim-gray transition-transform duration-300">add</span>
+</button>
+<div class="max-h-0 transition-all duration-500 overflow-hidden">
+<p class="pb-8 text-on-surface-variant font-body-md">Yes, we provide technical architecture support for creative and strategic agencies looking to add deep AI engineering to their offerings.</p>
+</div>
+</div>
+<div class="border-b border-outline group">
+<button class="w-full py-8 flex justify-between items-center text-left" onclick="toggleFaq(this)">
+<span class="font-body-lg text-primary">Can we sign an NDA before starting?</span>
+<span class="material-symbols-outlined text-dim-gray transition-transform duration-300">add</span>
+</button>
+<div class="max-h-0 transition-all duration-500 overflow-hidden">
+<p class="pb-8 text-on-surface-variant font-body-md">Confidentiality is paramount. We have standard NDAs ready or can review yours before any technical details are shared.</p>
+</div>
+</div>
+<div class="border-b border-outline group">
+<button class="w-full py-8 flex justify-between items-center text-left" onclick="toggleFaq(this)">
+<span class="font-body-lg text-primary">How are projects priced and paid for?</span>
+<span class="material-symbols-outlined text-dim-gray transition-transform duration-300">add</span>
+</button>
+<div class="max-h-0 transition-all duration-500 overflow-hidden">
+<p class="pb-8 text-on-surface-variant font-body-md">We work on a fixed-scope project basis or monthly engineering retainers. Pricing is strictly value-based.</p>
+</div>
+</div>
+<div class="border-b border-outline group">
+<button class="w-full py-8 flex justify-between items-center text-left" onclick="toggleFaq(this)">
+<span class="font-body-lg text-primary">Are you currently taking on new work?</span>
+<span class="material-symbols-outlined text-dim-gray transition-transform duration-300">add</span>
+</button>
+<div class="max-h-0 transition-all duration-500 overflow-hidden">
+<p class="pb-8 text-on-surface-variant font-body-md">We maintain a selective roster. Current lead time for new discovery phases is approximately 3 weeks.</p>
+</div>
+</div>
+</div>
+</section>
+</div>
+</main>
+<!-- Footer Component -->
+<footer class="w-full px-margin-desktop py-20 max-w-max-width mx-auto grid grid-cols-1 md:grid-cols-4 gap-gutter border-t border-outline bg-surface">
+<div class="md:col-span-2">
+<div class="font-headline-md text-headline-md text-primary mb-8 tracking-tighter font-bold">AXEN</div>
+<p class="font-body-md text-dim-gray max-w-xs mb-8">© 2024 AXEN. Engineered for clarity.</p>
+</div>
+<div>
+<h4 class="font-ui-label text-ui-label text-primary font-bold mb-6">Navigation</h4>
+<ul class="space-y-4">
+<li><a class="font-body-md text-dim-gray hover:text-primary transition-colors duration-300" href="#">Work</a></li>
+<li><a class="font-body-md text-dim-gray hover:text-primary transition-colors duration-300" href="#">Services</a></li>
+<li><a class="font-body-md text-dim-gray hover:text-primary transition-colors duration-300" href="#">About</a></li>
+<li><a class="font-body-md text-dim-gray hover:text-primary transition-colors duration-300" href="#">Insights</a></li>
+</ul>
+</div>
+<div>
+<h4 class="font-ui-label text-ui-label text-primary font-bold mb-6">Legal</h4>
+<ul class="space-y-4">
+<li><a class="font-body-md text-dim-gray hover:text-primary transition-colors duration-300" href="#">Privacy Policy</a></li>
+<li><a class="font-body-md text-dim-gray hover:text-primary transition-colors duration-300" href="#">Terms of Service</a></li>
+<li><a class="font-body-md text-dim-gray hover:text-primary transition-colors duration-300" href="#">Cookies</a></li>
+</ul>
+</div>
+</footer>
+<script>
+        // Menu Toggle
+        function toggleMenu() {
+            const menu = document.getElementById('menu-panel');
+            const menuBtn = document.querySelector('[onclick="toggleMenu()"] span:first-child');
+            const menuIcon = document.querySelector('[onclick="toggleMenu()"] .material-symbols-outlined');
+            
+            menu.classList.toggle('open');
+            if (menu.classList.contains('open')) {
+                menuBtn.innerText = 'CLOSE';
+                menuIcon.innerText = 'close';
+                document.body.style.overflow = 'hidden';
+            } else {
+                menuBtn.innerText = 'MENU';
+                menuIcon.innerText = 'menu';
+                document.body.style.overflow = 'auto';
+            }
+        }
+
+        // Simple FAQ Toggle
+        function toggleFaq(btn) {
+            const content = btn.nextElementSibling;
+            const icon = btn.querySelector('.material-symbols-outlined');
+            
+            if (content.style.maxHeight && content.style.maxHeight !== '0px') {
+                content.style.maxHeight = '0px';
+                icon.style.transform = 'rotate(0deg)';
+            } else {
+                // Close all others first
+                document.querySelectorAll('.group div').forEach(div => div.style.maxHeight = '0px');
+                document.querySelectorAll('.group .material-symbols-outlined').forEach(i => i.style.transform = 'rotate(0deg)');
+                
+                content.style.maxHeight = content.scrollHeight + 'px';
+                icon.style.transform = 'rotate(45deg)';
+            }
+        }
+
+        // Scroll Reveal Animation
+        const observerOptions = {
+            threshold: 0.1
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.scroll-reveal').forEach(el => observer.observe(el));
+
+        // Interaction for Form Inputs
+        document.querySelectorAll('input').forEach(input => {
+            input.addEventListener('focus', () => {
+                input.previousElementSibling.classList.replace('text-on-surface-variant', 'text-primary');
+            });
+            input.addEventListener('blur', () => {
+                if(!input.value) input.previousElementSibling.classList.replace('text-primary', 'text-on-surface-variant');
+            });
+        });
+    </script>
+</body></html>

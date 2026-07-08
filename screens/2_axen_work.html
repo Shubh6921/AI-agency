@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Work — AXEN</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=EB+Garamond:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "on-secondary-fixed-variant": "#474742",
+                    "surface-container-lowest": "#0e0e0e",
+                    "primary-container": "#e2e2e2",
+                    "outline": "#232326",
+                    "background": "#141313",
+                    "surface-container-highest": "#232326",
+                    "inverse-on-surface": "#313030",
+                    "error": "#ffb4ab",
+                    "dim-gray": "#6B6B70",
+                    "tertiary": "#ffffff",
+                    "on-primary-fixed": "#1a1c1c",
+                    "on-surface": "#e5e2e1",
+                    "outline-variant": "#444748",
+                    "surface-dim": "#141313",
+                    "surface-container-high": "#2a2a2a",
+                    "surface": "#050505",
+                    "on-error": "#690005",
+                    "secondary": "#c9c6c0",
+                    "tertiary-fixed": "#e2e2e2",
+                    "surface-container": "#151515",
+                    "on-tertiary-fixed-variant": "#454747",
+                    "error-container": "#93000a",
+                    "on-error-container": "#ffdad6",
+                    "secondary-fixed": "#e5e2db",
+                    "inverse-primary": "#5d5f5f",
+                    "surface-bright": "#0D0D0D",
+                    "surface-tint": "#c6c6c7",
+                    "on-secondary": "#31312c",
+                    "secondary-fixed-dim": "#c9c6c0",
+                    "on-primary-container": "#636565",
+                    "on-primary-fixed-variant": "#454747",
+                    "primary-fixed": "#e2e2e2",
+                    "surface-variant": "#353434",
+                    "secondary-container": "#474742",
+                    "primary": "#ffffff",
+                    "on-surface-variant": "#c4c7c8",
+                    "tertiary-container": "#e2e2e2",
+                    "surface-container-low": "#1c1b1b",
+                    "on-tertiary-container": "#636565",
+                    "on-secondary-fixed": "#1c1c18",
+                    "on-tertiary": "#2f3131",
+                    "on-secondary-container": "#b7b5af",
+                    "primary-fixed-dim": "#c6c6c7",
+                    "inverse-surface": "#e5e2e1",
+                    "on-tertiary-fixed": "#1a1c1c",
+                    "on-background": "#e5e2e1",
+                    "tertiary-fixed-dim": "#c6c6c7",
+                    "on-primary": "#2f3131"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "max-width": "1440px",
+                    "margin-desktop": "64px",
+                    "margin-mobile": "20px",
+                    "gutter": "24px"
+            },
+            "fontFamily": {
+                    "body-md": ["Inter"],
+                    "display-lg": ["EB Garamond"],
+                    "eyebrow": ["Inter"],
+                    "display-lg-mobile": ["EB Garamond"],
+                    "headline-md": ["EB Garamond"],
+                    "body-lg": ["Inter"],
+                    "ui-label": ["Inter"]
+            },
+            "fontSize": {
+                    "body-md": ["16px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                    "display-lg": ["96px", {"lineHeight": "1.0", "letterSpacing": "-0.02em", "fontWeight": "400"}],
+                    "eyebrow": ["12px", {"lineHeight": "16px", "letterSpacing": "0.2em", "fontWeight": "500"}],
+                    "display-lg-mobile": ["48px", {"lineHeight": "1.1", "fontWeight": "400"}],
+                    "headline-md": ["48px", {"lineHeight": "1.2", "fontWeight": "400"}],
+                    "body-lg": ["18px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                    "ui-label": ["14px", {"lineHeight": "20px", "fontWeight": "500"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        body {
+            background-color: #050505;
+            color: #FAFAFA;
+            overflow-x: hidden;
+        }
+        .marquee {
+            display: flex;
+            overflow: hidden;
+            user-select: none;
+            gap: 24px;
+        }
+        .marquee-content {
+            flex-shrink: 0;
+            display: flex;
+            justify-content: space-around;
+            gap: 24px;
+            min-width: 100%;
+            animation: scroll 40s linear infinite;
+        }
+        @keyframes scroll {
+            from { transform: translateX(0); }
+            to { transform: translateX(-100%); }
+        }
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .case-card:hover .case-img {
+            transform: scale(1.02);
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 24;
+            vertical-align: middle;
+        }
+        #menu-panel {
+            clip-path: circle(0% at 90% 5%);
+            transition: clip-path 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        #menu-panel.open {
+            clip-path: circle(150% at 90% 5%);
+        }
+    </style>
+</head>
+<body class="font-body-md text-body-md selection:bg-primary-container selection:text-on-primary-container">
+<!-- Floating Top-Right Cluster Navigation -->
+<nav class="fixed top-8 right-margin-mobile md:right-margin-desktop z-[100] flex items-center gap-4">
+<button class="w-12 h-12 rounded-full border border-outline bg-surface/80 backdrop-blur-md flex items-center justify-center text-primary hover:bg-surface-container transition-colors duration-300">
+<span class="material-symbols-outlined text-xl">volume_up</span>
+</button>
+<button class="px-8 py-3 bg-primary text-surface rounded-full font-ui-label font-bold text-sm tracking-wider hover:opacity-90 transition-opacity duration-300">
+        LET'S TALK
+    </button>
+<button class="px-6 py-3 border border-outline bg-surface/80 backdrop-blur-md text-primary rounded-full font-ui-label font-bold text-sm tracking-wider flex items-center gap-2 hover:bg-surface-container transition-all duration-300" id="menu-toggle">
+        MENU
+        <span class="material-symbols-outlined text-xl transition-transform duration-300" id="menu-icon">menu</span>
+</button>
+</nav>
+<!-- White Dropdown Menu Panel -->
+<div class="fixed inset-0 z-[90] bg-white text-surface-container-lowest hidden pointer-events-none" id="menu-panel">
+<div class="h-full w-full px-margin-mobile md:px-margin-desktop pt-40 pb-20 flex flex-col justify-between max-w-max-width mx-auto">
+<div class="grid grid-cols-1 md:grid-cols-2 gap-20">
+<nav class="flex flex-col gap-6">
+<a class="font-display-lg text-4xl md:text-7xl hover:italic transition-all duration-300 border-b border-surface-container-lowest/10 pb-4" href="#">Work</a>
+<a class="font-display-lg text-4xl md:text-7xl hover:italic transition-all duration-300 border-b border-surface-container-lowest/10 pb-4" href="#">Services</a>
+<a class="font-display-lg text-4xl md:text-7xl hover:italic transition-all duration-300 border-b border-surface-container-lowest/10 pb-4" href="#">About</a>
+<a class="font-display-lg text-4xl md:text-7xl hover:italic transition-all duration-300 border-b border-surface-container-lowest/10 pb-4" href="#">Insights</a>
+<a class="font-display-lg text-4xl md:text-7xl hover:italic transition-all duration-300" href="#">Contact</a>
+</nav>
+<div class="flex flex-col justify-end gap-12 pb-4">
+<div class="space-y-4">
+<p class="font-eyebrow text-dim-gray uppercase tracking-widest text-[10px]">Office</p>
+<p class="font-body-lg text-xl">London, EC1A 1BB<br/>United Kingdom</p>
+</div>
+<div class="space-y-4">
+<p class="font-eyebrow text-dim-gray uppercase tracking-widest text-[10px]">Inquiries</p>
+<p class="font-body-lg text-xl">hello@axen.engine</p>
+</div>
+<div class="flex gap-8">
+<a class="text-sm font-ui-label hover:underline" href="#">LinkedIn</a>
+<a class="text-sm font-ui-label hover:underline" href="#">Twitter</a>
+<a class="text-sm font-ui-label hover:underline" href="#">Instagram</a>
+</div>
+</div>
+</div>
+<div class="pt-20 border-t border-surface-container-lowest/10 flex justify-between items-center text-[12px] font-ui-label text-dim-gray">
+<span>© 2024 AXEN</span>
+<span>ENGINEERED FOR CLARITY</span>
+</div>
+</div>
+</div>
+<!-- Logo (Static Positioned separately from nav cluster) -->
+<div class="fixed top-11 left-margin-mobile md:left-margin-desktop z-[100]">
+<a class="font-headline-md text-2xl md:text-3xl font-bold text-primary tracking-tighter" href="/">AXEN</a>
+</div>
+<!-- OPENING SCROLL-STRIP -->
+<div class="w-full bg-surface-container border-b border-outline overflow-hidden py-4">
+<div class="marquee">
+<div class="marquee-content">
+<!-- Project Strip Item 1 -->
+<div class="w-48 h-32 flex-shrink-0 grayscale hover:grayscale-0 transition-all duration-700 bg-surface-container-high rounded-lg overflow-hidden border border-outline">
+<img class="w-full h-full object-cover" data-alt="A minimalist architectural visualization of a futuristic laboratory interior." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAdLyQxtgkqO4Mqr9WgyRa8VGbwJOp8zvVlclb7Csl7kW-6qIPK1lRXq1Sj01hPeE8VeO2tKP1w8fHgLvsZ_bz1aAGZfixq_M0V8vFWL2lUwKPSHvNPZZZO-n5-8SVB08tIzb4MZYC1-f9MO3o8yRmonnQCIhmmikWx5ASm7NCJH2KgMT21ck4vFUpbNc1lWroK7GIBB_CZTignpQ-tjEm1JLbPMthzg7hAsnqX9btgNk6UQJlo7G0pHw"/>
+</div>
+<!-- Project Strip Item 2 -->
+<div class="w-48 h-32 flex-shrink-0 grayscale hover:grayscale-0 transition-all duration-700 bg-surface-container-high rounded-lg overflow-hidden border border-outline">
+<img class="w-full h-full object-cover" data-alt="A close-up high-fidelity render of a metallic microchip interface." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBq0iDDPwkwNKH14JJTROQowFzXR0BvihQCZM_odzuIBtnr4ZCDSe5G1TOhdBMlp3OyYfmfGuDlFEpcAIs5p9_1kKedkrooOaHCKgLAbI6cs-4u60CN50xwvJrwDLc4x_z8MInsIn5cvued8N-KgF5BWOus9IBgnUSkEg3Dm_mu-hmCsf3YmcDJZo4DGpIPHJqd4rmT6V6iIpC_lksKP0MPoDrGw8zcFgQwItN3yQDTp-0nlMWmU2jbFw"/>
+</div>
+<!-- Project Strip Item 3 -->
+<div class="w-48 h-32 flex-shrink-0 grayscale hover:grayscale-0 transition-all duration-700 bg-surface-container-high rounded-lg overflow-hidden border border-outline">
+<img class="w-full h-full object-cover" data-alt="An abstract 3D composition of fluid glass spheres." src="https://lh3.googleusercontent.com/aida-public/AB6AXuA6hN0zg2ZqKioDWA1ptqkep2ne_Tnicqs_8TaIMCCUNGYD8yIIPhiotEG79GwsaBr_EiOVIhim6l_JbTJADUc1b85EE7e5oxN3kiVsIa0zLD5MNpm6D0bbCsxZIC5NPagcwlyfbMwbKHz6o1z4fi0ZqHADhDLbh_yVkQ53KaOgys2pIRANqlHTCMUFBLcTz8M7bG9J_oRw6IfiqeJ6_XhREFGBVzUc59X8kecm1QSXxbsVZ5PVyB35_Q"/>
+</div>
+<!-- Project Strip Item 4 -->
+<div class="w-48 h-32 flex-shrink-0 grayscale hover:grayscale-0 transition-all duration-700 bg-surface-container-high rounded-lg overflow-hidden border border-outline">
+<img class="w-full h-full object-cover" data-alt="A macro shot of brushed aluminum textures." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBcPA_8jp4DWoDHdKmmhuQQldvyUTJfnKm_XF5rqbO7WOKkpwBU9WqIaSQW3qIxXI44Id528ifgkKAZh3KyYD0YRRF458eTJ9irvL3j50PJhGMx1BekhJKepVj2wbJzmeVjKtMtKIC2ipH0RXT1JWeYXaN0OTXFSFN4ac8ksyebDghVRKw4g54tw9UMZ4j8npkuTXhC6FFhRjwKAs-3h3HgZ2jIhRtwZu479n81jZNKouzFOiitUcO7PA"/>
+</div>
+<!-- Project Strip Item 5 -->
+<div class="w-48 h-32 flex-shrink-0 grayscale hover:grayscale-0 transition-all duration-700 bg-surface-container-high rounded-lg overflow-hidden border border-outline">
+<img class="w-full h-full object-cover" data-alt="A minimalist data visualization showing a network of nodes." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCh-gDjhy_1GAroBbMp1KTnIVTZd9pqGyHIYF2Rx7NVZOb5Xhj1JgQx--nbnmXiRX85coPhpCJca_99O-8130OKA0oeWloHGbTcMMEVNxRThJ68jXeKKPbAGq-oZtQLjW59utxUB6U2pxLB2gKEjlpLySn-ZxkfDqdfUsmb7js2tuM8Mx4uCHj1N_nYCh9L5s8QNBk4VobcVuW8OtZQuXTUegXr0ot0zDoHLrCtFVPPAoclLDYxUNSi9g"/>
+</div>
+<!-- Project Strip Item 6 -->
+<div class="w-48 h-32 flex-shrink-0 grayscale hover:grayscale-0 transition-all duration-700 bg-surface-container-high rounded-lg overflow-hidden border border-outline">
+<img class="w-full h-full object-cover" data-alt="An elegant arrangement of geometric monoliths." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBbo9ht5HdQPqRJO4R0c_CTXwJo96_1_pS2VEuqhqA281CCwQwW9hLCKDz184oLOBuMpmxxvYNylEp9ha3czmNP1o5FW9ABMLt2tXOz9wQbHKHl1SBEOVmvIdKdD3Fyu0Cq09hHtsztzt3kCxjVyIEZvIBqPOfuRrYTo5jpMId09UFmCM2WtOzIJcXTUuXy7_dlfUedYA3GheCUTXkvUAwtpDRqOCGZBNB6kQepwPfBP7yXT9FM4EGe8Q"/>
+</div>
+</div>
+<!-- Duplicated for seamless loop -->
+<div aria-hidden="true" class="marquee-content">
+<div class="w-48 h-32 flex-shrink-0 grayscale hover:grayscale-0 transition-all duration-700 bg-surface-container-high rounded-lg overflow-hidden border border-outline"><img class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAdLyQxtgkqO4Mqr9WgyRa8VGbwJOp8zvVlclb7Csl7kW-6qIPK1lRXq1Sj01hPeE8VeO2tKP1w8fHgLvsZ_bz1aAGZfixq_M0V8vFWL2lUwKPSHvNPZZZO-n5-8SVB08tIzb4MZYC1-f9MO3o8yRmonnQCIhmmikWx5ASm7NCJH2KgMT21ck4vFUpbNc1lWroK7GIBB_CZTignpQ-tjEm1JLbPMthzg7hAsnqX9btgNk6UQJlo7G0pHw"/></div>
+<div class="w-48 h-32 flex-shrink-0 grayscale hover:grayscale-0 transition-all duration-700 bg-surface-container-high rounded-lg overflow-hidden border border-outline"><img class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBq0iDDPwkwNKH14JJTROQowFzXR0BvihQCZM_odzuIBtnr4ZCDSe5G1TOhdBMlp3OyYfmfGuDlFEpcAIs5p9_1kKedkrooOaHCKgLAbI6cs-4u60CN50xwvJrwDLc4x_z8MInsIn5cvued8N-KgF5BWOus9IBgnUSkEg3Dm_mu-hmCsf3YmcDJZo4DGpIPHJqd4rmT6V6iIpC_lksKP0MPoDrGw8zcFgQwItN3yQDTp-0nlMWmU2jbFw"/></div>
+<div class="w-48 h-32 flex-shrink-0 grayscale hover:grayscale-0 transition-all duration-700 bg-surface-container-high rounded-lg overflow-hidden border border-outline"><img class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA6hN0zg2ZqKioDWA1ptqkep2ne_Tnicqs_8TaIMCCUNGYD8yIIPhiotEG79GwsaBr_EiOVIhim6l_JbTJADUc1b85EE7e5oxN3kiVsIa0zLD5MNpm6D0bbCsxZIC5NPagcwlyfbMwbKHz6o1z4fi0ZqHADhDLbh_yVkQ53KaOgys2pIRANqlHTCMUFBLcTz8M7bG9J_oRw6IfiqeJ6_XhREFGBVzUc59X8kecm1QSXxbsVZ5PVyB35_Q"/></div>
+<div class="w-48 h-32 flex-shrink-0 grayscale hover:grayscale-0 transition-all duration-700 bg-surface-container-high rounded-lg overflow-hidden border border-outline"><img class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBcPA_8jp4DWoDHdKmmhuQQldvyUTJfnKm_XF5rqbO7WOKkpwBU9WqIaSQW3qIxXI44Id528ifgkKAZh3KyYD0YRRF458eTJ9irvL3j50PJhGMx1BekhJKepVj2wbJzmeVjKtMtKIC2ipH0RXT1JWeYXaN0OTXFSFN4ac8ksyebDghVRKw4g54tw9UMZ4j8npkuTXhC6FFhRjwKAs-3h3HgZ2jIhRtwZu479n81jZNKouzFOiitUcO7PA"/></div>
+<div class="w-48 h-32 flex-shrink-0 grayscale hover:grayscale-0 transition-all duration-700 bg-surface-container-high rounded-lg overflow-hidden border border-outline"><img class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCh-gDjhy_1GAroBbMp1KTnIVTZd9pqGyHIYF2Rx7NVZOb5Xhj1JgQx--nbnmXiRX85coPhpCJca_99O-8130OKA0oeWloHGbTcMMEVNxRThJ68jXeKKPbAGq-oZtQLjW59utxUB6U2pxLB2gKEjlpLySn-ZxkfDqdfUsmb7js2tuM8Mx4uCHj1N_nYCh9L5s8QNBk4VobcVuW8OtZQuXTUegXr0ot0zDoHLrCtFVPPAoclLDYxUNSi9g"/></div>
+<div class="w-48 h-32 flex-shrink-0 grayscale hover:grayscale-0 transition-all duration-700 bg-surface-container-high rounded-lg overflow-hidden border border-outline"><img class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBbo9ht5HdQPqRJO4R0c_CTXwJo96_1_pS2VEuqhqA281CCwQwW9hLCKDz184oLOBuMpmxxvYNylEp9ha3czmNP1o5FW9ABMLt2tXOz9wQbHKHl1SBEOVmvIdKdD3Fyu0Cq09hHtsztzt3kCxjVyIEZvIBqPOfuRrYTo5jpMId09UFmCM2WtOzIJcXTUuXy7_dlfUedYA3GheCUTXkvUAwtpDRqOCGZBNB6kQepwPfBP7yXT9FM4EGe8Q"/></div>
+</div>
+</div>
+</div>
+<!-- HEADER SECTION -->
+<header class="pt-48 pb-24 px-margin-desktop max-w-max-width mx-auto">
+<div class="reveal active">
+<div class="flex items-center gap-2 mb-4">
+<span class="material-symbols-outlined text-primary scale-75" style="font-variation-settings: 'FILL' 1;">stars</span>
+<span class="font-eyebrow text-eyebrow uppercase tracking-[0.2em] text-dim-gray">Selected Work</span>
+</div>
+<h1 class="font-display-lg text-display-lg md:text-display-lg text-primary mb-6">Our work</h1>
+<p class="font-body-lg text-body-lg text-dim-gray max-w-2xl">
+            A curated showcase of AI systems, products, and digital experiences engineered for clarity and longevity.
+        </p>
+</div>
+</header>
+<!-- CASE GRID -->
+<section class="px-margin-desktop max-w-max-width mx-auto pb-48">
+<div class="grid grid-cols-1 md:grid-cols-2 gap-x-gutter gap-y-32">
+<!-- Tile 1 -->
+<div class="case-card group reveal">
+<div class="aspect-[4/5] overflow-hidden rounded-xl bg-surface-container border border-outline mb-8 relative">
+<img class="case-img w-full h-full object-cover transition-transform duration-700 ease-out" data-alt="Financial data visualized in a minimal, monochrome style." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDPGKzXKXubgKEAP--bdIMBlbeoPGoHQGNY92KRhlhHqSSlNObyb_joMffqXHJ8KmwnNlqTR9fcdP3jrqyTRwpm_V4U2XQfIEsv3XNHTDm4HW5R1itzuFQnbmTmG8nUFP9Irl1-lyBRsX1sUu0jAZsJm9PLyMGW0stu7ObQUIUK_4Bq_X2n5BonxYAnFcOe0Ub8AfF-x9euvEdXI9KJ01YAz2PcL98DWS3ao1aQoY1Toy_vYEulkYu02g"/>
+</div>
+<div class="flex flex-col gap-2">
+<h3 class="font-headline-md text-[32px] text-primary">Aether Finance</h3>
+<p class="text-dim-gray font-body-md">Automated customer support for global fintech leaders.</p>
+<a class="mt-4 flex items-center gap-2 text-primary font-ui-label hover:gap-4 transition-all duration-300" href="#">
+                    Explore project <span class="material-symbols-outlined text-sm">arrow_forward</span>
+</a>
+</div>
+</div>
+<!-- Tile 2 -->
+<div class="case-card group reveal md:mt-24">
+<div class="aspect-[4/5] overflow-hidden rounded-xl bg-surface-container border border-outline mb-8 relative">
+<img class="case-img w-full h-full object-cover transition-transform duration-700 ease-out" data-alt="An automated logistics warehouse render." src="https://lh3.googleusercontent.com/aida-public/AB6AXuD18FdcBAars05UYmZD6oKuICq39c1s7SxKJYQ1e8rnFAvILSwEhOJ8MDckfGNAtjC_vHkFIM9twuNJ0pliZs0i1n2h9XFO26SexIH9fdI07_CqMKev9F-lv-Tw5pGp1KrUqncDugRP9s4pZygEIhVgEh83gHju6JLlV0lhGR75WcSEbUPt-06_pqIHt0hEofd5nCm4vSMaE4-s16IXYdEgHDdhkIJUSMibP5CLewLCSlNJ7vcjoerFjg"/>
+</div>
+<div class="flex flex-col gap-2">
+<h3 class="font-headline-md text-[32px] text-primary">Kinetix Logix</h3>
+<p class="text-dim-gray font-body-md">Real-time supply chain optimization engine.</p>
+<a class="mt-4 flex items-center gap-2 text-primary font-ui-label hover:gap-4 transition-all duration-300" href="#">
+                    Explore project <span class="material-symbols-outlined text-sm">arrow_forward</span>
+</a>
+</div>
+</div>
+<!-- Tile 3 -->
+<div class="case-card group reveal">
+<div class="aspect-[4/5] overflow-hidden rounded-xl bg-surface-container border border-outline mb-8 relative">
+<img class="case-img w-full h-full object-cover transition-transform duration-700 ease-out" data-alt="A conceptual 3D render of a neural network." src="https://lh3.googleusercontent.com/aida-public/AB6AXuA3D4qCIfshFa9HClC-OtnUFVIiPJ7qygXs9U6DC4XEE70aDIyPjrsnXUIa3iOTnM7FLLvVeBeb6S2Tzs_egwzyXE0yOk05fMSNShJZcQ2_pm7x43n6rHjbA5NDtyJOcjnxH2Kigsh-eFwSrt0pb1tD5S2R4i8Arkp2r0Q9jqxNXICDzxM3xxXcQPquHrXraQLI2NCi-PF8TK0vK-ZB0URxnf2vFrYEgQGzCH61dSy92vCZNflyz4w3Pw"/>
+</div>
+<div class="flex flex-col gap-2">
+<h3 class="font-headline-md text-[32px] text-primary">Neural Cortex</h3>
+<p class="text-dim-gray font-body-md">Advanced predictive analytics for biotech researchers.</p>
+<a class="mt-4 flex items-center gap-2 text-primary font-ui-label hover:gap-4 transition-all duration-300" href="#">
+                    Explore project <span class="material-symbols-outlined text-sm">arrow_forward</span>
+</a>
+</div>
+</div>
+<!-- Tile 4 -->
+<div class="case-card group reveal md:mt-24">
+<div class="aspect-[4/5] overflow-hidden rounded-xl bg-surface-container border border-outline mb-8 relative">
+<img class="case-img w-full h-full object-cover transition-transform duration-700 ease-out" data-alt="A sleek modern server room architectural interior." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCUBSzmSzXuRyqoQRALJBuiB3WKuMtiscJpSMt0jRi82P-KDzFkK4P0B9Z7RC8RGSHrErJz1-HYlr0foQt3Mk05PGhRdXG3F7atn2DUzSzg8RFsHF_owAv1H4nHIhyiuQzcqhTP5qz5pjOszIUp-7VQSucAb6R_kzBdFa-9jDL8gxivI3ef-3xiXVkobXCGwaYR4ip_IMfiZEoarNkLMGnGykkF6sdrZN4qC9fzTGO6IkZyvqhk3P_Lag"/>
+</div>
+<div class="flex flex-col gap-2">
+<h3 class="font-headline-md text-[32px] text-primary">Prism Infrastructure</h3>
+<p class="text-dim-gray font-body-md">Next-generation cloud management for enterprise scale.</p>
+<a class="mt-4 flex items-center gap-2 text-primary font-ui-label hover:gap-4 transition-all duration-300" href="#">
+                    Explore project <span class="material-symbols-outlined text-sm">arrow_forward</span>
+</a>
+</div>
+</div>
+<!-- Tile 5 -->
+<div class="case-card group reveal">
+<div class="aspect-[4/5] overflow-hidden rounded-xl bg-surface-container border border-outline mb-8 relative">
+<img class="case-img w-full h-full object-cover transition-transform duration-700 ease-out" data-alt="A dramatic close-up of a mechanical watch movement." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDq-wHJlAkyPSjLbdOJD2iKktJhcDCEYF_EfxhxBlmpXrOkdeQCU_NtcCseCyywWhbuo98IbJfJ40XaMmXT3ysdcijLB17mDBAOfkPUdA7mYlsi133e0Dp7ATpyQmj-dYNo6JuETLWOcyOety5P7y_MTxXkZZ3mjJ0VSz-NONIanuj3RTEit9zUo66BykcKdHm5SPkDqB4YGeP6NL1hAyM5incAd51WHjnSjK6502Vx7qQ8E7yvbLFfbA"/>
+</div>
+<div class="flex flex-col gap-2">
+<h3 class="font-headline-md text-[32px] text-primary">Chronos Core</h3>
+<p class="text-dim-gray font-body-md">Enterprise-grade time tracking and resource allocation.</p>
+<a class="mt-4 flex items-center gap-2 text-primary font-ui-label hover:gap-4 transition-all duration-300" href="#">
+                    Explore project <span class="material-symbols-outlined text-sm">arrow_forward</span>
+</a>
+</div>
+</div>
+<!-- Tile 6 -->
+<div class="case-card group reveal md:mt-24">
+<div class="aspect-[4/5] overflow-hidden rounded-xl bg-surface-container border border-outline mb-8 relative">
+<img class="case-img w-full h-full object-cover transition-transform duration-700 ease-out" data-alt="Abstract visualization of digital waves." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBo7BypbH-gsLr6DNs7F8pUPs7AI2h0S-wIMRuerbDrsUTZPwIwibluGumWwTzRfVgKswAyfs-M4zeIkfr-CO1koilE0wt4OAYeUiF-UsdZMNV_89jvVt2gGr7dKv35vpv3iaqNwrr42cDltYuik06P0-KmwSONugC4YrJEv1jkBZ5RAwwn55HnetxPZ14TKbzMjHADVPQgORhvI35QvsJMAlcMJy44yCVyHO_y6z9Q3NKPWOUzY_EH8Q"/>
+</div>
+<div class="flex flex-col gap-2">
+<h3 class="font-headline-md text-[32px] text-primary">Flux Dynamics</h3>
+<p class="text-dim-gray font-body-md">Intelligent fluid simulation for energy systems.</p>
+<a class="mt-4 flex items-center gap-2 text-primary font-ui-label hover:gap-4 transition-all duration-300" href="#">
+                    Explore project <span class="material-symbols-outlined text-sm">arrow_forward</span>
+</a>
+</div>
+</div>
+</div>
+</section>
+<!-- CLOSING BLOCK -->
+<section class="py-40 bg-surface-container-low border-t border-outline reveal">
+<div class="px-margin-desktop max-w-2xl mx-auto text-center flex flex-col items-center gap-12">
+<h2 class="font-headline-md text-headline-md text-primary">
+            If you'd like to see work relevant to your specific requirements, we're happy to share it.
+        </h2>
+<button class="px-10 py-4 bg-primary text-surface rounded-full font-ui-label text-body-md font-bold hover:scale-105 transition-transform duration-300 flex items-center gap-3">
+            Contact Us
+            <span class="material-symbols-outlined">mail</span>
+</button>
+</div>
+</section>
+<!-- Footer -->
+<footer class="w-full px-margin-desktop py-20 max-w-max-width mx-auto grid grid-cols-1 md:grid-cols-4 gap-gutter border-t border-outline bg-surface">
+<div class="flex flex-col gap-6">
+<div class="font-headline-md text-3xl font-bold text-primary">AXEN</div>
+<p class="text-dim-gray font-body-md leading-relaxed">
+            Engineering digital futures with authority and restraint.
+        </p>
+</div>
+<div class="flex flex-col gap-4">
+<h4 class="font-ui-label text-primary font-bold">Platform</h4>
+<nav class="flex flex-col gap-2">
+<a class="text-dim-gray hover:text-primary transition-colors duration-300" href="#">Work</a>
+<a class="text-dim-gray hover:text-primary transition-colors duration-300" href="#">Services</a>
+<a class="text-dim-gray hover:text-primary transition-colors duration-300" href="#">Insights</a>
+</nav>
+</div>
+<div class="flex flex-col gap-4">
+<h4 class="font-ui-label text-primary font-bold">Company</h4>
+<nav class="flex flex-col gap-2">
+<a class="text-dim-gray hover:text-primary transition-colors duration-300" href="#">About</a>
+<a class="text-dim-gray hover:text-primary transition-colors duration-300" href="#">Contact</a>
+<a class="text-dim-gray hover:text-primary transition-colors duration-300" href="#">Privacy Policy</a>
+</nav>
+</div>
+<div class="flex flex-col gap-4">
+<h4 class="font-ui-label text-primary font-bold">Contact</h4>
+<p class="text-dim-gray font-body-md">hello@axen.engine</p>
+<p class="text-dim-gray font-body-md">London • New York</p>
+<div class="mt-4 text-dim-gray font-ui-label text-xs">© 2024 AXEN. Engineered for clarity.</div>
+</div>
+</footer>
+<script>
+    // Scroll Reveal Logic
+    const observerOptions = {
+        threshold: 0.1,
+        rootMargin: '0px 0px -50px 0px'
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('active');
+            }
+        });
+    }, observerOptions);
+
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+    // Magnetic Cursor Effect (Micro-interaction)
+    const buttons = document.querySelectorAll('button');
+    buttons.forEach(btn => {
+        btn.addEventListener('mousemove', (e) => {
+            const rect = btn.getBoundingClientRect();
+            const x = e.clientX - rect.left - rect.width / 2;
+            const y = e.clientY - rect.top - rect.height / 2;
+            btn.style.transform = `translate(${x * 0.1}px, ${y * 0.1}px)`;
+        });
+        btn.addEventListener('mouseleave', () => {
+            btn.style.transform = `translate(0px, 0px)`;
+        });
+    });
+
+    // Menu Toggle Logic
+    const menuToggle = document.getElementById('menu-toggle');
+    const menuPanel = document.getElementById('menu-panel');
+    const menuIcon = document.getElementById('menu-icon');
+    let isMenuOpen = false;
+
+    menuToggle.addEventListener('click', () => {
+        isMenuOpen = !isMenuOpen;
+        
+        if (isMenuOpen) {
+            menuPanel.classList.remove('hidden');
+            setTimeout(() => {
+                menuPanel.classList.add('open');
+                menuPanel.classList.add('pointer-events-auto');
+                menuIcon.textContent = 'close';
+                menuToggle.classList.add('bg-white', 'text-surface-container-lowest');
+                menuToggle.classList.remove('bg-surface/80', 'text-primary');
+            }, 10);
+            document.body.style.overflow = 'hidden';
+        } else {
+            menuPanel.classList.remove('open');
+            menuPanel.classList.remove('pointer-events-auto');
+            menuIcon.textContent = 'menu';
+            menuToggle.classList.remove('bg-white', 'text-surface-container-lowest');
+            menuToggle.classList.add('bg-surface/80', 'text-primary');
+            setTimeout(() => {
+                if (!isMenuOpen) menuPanel.classList.add('hidden');
+            }, 600);
+            document.body.style.overflow = '';
+        }
+    });
+
+    // Logo color switch on menu open
+    const logo = document.querySelector('.fixed.top-11.left-margin-mobile a');
+    const observerLogo = new MutationObserver(() => {
+        if (isMenuOpen) {
+            logo.classList.add('text-surface-container-lowest');
+            logo.classList.remove('text-primary');
+        } else {
+            logo.classList.remove('text-surface-container-lowest');
+            logo.classList.add('text-primary');
+        }
+    });
+    observerLogo.observe(menuPanel, { attributes: true, attributeFilter: ['class'] });
+
+</script>
+</body></html>

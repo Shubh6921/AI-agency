@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>AXEN | Services &amp; Area of Expertise</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=EB+Garamond:ital,wght@0,400..800;1,400..800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "inverse-on-surface": "#313030",
+                    "dim-gray": "#6B6B70",
+                    "primary-fixed-dim": "#c6c6c7",
+                    "on-secondary": "#31312c",
+                    "surface-container": "#201f1f",
+                    "secondary-fixed": "#e5e2db",
+                    "on-secondary-fixed": "#1c1c18",
+                    "on-primary-fixed-variant": "#454747",
+                    "surface-container-highest": "#353434",
+                    "on-secondary-container": "#b7b5af",
+                    "on-primary-container": "#636565",
+                    "on-error-container": "#ffdad6",
+                    "primary-container": "#e2e2e2",
+                    "on-surface-variant": "#c4c7c8",
+                    "error-container": "#93000a",
+                    "on-error": "#690005",
+                    "tertiary": "#ffffff",
+                    "background": "#141313",
+                    "on-tertiary-container": "#636565",
+                    "surface-tint": "#c6c6c7",
+                    "on-secondary-fixed-variant": "#474742",
+                    "primary": "#ffffff",
+                    "on-primary-fixed": "#1a1c1c",
+                    "outline-variant": "#444748",
+                    "outline": "#232326",
+                    "secondary": "#c9c6c0",
+                    "on-surface": "#e5e2e1",
+                    "error": "#ffb4ab",
+                    "on-tertiary": "#2f3131",
+                    "tertiary-fixed-dim": "#c6c6c7",
+                    "secondary-container": "#474742",
+                    "on-background": "#e5e2e1",
+                    "tertiary-container": "#e2e2e2",
+                    "surface-container-low": "#1c1b1b",
+                    "secondary-fixed-dim": "#c9c6c0",
+                    "surface-container-lowest": "#0e0e0e",
+                    "surface-container-high": "#2a2a2a",
+                    "tertiary-fixed": "#e2e2e2",
+                    "surface-bright": "#0D0D0D",
+                    "surface-variant": "#353434",
+                    "on-tertiary-fixed-variant": "#454747",
+                    "on-tertiary-fixed": "#1a1c1c",
+                    "primary-fixed": "#e2e2e2",
+                    "on-primary": "#2f3131",
+                    "inverse-surface": "#e5e2e1",
+                    "inverse-primary": "#5d5f5f",
+                    "surface": "#050505",
+                    "surface-dim": "#141313"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "max-width": "1440px",
+                    "margin-mobile": "20px",
+                    "margin-desktop": "64px",
+                    "gutter": "24px"
+            },
+            "fontFamily": {
+                    "display-lg-mobile": ["EB Garamond"],
+                    "body-md": ["Inter"],
+                    "eyebrow": ["Inter"],
+                    "body-lg": ["Inter"],
+                    "ui-label": ["Inter"],
+                    "headline-md": ["EB Garamond"],
+                    "display-lg": ["EB Garamond"]
+            },
+            "fontSize": {
+                    "display-lg-mobile": ["48px", {"lineHeight": "1.1", "fontWeight": "400"}],
+                    "body-md": ["16px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                    "eyebrow": ["12px", {"lineHeight": "16px", "letterSpacing": "0.2em", "fontWeight": "500"}],
+                    "body-lg": ["18px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                    "ui-label": ["14px", {"lineHeight": "20px", "fontWeight": "500"}],
+                    "headline-md": ["48px", {"lineHeight": "1.2", "fontWeight": "400"}],
+                    "display-lg": ["96px", {"lineHeight": "1.0", "letterSpacing": "-0.02em", "fontWeight": "400"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        body { background-color: #050505; color: #FAFAFA; scroll-behavior: smooth; }
+        .reveal-on-scroll { opacity: 0; transform: translateY(50px); transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1); }
+        .reveal-on-scroll.active { opacity: 1; transform: translateY(0); }
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+        
+        #nav-dropdown {
+            clip-path: inset(0 0 100% 0);
+            transition: clip-path 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        #nav-dropdown.active {
+            clip-path: inset(0 0 0 0);
+        }
+    </style>
+</head>
+<body class="font-body-md text-body-md overflow-x-hidden">
+<!-- Floating Top Nav Cluster -->
+<div class="fixed top-0 left-0 w-full z-[100] pointer-events-none">
+<div class="max-w-max-width mx-auto px-margin-mobile md:px-margin-desktop py-8 flex justify-between items-center">
+<a class="font-headline-md text-3xl font-bold text-primary tracking-tighter pointer-events-auto" href="/">AXEN</a>
+<div class="flex items-center gap-4 pointer-events-auto">
+<!-- Sound Toggle -->
+<button class="w-10 h-10 rounded-full border border-white/10 flex items-center justify-center bg-surface/50 backdrop-blur-sm hover:bg-surface-container transition-colors">
+<span class="material-symbols-outlined text-xl">volume_up</span>
+</button>
+<!-- Let's Talk Pill -->
+<button class="bg-primary text-surface px-8 py-2.5 rounded-full font-ui-label text-sm font-bold transition-transform hover:scale-105 active:scale-95">
+                LET'S TALK
+            </button>
+<!-- Menu Pill -->
+<button class="group flex items-center gap-3 border border-white/20 bg-surface/30 backdrop-blur-md px-5 py-2.5 rounded-full hover:bg-white hover:text-surface transition-all duration-300" id="menu-toggle">
+<span class="font-ui-label text-sm font-bold uppercase tracking-widest">Menu</span>
+<div class="w-5 h-5 flex flex-col justify-center gap-1">
+<span class="w-full h-0.5 bg-current transition-all"></span>
+<span class="w-full h-0.5 bg-current transition-all"></span>
+</div>
+</button>
+</div>
+</div>
+</div>
+<!-- Nav Dropdown Panel -->
+<div class="fixed inset-0 z-[90] bg-white text-surface hidden md:block" id="nav-dropdown">
+<div class="max-w-max-width mx-auto px-margin-desktop py-40 h-full flex flex-col justify-between">
+<div class="grid grid-cols-2 gap-20">
+<div>
+<nav class="flex flex-col gap-8">
+<a class="font-display-lg text-8xl hover:italic transition-all duration-300" href="#">Work</a>
+<a class="font-display-lg text-8xl italic transition-all duration-300" href="#">Services</a>
+<a class="font-display-lg text-8xl hover:italic transition-all duration-300" href="#">About</a>
+<a class="font-display-lg text-8xl hover:italic transition-all duration-300" href="#">Insights</a>
+<a class="font-display-lg text-8xl hover:italic transition-all duration-300" href="#">Contact</a>
+</nav>
+</div>
+<div class="flex flex-col justify-end pb-12">
+<div class="mb-12">
+<h5 class="font-eyebrow text-xs text-dim-gray uppercase mb-6">Location</h5>
+<p class="font-headline-md text-2xl">London — NYC — Berlin</p>
+</div>
+<div>
+<h5 class="font-eyebrow text-xs text-dim-gray uppercase mb-6">Inquiries</h5>
+<p class="font-headline-md text-2xl">hello@axen.com</p>
+</div>
+</div>
+</div>
+<div class="flex justify-between items-center pt-20 border-t border-surface/10 text-dim-gray font-ui-label text-xs uppercase tracking-widest">
+<span>© 2024 AXEN — Engineered for clarity.</span>
+<div class="flex gap-8">
+<a class="hover:text-surface" href="#">Instagram</a>
+<a class="hover:text-surface" href="#">LinkedIn</a>
+<a class="hover:text-surface" href="#">Twitter</a>
+</div>
+</div>
+</div>
+</div>
+<!-- Main Content -->
+<main class="pt-40 pb-0">
+<!-- Header Block -->
+<section class="max-w-max-width mx-auto px-margin-mobile md:px-margin-desktop mb-40 reveal-on-scroll">
+<div class="mb-6 flex items-center gap-3">
+<span class="text-primary text-xl">✦</span>
+<span class="font-eyebrow text-eyebrow uppercase text-dim-gray">what we do best</span>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-gutter items-end">
+<div>
+<h1 class="font-display-lg text-display-lg-mobile md:text-display-lg leading-none mb-12">Area of expertise</h1>
+<ul class="space-y-4 font-headline-md text-3xl md:text-4xl text-dim-gray">
+<li class="text-primary cursor-default flex items-center gap-4">AI &amp; Intelligent Automation <span class="text-xs font-ui-label border border-outline px-2 py-1 rounded-full uppercase tracking-widest scale-75 origin-left">Active</span></li>
+<li class="hover:text-primary transition-colors duration-300 cursor-pointer">Web Development</li>
+<li class="hover:text-primary transition-colors duration-300 cursor-pointer">Product Design</li>
+<li class="hover:text-primary transition-colors duration-300 cursor-pointer">Website &amp; Mobile Design</li>
+<li class="hover:text-primary transition-colors duration-300 cursor-pointer">Branding</li>
+<li class="hover:text-primary transition-colors duration-300 cursor-pointer">Consulting &amp; Strategy</li>
+</ul>
+</div>
+<div class="md:pl-12 flex flex-col items-start">
+<p class="font-headline-md text-2xl md:text-3xl text-dim-gray mb-10 leading-snug max-w-md">
+                    Focused disciplines where strategy, design, and technology work as one.
+                </p>
+<div class="flex flex-wrap gap-4">
+<button class="rounded-full bg-primary text-surface px-10 py-4 font-ui-label text-ui-label font-bold transition-all duration-300 hover:opacity-90">Build With AXEN</button>
+<button class="rounded-full border border-outline text-primary px-10 py-4 font-ui-label text-ui-label font-bold transition-all duration-300 hover:bg-surface-container-low">View Our Work</button>
+</div>
+</div>
+</div>
+</section>
+<!-- Service Module 01: AI -->
+<section class="border-t border-outline py-24 md:py-40 bg-surface-container-lowest">
+<div class="max-w-max-width mx-auto px-margin-mobile md:px-margin-desktop reveal-on-scroll">
+<div class="grid grid-cols-1 md:grid-cols-2 gap-20 items-center">
+<div class="order-2 md:order-1">
+<p class="font-eyebrow text-eyebrow text-dim-gray uppercase mb-8">Integrated seamlessly into existing platforms.</p>
+<div class="aspect-[4/3] rounded-2xl bg-surface-container border border-outline overflow-hidden relative group">
+<div class="absolute inset-0 bg-gradient-to-br from-white/5 to-transparent z-10"></div>
+<img class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" data-alt="A cinematic, high-fidelity monochrome 3D render of a futuristic AI interface, featuring flowing digital liquid metal and abstract data nodes. The lighting is focused and dramatic, highlighting smooth architectural curves against a deep charcoal background. The overall aesthetic is professional, engineered, and sophisticated, perfectly matching a dark mode minimalist design system." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAXsybr-Y-RHAIyZ_B_yq7nEbGY9Od-Su63mh4VzUnEKV0nFJwpJwzrYgkkADuCNe9ZaYd8MW-I0Om5a37WJ658HBxFmwXkDm2jdy0mVGwFswPo22itJHTEaPyFLeVAY6XZ4Fq3RHARYGQIU4ESzF9aS7J1cSC5YpXo2FHYf0E77zR5Xvlsj9Xz5RWx9NyaV-OCzmvifRtulUunW2wuRYjMBNjNMMzoETtiSBePBpcZ9scI9zA8pFx1cQ"/>
+</div>
+</div>
+<div class="order-1 md:order-2 md:pl-12">
+<h2 class="font-headline-md text-headline-md mb-6">AI &amp; Intelligent Automation</h2>
+<p class="text-dim-gray text-body-lg mb-10 leading-relaxed">
+                        We deploy advanced machine learning models to solve complex operational bottlenecks. Our approach focuses on delivering tangible ROI through systems that learn, adapt, and scale alongside your business objectives.
+                    </p>
+<div class="space-y-6">
+<span class="font-eyebrow text-eyebrow text-primary uppercase">Our Core Capabilities</span>
+<div class="flex flex-wrap gap-2">
+<span class="px-4 py-1.5 rounded-full border border-outline bg-surface-container-low text-ui-label text-dim-gray">LLM Ops</span>
+<span class="px-4 py-1.5 rounded-full border border-outline bg-surface-container-low text-ui-label text-dim-gray">Workflow Design</span>
+<span class="px-4 py-1.5 rounded-full border border-outline bg-surface-container-low text-ui-label text-dim-gray">Neural Networks</span>
+<span class="px-4 py-1.5 rounded-full border border-outline bg-surface-container-low text-ui-label text-dim-gray">Data Engineering</span>
+<span class="px-4 py-1.5 rounded-full border border-outline bg-surface-container-low text-ui-label text-dim-gray">Cloud Architecture</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Service Module 02: Product Design -->
+<section class="border-t border-outline py-24 md:py-40">
+<div class="max-w-max-width mx-auto px-margin-mobile md:px-margin-desktop reveal-on-scroll">
+<div class="grid grid-cols-1 md:grid-cols-2 gap-20 items-center">
+<div class="md:pr-12">
+<h2 class="font-headline-md text-headline-md mb-6">Product Design</h2>
+<p class="text-dim-gray text-body-lg mb-10 leading-relaxed">
+                        Form follows function with architectural precision. We design digital products that prioritize user clarity, utilizing minimalist principles to ensure every interaction feels deliberate and unhurried.
+                    </p>
+<div class="space-y-6">
+<span class="font-eyebrow text-eyebrow text-primary uppercase">Our Core Capabilities</span>
+<div class="flex flex-wrap gap-2">
+<span class="px-4 py-1.5 rounded-full border border-outline bg-surface-container-low text-ui-label text-dim-gray">UI/UX Systems</span>
+<span class="px-4 py-1.5 rounded-full border border-outline bg-surface-container-low text-ui-label text-dim-gray">Prototyping</span>
+<span class="px-4 py-1.5 rounded-full border border-outline bg-surface-container-low text-ui-label text-dim-gray">User Research</span>
+<span class="px-4 py-1.5 rounded-full border border-outline bg-surface-container-low text-ui-label text-dim-gray">Atomic Design</span>
+<span class="px-4 py-1.5 rounded-full border border-outline bg-surface-container-low text-ui-label text-dim-gray">Design Sprints</span>
+</div>
+</div>
+</div>
+<div>
+<p class="font-eyebrow text-eyebrow text-dim-gray uppercase mb-8 md:text-right">Aesthetic utility for high-end applications.</p>
+<div class="aspect-[4/3] rounded-2xl bg-surface-container border border-outline overflow-hidden relative group">
+<div class="absolute inset-0 bg-gradient-to-tl from-white/5 to-transparent z-10"></div>
+<img class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" data-alt="A clean, minimalist monochrome workspace featuring a high-end tablet and smartphone displaying a sophisticated dashboard interface. The environment is a professional architectural studio with soft daylight and subtle concrete textures. The image emphasizes precision, clarity, and premium design quality, avoiding clutter and bright colors." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCCN4RbkPnaG2vptMJiPQEO5S5D4mdvKwhxleKyFO0NctDGEBazLF2pfeLTV0JTlwHlil-7u03CygHne9X06w20Jw9csjAPgen0ZC74LDB59saeBN1Sq2Su8WzWtr-RmsBxd1N-b06bH-s7hLDjiwq0P6IKwUz_a2R-bmAqBu0wfUOXXj8Rt_EckrckReRrhzp0eQuQjHmXnSx_R7psD7Fbtzs0p9m67fSBrkQbahl48pl6Ch1EpBN90g"/>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Technology Stack Section -->
+<section class="border-t border-outline py-24 md:py-40 bg-surface-bright">
+<div class="max-w-max-width mx-auto px-margin-mobile md:px-margin-desktop reveal-on-scroll">
+<div class="mb-20 text-center md:text-left">
+<span class="font-eyebrow text-eyebrow text-dim-gray uppercase tracking-[0.3em]">the engine room</span>
+<h2 class="font-headline-md text-headline-md mt-4">Technology Stack</h2>
+</div>
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-x-gutter gap-y-16">
+<div class="border-l border-outline pl-6">
+<div class="text-dim-gray font-headline-md text-2xl mb-4">01</div>
+<h4 class="font-ui-label text-primary uppercase mb-6 tracking-widest">AI &amp; Automation</h4>
+<ul class="text-dim-gray space-y-2">
+<li>OpenAI (GPT-4)</li>
+<li>PyTorch / TensorFlow</li>
+<li>LangChain</li>
+<li>Hugging Face</li>
+</ul>
+</div>
+<div class="border-l border-outline pl-6">
+<div class="text-dim-gray font-headline-md text-2xl mb-4">02</div>
+<h4 class="font-ui-label text-primary uppercase mb-6 tracking-widest">Front-end</h4>
+<ul class="text-dim-gray space-y-2">
+<li>Next.js / React</li>
+<li>TypeScript</li>
+<li>Tailwind CSS</li>
+<li>Framer Motion</li>
+</ul>
+</div>
+<div class="border-l border-outline pl-6">
+<div class="text-dim-gray font-headline-md text-2xl mb-4">03</div>
+<h4 class="font-ui-label text-primary uppercase mb-6 tracking-widest">Back-end</h4>
+<ul class="text-dim-gray space-y-2">
+<li>Python (FastAPI)</li>
+<li>Node.js</li>
+<li>Go Lang</li>
+<li>Rust</li>
+</ul>
+</div>
+<div class="border-l border-outline pl-6">
+<div class="text-dim-gray font-headline-md text-2xl mb-4">04</div>
+<h4 class="font-ui-label text-primary uppercase mb-6 tracking-widest">Databases &amp; CMS</h4>
+<ul class="text-dim-gray space-y-2">
+<li>PostgreSQL</li>
+<li>Redis</li>
+<li>Supabase</li>
+<li>Sanity.io</li>
+</ul>
+</div>
+<div class="border-l border-outline pl-6 lg:mt-0">
+<div class="text-dim-gray font-headline-md text-2xl mb-4">05</div>
+<h4 class="font-ui-label text-primary uppercase mb-6 tracking-widest">Cloud</h4>
+<ul class="text-dim-gray space-y-2">
+<li>AWS</li>
+<li>Vercel</li>
+<li>Google Cloud</li>
+<li>DigitalOcean</li>
+</ul>
+</div>
+<div class="border-l border-outline pl-6">
+<div class="text-dim-gray font-headline-md text-2xl mb-4">06</div>
+<h4 class="font-ui-label text-primary uppercase mb-6 tracking-widest">DevOps</h4>
+<ul class="text-dim-gray space-y-2">
+<li>Docker</li>
+<li>GitHub Actions</li>
+<li>Kubernetes</li>
+<li>Terraform</li>
+</ul>
+</div>
+<div class="border-l border-outline pl-6 lg:col-span-2">
+<div class="text-dim-gray font-headline-md text-2xl mb-4">07</div>
+<h4 class="font-ui-label text-primary uppercase mb-6 tracking-widest">Marketing &amp; Integrations</h4>
+<ul class="text-dim-gray space-y-2 grid grid-cols-2">
+<li>Stripe Payments</li>
+<li>SendGrid</li>
+<li>Twilio API</li>
+<li>Zapier Enterprise</li>
+</ul>
+</div>
+</div>
+</div>
+</section>
+<!-- How We Work Section -->
+<section class="py-24 md:py-40 bg-surface">
+<div class="max-w-max-width mx-auto px-margin-mobile md:px-margin-desktop reveal-on-scroll">
+<div class="grid grid-cols-1 md:grid-cols-3 gap-gutter">
+<div class="p-8 border border-outline rounded-2xl bg-surface-container-low transition-all duration-300 hover:bg-surface-container relative overflow-hidden group">
+<div class="font-display-lg text-4xl mb-8 opacity-20">01</div>
+<h3 class="font-headline-md text-2xl mb-4">Discovery</h3>
+<p class="text-dim-gray">A rigorous audit of your current technical landscape to identify high-impact opportunities for optimization.</p>
+<div class="absolute -bottom-2 -right-2 opacity-10 transition-transform duration-500 group-hover:scale-110">
+<span class="material-symbols-outlined text-9xl">search</span>
+</div>
+</div>
+<div class="p-8 border border-outline rounded-2xl bg-surface-container-low transition-all duration-300 hover:bg-surface-container relative overflow-hidden group">
+<div class="font-display-lg text-4xl mb-8 opacity-20">02</div>
+<h3 class="font-headline-md text-2xl mb-4">Engineering</h3>
+<p class="text-dim-gray">Design-led development where every pixel and every line of code is engineered for clarity and performance.</p>
+<div class="absolute -bottom-2 -right-2 opacity-10 transition-transform duration-500 group-hover:scale-110">
+<span class="material-symbols-outlined text-9xl">layers</span>
+</div>
+</div>
+<div class="p-8 border border-outline rounded-2xl bg-surface-container-low transition-all duration-300 hover:bg-surface-container relative overflow-hidden group">
+<div class="font-display-lg text-4xl mb-8 opacity-20">03</div>
+<h3 class="font-headline-md text-2xl mb-4">Deployment</h3>
+<p class="text-dim-gray">A seamless transition to live environments, followed by persistent monitoring and iterative refinement.</p>
+<div class="absolute -bottom-2 -right-2 opacity-10 transition-transform duration-500 group-hover:scale-110">
+<span class="material-symbols-outlined text-9xl">rocket_launch</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- CTA Banner -->
+<section class="max-w-max-width mx-auto px-margin-mobile md:px-margin-desktop mb-24 reveal-on-scroll">
+<div class="relative rounded-3xl bg-surface-container border border-outline overflow-hidden py-24 px-10 text-center">
+<div class="absolute inset-0 opacity-10">
+<div class="w-full h-full bg-[radial-gradient(#FAFAFA_1px,transparent_1px)] [background-size:20px_20px]"></div>
+</div>
+<div class="relative z-10">
+<h2 class="font-display-lg text-display-lg-mobile md:text-6xl mb-12">Ready to scope a project?</h2>
+<button class="rounded-full bg-primary text-surface px-12 py-5 font-ui-label text-body-lg font-bold transition-all duration-300 hover:scale-105">Let's Talk</button>
+</div>
+</div>
+</section>
+</main>
+<!-- Footer -->
+<footer class="w-full px-margin-mobile md:px-margin-desktop py-20 max-w-max-width mx-auto grid grid-cols-1 md:grid-cols-4 gap-gutter border-t border-outline bg-surface">
+<div class="md:col-span-1">
+<div class="font-headline-md text-headline-md text-primary font-bold mb-6">AXEN</div>
+<p class="text-dim-gray font-body-md text-body-md mb-8">
+            Engineered for clarity. Built for the future.
+        </p>
+</div>
+<div class="flex flex-col gap-4">
+<h5 class="text-primary font-ui-label uppercase tracking-widest text-xs mb-2">Navigation</h5>
+<a class="text-dim-gray hover:text-primary transition-colors duration-300" href="#">Work</a>
+<a class="text-primary transition-colors duration-300" href="#">Services</a>
+<a class="text-dim-gray hover:text-primary transition-colors duration-300" href="#">About</a>
+<a class="text-dim-gray hover:text-primary transition-colors duration-300" href="#">Insights</a>
+</div>
+<div class="flex flex-col gap-4">
+<h5 class="text-primary font-ui-label uppercase tracking-widest text-xs mb-2">Legal</h5>
+<a class="text-dim-gray hover:text-primary transition-colors duration-300" href="#">Privacy Policy</a>
+<a class="text-dim-gray hover:text-primary transition-colors duration-300" href="#">Terms of Service</a>
+<a class="text-dim-gray hover:text-primary transition-colors duration-300" href="#">Cookie Policy</a>
+</div>
+<div class="flex flex-col gap-4">
+<h5 class="text-primary font-ui-label uppercase tracking-widest text-xs mb-2">Contact</h5>
+<a class="text-dim-gray hover:text-primary transition-colors duration-300" href="mailto:hello@axen.com">hello@axen.com</a>
+<div class="flex gap-4 mt-4">
+<a class="text-dim-gray hover:text-primary transition-colors duration-300" href="#"><span class="material-symbols-outlined">alternate_email</span></a>
+<a class="text-dim-gray hover:text-primary transition-colors duration-300" href="#"><span class="material-symbols-outlined">hub</span></a>
+</div>
+</div>
+<div class="md:col-span-4 border-t border-outline/50 mt-12 pt-8 flex justify-between items-center text-dim-gray font-ui-label text-xs">
+<span>© 2024 AXEN. Engineered for clarity.</span>
+<span class="hidden md:block">EST. 2018 — LON / NYC / BER</span>
+</div>
+</footer>
+<script>
+    // Reveal on scroll logic
+    const observerOptions = {
+        threshold: 0.1
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('active');
+            }
+        });
+    }, observerOptions);
+
+    document.querySelectorAll('.reveal-on-scroll').forEach(el => observer.observe(el));
+
+    // Nav Dropdown Toggle
+    const menuToggle = document.getElementById('menu-toggle');
+    const navDropdown = document.getElementById('nav-dropdown');
+    let isNavOpen = false;
+
+    menuToggle.addEventListener('click', () => {
+        isNavOpen = !isNavOpen;
+        if (isNavOpen) {
+            navDropdown.classList.remove('hidden');
+            setTimeout(() => navDropdown.classList.add('active'), 10);
+            menuToggle.classList.add('bg-white', 'text-surface');
+            menuToggle.querySelector('span').textContent = 'Close';
+        } else {
+            navDropdown.classList.remove('active');
+            setTimeout(() => navDropdown.classList.add('hidden'), 600);
+            menuToggle.classList.remove('bg-white', 'text-surface');
+            menuToggle.querySelector('span').textContent = 'Menu';
+        }
+    });
+</script>
+</body></html>

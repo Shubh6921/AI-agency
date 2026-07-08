@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Aether Finance | AXEN Case Study</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=EB+Garamond:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "on-tertiary": "#2f3131",
+                    "surface-container-lowest": "#0e0e0e",
+                    "surface-container-low": "#1c1b1b",
+                    "on-error-container": "#ffdad6",
+                    "surface-bright": "#3a3939",
+                    "on-secondary-fixed-variant": "#474742",
+                    "on-surface-variant": "#c4c7c8",
+                    "error-container": "#93000a",
+                    "inverse-on-surface": "#313030",
+                    "surface-container-high": "#1A1A1A",
+                    "tertiary-container": "#e2e2e2",
+                    "secondary-fixed": "#e5e2db",
+                    "surface-container": "#201f1f",
+                    "secondary-fixed-dim": "#c9c6c0",
+                    "inverse-surface": "#e5e2e1",
+                    "on-primary-fixed": "#1a1c1c",
+                    "dim-gray": "#6B6B70",
+                    "secondary-container": "#474742",
+                    "on-surface": "#e5e2e1",
+                    "on-tertiary-fixed-variant": "#454747",
+                    "on-tertiary-fixed": "#1a1c1c",
+                    "on-secondary-container": "#b7b5af",
+                    "background": "#141313",
+                    "tertiary-fixed-dim": "#c6c6c7",
+                    "inverse-primary": "#5d5f5f",
+                    "surface-tint": "#c6c6c7",
+                    "surface-container-highest": "#232326",
+                    "secondary": "#c9c6c0",
+                    "on-error": "#690005",
+                    "on-background": "#e5e2e1",
+                    "primary-container": "#e2e2e2",
+                    "on-primary-container": "#636565",
+                    "on-primary": "#2f3131",
+                    "primary-fixed": "#e2e2e2",
+                    "on-primary-fixed-variant": "#454747",
+                    "on-secondary-fixed": "#1c1c18",
+                    "on-tertiary-container": "#636565",
+                    "tertiary-fixed": "#e2e2e2",
+                    "error": "#ffb4ab",
+                    "surface-variant": "#353434",
+                    "surface-dim": "#141313",
+                    "primary-fixed-dim": "#c6c6c7",
+                    "tertiary": "#ffffff",
+                    "on-secondary": "#31312c",
+                    "primary": "#ffffff",
+                    "outline-variant": "#444748",
+                    "surface": "#050505",
+                    "outline": "#232326"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "margin-mobile": "20px",
+                    "margin-desktop": "64px",
+                    "gutter": "24px",
+                    "max-width": "1440px"
+            },
+            "fontFamily": {
+                    "ui-label": ["Inter"],
+                    "display-lg": ["EB Garamond"],
+                    "body-lg": ["Inter"],
+                    "headline-md": ["EB Garamond"],
+                    "eyebrow": ["Inter"],
+                    "display-lg-mobile": ["EB Garamond"],
+                    "body-md": ["Inter"]
+            },
+            "fontSize": {
+                    "ui-label": ["14px", {"lineHeight": "20px", "fontWeight": "500"}],
+                    "display-lg": ["96px", {"lineHeight": "1.0", "letterSpacing": "-0.02em", "fontWeight": "400"}],
+                    "body-lg": ["18px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                    "headline-md": ["48px", {"lineHeight": "1.2", "fontWeight": "400"}],
+                    "eyebrow": ["12px", {"lineHeight": "16px", "letterSpacing": "0.2em", "fontWeight": "500"}],
+                    "display-lg-mobile": ["48px", {"lineHeight": "1.1", "fontWeight": "400"}],
+                    "body-md": ["16px", {"lineHeight": "1.6", "fontWeight": "400"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        body {
+            background-color: #050505;
+            color: #FAFAFA;
+            -webkit-font-smoothing: antialiased;
+        }
+        .scroll-reveal {
+            opacity: 0;
+            transform: translateY(50px);
+            transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .scroll-reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .hairline {
+            border: 1px solid #232326;
+        }
+        .hairline-b {
+            border-bottom: 1px solid #232326;
+        }
+        .hairline-t {
+            border-top: 1px solid #232326;
+        }
+        .hairline-l {
+            border-left: 1px solid #232326;
+        }
+        #menu-panel {
+            clip-path: inset(0 0 100% 0);
+            transition: clip-path 0.6s cubic-bezier(0.83, 0, 0.17, 1);
+        }
+        #menu-panel.open {
+            clip-path: inset(0 0 0 0);
+        }
+    </style>
+</head>
+<body class="font-body-md text-body-md overflow-x-hidden">
+<!-- New Navigation Cluster -->
+<nav class="fixed top-0 left-0 w-full z-[100] px-margin-mobile md:px-margin-desktop pt-8 pointer-events-none">
+<div class="max-w-max-width mx-auto flex justify-between items-start">
+<a class="font-headline-md text-headline-md font-bold text-primary tracking-tighter pointer-events-auto" href="/">AXEN</a>
+<div class="flex items-center gap-3 pointer-events-auto">
+<!-- Sound Toggle -->
+<button class="w-12 h-12 flex items-center justify-center bg-surface-container/20 backdrop-blur-md hairline rounded-full text-primary hover:bg-surface-container transition-all">
+<span class="material-symbols-outlined !text-[20px]" data-icon="volume_up">volume_up</span>
+</button>
+<!-- Let's Talk Pill -->
+<button class="h-12 px-8 bg-primary text-on-primary font-ui-label text-ui-label rounded-full hover:scale-105 transition-transform">
+                LET'S TALK
+            </button>
+<!-- Menu Pill -->
+<button class="h-12 px-8 bg-surface-container/20 backdrop-blur-md hairline text-primary font-ui-label text-ui-label rounded-full hover:bg-surface-container transition-all flex items-center gap-2" id="menu-toggle">
+                MENU
+                <span class="w-1.5 h-1.5 bg-primary rounded-full"></span>
+</button>
+</div>
+</div>
+</nav>
+<!-- Full Screen Menu Panel -->
+<div class="fixed inset-0 z-[90] bg-white text-black overflow-hidden flex flex-col pointer-events-none" id="menu-panel">
+<div class="flex-1 flex flex-col justify-center px-margin-mobile md:px-margin-desktop py-20 pointer-events-auto">
+<div class="max-w-max-width mx-auto w-full grid grid-cols-1 md:grid-cols-2 gap-20">
+<!-- Navigation Links -->
+<div class="flex flex-col gap-4">
+<div class="font-eyebrow text-dim-gray mb-4">NAVIGATION</div>
+<a class="font-display-lg text-6xl md:text-8xl hover:italic transition-all" href="#">Work</a>
+<a class="font-display-lg text-6xl md:text-8xl hover:italic transition-all" href="#">Services</a>
+<a class="font-display-lg text-6xl md:text-8xl hover:italic transition-all" href="#">About</a>
+<a class="font-display-lg text-6xl md:text-8xl hover:italic transition-all" href="#">Insights</a>
+<a class="font-display-lg text-6xl md:text-8xl hover:italic transition-all" href="#">Contact</a>
+</div>
+<!-- Office / Socials -->
+<div class="flex flex-col justify-end">
+<div class="grid grid-cols-2 gap-12">
+<div>
+<div class="font-eyebrow text-dim-gray mb-6">OFFICES</div>
+<address class="not-italic font-body-lg text-black/60 leading-relaxed">
+                            Zurich, Switzerland<br/>
+                            London, United Kingdom<br/>
+                            San Francisco, USA
+                        </address>
+</div>
+<div>
+<div class="font-eyebrow text-dim-gray mb-6">SOCIALS</div>
+<div class="flex flex-col gap-2 font-body-lg text-black/60">
+<a class="hover:text-black transition-colors" href="#">LinkedIn</a>
+<a class="hover:text-black transition-colors" href="#">Twitter</a>
+<a class="hover:text-black transition-colors" href="#">Instagram</a>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Menu Footer -->
+<div class="px-margin-mobile md:px-margin-desktop py-12 border-t border-black/10 pointer-events-auto">
+<div class="max-w-max-width mx-auto flex justify-between items-center text-dim-gray font-ui-label">
+<div>© 2024 AXEN</div>
+<div class="flex gap-8">
+<a class="hover:text-black" href="#">Privacy Policy</a>
+<a class="hover:text-black" href="#">Terms of Service</a>
+</div>
+</div>
+</div>
+</div>
+<!-- Hero Section -->
+<header class="relative pt-32 pb-20 md:pt-48 md:pb-32 overflow-hidden">
+<div class="max-w-max-width mx-auto px-margin-mobile md:px-margin-desktop">
+<div class="mb-12 scroll-reveal" id="hero-text">
+<h1 class="font-display-lg text-display-lg-mobile md:text-display-lg mb-4">Aether Finance</h1>
+<p class="font-body-lg text-body-lg text-dim-gray max-w-2xl mb-8">Automated customer support for global fintech leaders.</p>
+<div class="flex flex-wrap gap-x-8 gap-y-2 text-dim-gray font-ui-label text-ui-label uppercase tracking-widest border-t border-outline pt-6">
+<span>Client: Aether Group</span>
+<span>Industry: Fintech</span>
+<span>Services: AI Automation, Product Design</span>
+</div>
+</div>
+<div class="w-full aspect-video md:aspect-[21/9] bg-surface-container-highest hairline rounded-xl overflow-hidden scroll-reveal">
+<img class="w-full h-full object-cover" data-alt="A high-fidelity project mockup of a sophisticated fintech dashboard. The interface is displayed on a wide cinematic monitor against a dark, minimalist studio background. The screen shows complex data visualizations and clean AI-driven support interfaces in a monochrome palette with subtle gray accents. Professional architectural lighting creates soft reflections on the screen's surface, reinforcing an engineered and unhurried brand identity." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAw-AIf3JnC2TU6l99f4as9XXcPAJJQA4g1cMBZ-Hv4hr2nlVHOaeCTO5fOhLeJHo3iITefVohFQjOTA5IjIyZnnwna-PV9fWOPRZFLkZ83PrRwx_6xtH9JM1XVvOLA70_j_OninbUrxYXzHotEGzgfknXxCpGMqH5XwELmVKiadrj5X0EpwlM1gbc10kRu0XEUvnqP2d7D6RY70fmUvAgoqj3KkdkmgXa8wzW9vVn5ykP1ZwLPSPl0_w"/>
+</div>
+</div>
+</header>
+<!-- Narrative Section -->
+<section class="py-20 md:py-40">
+<div class="max-w-3xl mx-auto px-margin-mobile md:px-0">
+<div class="mb-24 scroll-reveal">
+<div class="font-eyebrow text-eyebrow uppercase text-dim-gray mb-6">✦ THE CHALLENGE</div>
+<p class="font-body-lg text-body-lg leading-relaxed">
+                    Aether Group faced a critical bottleneck: scaling their customer support infrastructure without compromising the elite, white-glove service expected by their high-net-worth clientele. Their existing manual workflows were failing to keep pace with a 300% surge in user acquisition, leading to latency in response times and increased operational friction.
+                </p>
+</div>
+</div>
+<div class="w-full mb-24 scroll-reveal">
+<div class="max-w-max-width mx-auto px-margin-mobile md:px-margin-desktop">
+<div class="hairline rounded-xl overflow-hidden aspect-[16/7] bg-surface-container">
+<img class="w-full h-full object-cover" data-alt="A detailed full-bleed image of a dashboard interface for a global fintech platform. The layout is engineered for clarity, featuring a monochromatic dark-mode UI with sharp 1px borders and high-contrast typography. The image shows a complex multi-pane view of automated support queues, live data analytics, and AI response generated panels. The overall aesthetic is one of architectural precision and high-end engineering reliability." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCNeMlfJ_hQj2bllhajde4NetY4yZzusDAFC6ZT4EGu6VqlTizmLLPfZaJoGqS2Irlota1l0Z9FZxbca5IyrbUzR9sZ7HV07Q0kp5YpZ5_jfTpIor6EWmv0XN6cTepIVqp-A6YkGeTj3ffMunHyXGJlo5aP0GiQc5e_H3_U0zIS8ENVhdqPUcL7HH_koVT5BCxzsRNq6rh7ekhEa0dIC4FsDXJfuSoPyppx4nmlpu5Gc2qZysjxMfjUQg"/>
+</div>
+</div>
+</div>
+<div class="max-w-3xl mx-auto px-margin-mobile md:px-0">
+<div class="mb-24 scroll-reveal">
+<div class="font-eyebrow text-eyebrow uppercase text-dim-gray mb-6">✦ THE APPROACH</div>
+<p class="font-body-lg text-body-lg leading-relaxed">
+                    Our engineering scope focused on the integration of a proprietary LLM-driven automation engine. We redesigned the agent interface from the ground up, prioritizing cognitive load reduction and structural clarity. The strategy moved away from reactive ticketing toward a predictive workspace that suggests resolutions before agents even engage.
+                </p>
+</div>
+</div>
+<div class="max-w-4xl mx-auto px-margin-mobile md:px-0 mb-24 scroll-reveal">
+<div class="relative bg-surface-container-high hairline p-12 md:p-20 rounded-2xl flex justify-center">
+<img class="max-w-full h-auto drop-shadow-2xl" data-alt="A high-end tablet device mockup floating in a void of deep charcoal space. The tablet screen displays a minimalist agent interface for AI-automated fintech support. The UI is clean and professional, using Inter for typography and a strict monochrome palette. Subtle shadows are absent, replaced by sharp 1px hairlines that define the structural boundaries of the app. The image conveys a sense of calm, professional reliability and technological sophistication." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCbbbkx9dDdN89FWJ2xnZIS3neFadD3JMVcW6EwVUVku9tri5LDY38_vs4j6TO490w-P5a_1LOPo94PL_yiDJIxcRaLOzlWEmvZkHRA_uxkp8rHPmqawXlLC2-j6KOjKtwvyZpbcd5LJSGiKBoj-2M57k65H5Fg7i59gerCkoC6Pd5xZH2umnijcl79UFBgJXCdDP2mD9hl7mlQmIvMDhac4jOXNskidFOCGlDMOeR-_Ju_SGZxjZSeRQ"/>
+</div>
+</div>
+<div class="max-w-3xl mx-auto px-margin-mobile md:px-0">
+<div class="mb-40 scroll-reveal">
+<div class="font-eyebrow text-eyebrow uppercase text-dim-gray mb-6">✦ THE OUTCOME</div>
+<p class="font-body-lg text-body-lg leading-relaxed">
+                    The resulting system transformed Aether's operational model. By automating 82% of routine inquiries with high precision, the support team was liberated to focus exclusively on complex advisory roles. The new interface reduced onboarding time for new agents by 50% while significantly boosting customer satisfaction scores through near-instantaneous response loops.
+                </p>
+</div>
+</div>
+</section>
+<!-- Results Section -->
+<section class="py-20 md:py-32 bg-surface-container-lowest hairline-t hairline-b">
+<div class="max-w-max-width mx-auto px-margin-mobile md:px-margin-desktop">
+<div class="font-eyebrow text-eyebrow uppercase text-dim-gray mb-16 scroll-reveal">✦ impact metrics</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-gutter scroll-reveal">
+<!-- Stat Card 1 -->
+<div class="bg-surface-container p-12 hairline rounded-xl group hover:bg-surface-container-high transition-colors duration-300">
+<div class="font-display-lg text-7xl md:text-8xl mb-4 group-hover:translate-x-2 transition-transform duration-500">40%</div>
+<div class="font-ui-label text-ui-label text-dim-gray uppercase tracking-widest">faster response time</div>
+</div>
+<!-- Stat Card 2 -->
+<div class="bg-surface-container p-12 hairline rounded-xl group hover:bg-surface-container-high transition-colors duration-300">
+<div class="font-display-lg text-7xl md:text-8xl mb-4 group-hover:translate-x-2 transition-transform duration-500">3x</div>
+<div class="font-ui-label text-ui-label text-dim-gray uppercase tracking-widest">lead volume</div>
+</div>
+<!-- Stat Card 3 -->
+<div class="bg-surface-container p-12 hairline rounded-xl group hover:bg-surface-container-high transition-colors duration-300">
+<div class="font-display-lg text-7xl md:text-8xl mb-4 group-hover:translate-x-2 transition-transform duration-500">99%</div>
+<div class="font-ui-label text-ui-label text-dim-gray uppercase tracking-widest">accuracy rate</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Next Project Navigation -->
+<section class="py-20 md:py-40">
+<div class="max-w-max-width mx-auto px-margin-mobile md:px-margin-desktop">
+<div class="grid grid-cols-1 md:grid-cols-2 hairline rounded-xl overflow-hidden mb-20 scroll-reveal">
+<a class="flex items-center gap-6 p-8 md:p-12 hover:bg-surface-container transition-colors duration-300 group" href="#">
+<div class="w-20 h-20 bg-surface-container-high hairline rounded-lg overflow-hidden shrink-0">
+<img class="w-full h-full object-cover grayscale opacity-50 group-hover:opacity-100 transition-opacity" data-alt="A small thumbnail representing a previous engineering project called Chronos Core. It features abstract architectural shapes in a deep gray and black color palette, suggesting structural stability and chronological order. The lighting is low-key and dramatic, fitting the minimalist dark mode aesthetic of the AXEN brand." src="https://lh3.googleusercontent.com/aida-public/AB6AXuB7g04d6VAvrnVcVyB0nIbkbyUJ9P3gmsZwmWrUlHOrC4TfQxzwgaMbG1kt43Allh612Uo3tIF1-_ZpgX3sDkKVAWF-_Ou2phMy5BWV_44QkeUypwkwiFZ011b4RZ1dtcmTAKbvfFUx-GsewoEVN0DpPbGdzoJIgQIZ83_nbaSAsgo15ywlygKexGgQ-Mm8iQcF0BJCMYSWswMMeZWrgi86OVqm1Axl8KvR8EsFsZ0Xl28kc2UZcip3nw"/>
+</div>
+<div>
+<div class="text-dim-gray font-ui-label text-ui-label mb-1">← Previous Project</div>
+<div class="font-headline-md text-2xl md:text-3xl">Chronos Core</div>
+</div>
+</a>
+<a class="flex items-center justify-end gap-6 p-8 md:p-12 hover:bg-surface-container transition-colors duration-300 group border-t md:border-t-0 md:hairline-l" href="#">
+<div class="text-right">
+<div class="text-dim-gray font-ui-label text-ui-label mb-1">Next Project →</div>
+<div class="font-headline-md text-2xl md:text-3xl">Kinetix Logix</div>
+</div>
+<div class="w-20 h-20 bg-surface-container-high hairline rounded-lg overflow-hidden shrink-0">
+<img class="w-full h-full object-cover grayscale opacity-50 group-hover:opacity-100 transition-opacity" data-alt="A small thumbnail representing a next project called Kinetix Logix. The image depicts abstract flowing lines and engineered geometric grids in a monochrome palette. It conveys motion and logic through a restrained architectural style, maintaining the professional and unhurried tone of the brand." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBYVkvZrAofodHCEoENy3w46IEBctS-FqQCKIywP4v603QXhcLtx0lIsnJKDM5mF2JuP6t7TGQl-8NZWvllLfLRUW9w5XoXB1P7dp3iQTsxCR3xBJ-Gj9rH0VW7-MuEYLFnAt-AQ8wSr4bsPUmF8LrcPOJrTusA9pSXQNNeIR4F2E3yjWL12lxCBVPDg_snPY18PnPub59BpY2z0nExfQz0-2xNlxx9nVWLpXTmTWM_6qxp6R0pJDmtGA"/>
+</div>
+</a>
+</div>
+<div class="flex flex-col items-center gap-8 scroll-reveal">
+<h3 class="font-headline-md text-3xl md:text-4xl text-center">Ready to engineer your next leap?</h3>
+<button class="bg-primary text-on-primary px-10 py-4 rounded-full font-ui-label text-lg hover:scale-105 transition-all duration-300 shadow-xl">Start your project</button>
+</div>
+</div>
+</section>
+<!-- Footer -->
+<footer class="w-full px-margin-desktop py-20 max-w-max-width mx-auto grid grid-cols-1 md:grid-cols-4 gap-gutter border-t border-outline">
+<div class="col-span-1 md:col-span-1">
+<div class="font-headline-md text-headline-md text-primary mb-6">AXEN</div>
+<p class="font-body-md text-body-md text-dim-gray mb-8">© 2024 AXEN. Engineered for clarity.</p>
+</div>
+<div class="col-span-1">
+<h4 class="font-ui-label text-ui-label uppercase text-primary mb-6">Navigation</h4>
+<div class="flex flex-col gap-3">
+<a class="font-body-md text-body-md text-dim-gray hover:text-primary transition-colors" href="#">Work</a>
+<a class="font-body-md text-body-md text-dim-gray hover:text-primary transition-colors" href="#">Services</a>
+<a class="font-body-md text-body-md text-dim-gray hover:text-primary transition-colors" href="#">About</a>
+<a class="font-body-md text-body-md text-dim-gray hover:text-primary transition-colors" href="#">Insights</a>
+</div>
+</div>
+<div class="col-span-1">
+<h4 class="font-ui-label text-ui-label uppercase text-primary mb-6">Connect</h4>
+<div class="flex flex-col gap-3">
+<a class="font-body-md text-body-md text-dim-gray hover:text-primary transition-colors" href="#">Contact</a>
+<a class="font-body-md text-body-md text-dim-gray hover:text-primary transition-colors" href="#">LinkedIn</a>
+<a class="font-body-md text-body-md text-dim-gray hover:text-primary transition-colors" href="#">Twitter</a>
+</div>
+</div>
+<div class="col-span-1">
+<h4 class="font-ui-label text-ui-label uppercase text-primary mb-6">Legal</h4>
+<div class="flex flex-col gap-3">
+<a class="font-body-md text-body-md text-dim-gray hover:text-primary transition-colors" href="#">Privacy Policy</a>
+<a class="font-body-md text-body-md text-dim-gray hover:text-primary transition-colors" href="#">Terms of Service</a>
+</div>
+</div>
+</footer>
+<script>
+        // Menu Toggle Logic
+        const menuToggle = document.getElementById('menu-toggle');
+        const menuPanel = document.getElementById('menu-panel');
+        let isMenuOpen = false;
+
+        menuToggle.addEventListener('click', () => {
+            isMenuOpen = !isMenuOpen;
+            if (isMenuOpen) {
+                menuPanel.classList.add('open', 'pointer-events-auto');
+                menuPanel.classList.remove('pointer-events-none');
+                menuToggle.innerHTML = 'CLOSE <span class="w-1.5 h-1.5 bg-black rounded-full"></span>';
+                menuToggle.classList.add('bg-white', 'text-black');
+                menuToggle.classList.remove('text-primary');
+            } else {
+                menuPanel.classList.remove('open', 'pointer-events-auto');
+                menuPanel.classList.add('pointer-events-none');
+                menuToggle.innerHTML = 'MENU <span class="w-1.5 h-1.5 bg-primary rounded-full"></span>';
+                menuToggle.classList.remove('bg-white', 'text-black');
+                menuToggle.classList.add('text-primary');
+            }
+        });
+
+        // Intersection Observer for scroll reveal
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.scroll-reveal').forEach(el => observer.observe(el));
+    </script>
+</body></html>

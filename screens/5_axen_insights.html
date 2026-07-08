@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Insights | AXEN - Engineered Clarity</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:wght@400;500&amp;family=Inter:wght@400;500;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "inverse-surface": "#e5e2e1",
+                    "secondary-fixed-dim": "#c9c6c0",
+                    "surface-container-low": "#1c1b1b",
+                    "error": "#ffb4ab",
+                    "on-secondary-fixed-variant": "#474742",
+                    "error-container": "#93000a",
+                    "tertiary-container": "#e2e2e2",
+                    "on-tertiary-fixed": "#1a1c1c",
+                    "dim-gray": "#6B6B70",
+                    "tertiary": "#ffffff",
+                    "surface-container-highest": "#353434",
+                    "primary-fixed": "#e2e2e2",
+                    "outline": "#232326",
+                    "surface-container-high": "#2a2a2a",
+                    "surface-bright": "#3a3939",
+                    "secondary-container": "#474742",
+                    "on-primary-fixed": "#1a1c1c",
+                    "on-tertiary-fixed-variant": "#454747",
+                    "on-tertiary": "#2f3131",
+                    "surface-dim": "#141313",
+                    "on-tertiary-container": "#636565",
+                    "on-primary-fixed-variant": "#454747",
+                    "on-surface": "#e5e2e1",
+                    "surface-container": "#151515",
+                    "on-primary-container": "#636565",
+                    "on-surface-variant": "#c4c7c8",
+                    "surface-container-lowest": "#0e0e0e",
+                    "surface-variant": "#353434",
+                    "inverse-primary": "#5d5f5f",
+                    "background": "#141313",
+                    "tertiary-fixed": "#e2e2e2",
+                    "on-background": "#e5e2e1",
+                    "on-secondary-container": "#b7b5af",
+                    "secondary-fixed": "#e5e2db",
+                    "inverse-on-surface": "#313030",
+                    "on-primary": "#2f3131",
+                    "secondary": "#c9c6c0",
+                    "outline-variant": "#444748",
+                    "tertiary-fixed-dim": "#c6c6c7",
+                    "surface": "#050505",
+                    "on-secondary-fixed": "#1c1c18",
+                    "primary": "#ffffff",
+                    "on-error-container": "#ffdad6",
+                    "primary-fixed-dim": "#c6c6c7",
+                    "on-secondary": "#31312c",
+                    "surface-tint": "#c6c6c7",
+                    "on-error": "#690005",
+                    "primary-container": "#e2e2e2"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "margin-mobile": "20px",
+                    "max-width": "1440px",
+                    "margin-desktop": "64px",
+                    "gutter": "24px"
+            },
+            "fontFamily": {
+                    "headline-md": ["EB Garamond"],
+                    "body-md": ["Inter"],
+                    "ui-label": ["Inter"],
+                    "eyebrow": ["Inter"],
+                    "display-lg-mobile": ["EB Garamond"],
+                    "display-lg": ["EB Garamond"],
+                    "body-lg": ["Inter"]
+            },
+            "fontSize": {
+                    "headline-md": ["48px", {"lineHeight": "1.2", "fontWeight": "400"}],
+                    "body-md": ["16px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                    "ui-label": ["14px", {"lineHeight": "20px", "fontWeight": "500"}],
+                    "eyebrow": ["12px", {"lineHeight": "16px", "letterSpacing": "0.2em", "fontWeight": "500"}],
+                    "display-lg-mobile": ["48px", {"lineHeight": "1.1", "fontWeight": "400"}],
+                    "display-lg": ["96px", {"lineHeight": "1.0", "letterSpacing": "-0.02em", "fontWeight": "400"}],
+                    "body-lg": ["18px", {"lineHeight": "1.6", "fontWeight": "400"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        body {
+            background-color: #050505;
+            color: #FAFAFA;
+            -webkit-font-smoothing: antialiased;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .reveal-on-scroll {
+            opacity: 0;
+            transform: translateY(50px);
+            transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .reveal-on-scroll.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .hover-lift {
+            transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.3s ease;
+        }
+        .hover-lift:hover {
+            transform: translateY(-4px);
+            background-color: #0D0D0D;
+        }
+        
+        /* Dropdown specific styles */
+        #menu-dropdown {
+            transform-origin: top right;
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        #menu-dropdown.hidden-custom {
+            opacity: 0;
+            transform: scale(0.95) translateY(-20px);
+            pointer-events: none;
+        }
+    </style>
+</head>
+<body class="font-body-md text-body-md overflow-x-hidden">
+<!-- Floating Navigation Header -->
+<header class="fixed top-0 left-0 w-full z-[100] px-margin-mobile md:px-margin-desktop py-8 flex justify-between items-start pointer-events-none">
+<!-- Brand Logo -->
+<a class="font-headline-md text-3xl font-bold text-primary tracking-tight pointer-events-auto" href="/">AXEN</a>
+<!-- Navigation Cluster -->
+<div class="flex items-center gap-2 pointer-events-auto">
+<!-- Sound Toggle -->
+<button class="w-12 h-12 flex items-center justify-center rounded-full bg-surface-container border border-outline text-primary hover:bg-surface-variant transition-colors group">
+<span class="material-symbols-outlined text-[20px]" data-icon="volume_up">volume_up</span>
+</button>
+<!-- Let's Talk Pill -->
+<button class="h-12 px-8 rounded-full bg-primary text-surface font-ui-label text-ui-label font-bold hover:opacity-90 transition-opacity uppercase tracking-widest">
+            Let's Talk
+        </button>
+<!-- Menu Toggle -->
+<button class="h-12 px-8 rounded-full border border-primary bg-transparent text-primary font-ui-label text-ui-label font-bold hover:bg-primary hover:text-surface transition-all uppercase tracking-widest flex items-center gap-2" id="menu-toggle">
+            Menu
+            <span class="material-symbols-outlined text-[18px]" data-icon="menu">menu</span>
+</button>
+</div>
+</header>
+<!-- White Dropdown Panel -->
+<div class="fixed top-24 right-margin-mobile md:right-margin-desktop z-[90] w-72 bg-white text-surface p-8 rounded-xl shadow-2xl hidden-custom" id="menu-dropdown">
+<nav class="flex flex-col gap-6">
+<a class="font-headline-md text-3xl text-surface hover:pl-2 transition-all duration-300" href="#">Work</a>
+<a class="font-headline-md text-3xl text-surface hover:pl-2 transition-all duration-300" href="#">Services</a>
+<a class="font-headline-md text-3xl text-surface hover:pl-2 transition-all duration-300" href="#">About</a>
+<a class="font-headline-md text-3xl text-primary-fixed-dim bg-surface px-4 py-1 rounded-sm -ml-4 w-fit" href="#">Insights</a>
+<a class="font-headline-md text-3xl text-surface hover:pl-2 transition-all duration-300" href="#">Contact</a>
+</nav>
+<div class="mt-12 pt-8 border-t border-outline-variant/20">
+<div class="font-ui-label text-ui-label text-dim-gray uppercase tracking-widest mb-4">Follow Us</div>
+<div class="flex gap-4">
+<a class="text-surface hover:text-dim-gray transition-colors" href="#">LI</a>
+<a class="text-surface hover:text-dim-gray transition-colors" href="#">TW</a>
+<a class="text-surface hover:text-dim-gray transition-colors" href="#">IG</a>
+</div>
+</div>
+</div>
+<main class="max-w-max-width mx-auto px-margin-mobile md:px-margin-desktop pt-40 pb-20">
+<!-- Header Section -->
+<header class="mb-20 reveal-on-scroll">
+<div class="flex items-center gap-3 mb-6">
+<span class="font-eyebrow text-eyebrow text-primary uppercase tracking-widest">✦ perspectives</span>
+</div>
+<h1 class="font-display-lg-mobile md:font-display-lg text-display-lg-mobile md:text-display-lg text-primary mb-8 max-w-4xl">Insights</h1>
+<p class="font-body-lg text-body-lg text-dim-gray max-w-2xl">
+            Technical depth and strategic foresight on the future of AI and digital craft.
+        </p>
+</header>
+<!-- Featured Article -->
+<section class="mb-24 reveal-on-scroll">
+<div class="group relative bg-surface-container border border-outline rounded-xl overflow-hidden grid grid-cols-1 lg:grid-cols-3 hover-lift">
+<div class="lg:col-span-2 relative h-80 lg:h-[600px] overflow-hidden">
+<div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-105" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBDXM6f1t5fXRC5IQbbAE9QmgxllOFgCdATxQOZyUhSG3KGzVNnL1Cq3SQMDY9GMT6nyeNpyapZJTB6Xuj-bzUrHoCFkG4QMF4k4tyG1D2UbMxC_8tNST-wsiwZfGlnIt2efrsckB5V7oo6U_0a-00IB1yUI2MSdHp2XBqgrxiLFsTnBjh77AIEACvRWcpsUDsyHOXzIuUH1lbXnSmrN03QHoaH4n5l4rb0lsGbAJzs6IOsFVZrxp7gHA')"></div>
+</div>
+<div class="p-8 md:p-12 flex flex-col justify-center">
+<span class="font-eyebrow text-eyebrow text-dim-gray mb-4 uppercase">Featured · AI Strategy</span>
+<h2 class="font-headline-md text-headline-md text-primary mb-6 leading-tight">The Shift to Agentic Workflows: Why LLMs are moving beyond chat.</h2>
+<p class="font-body-md text-body-md text-dim-gray mb-8">
+                    The next frontier of generative AI isn't better conversation—it's execution. We analyze the technical architecture required to move from reactive chatbots to proactive agents that orchestrate business logic.
+                </p>
+<a class="inline-flex items-center gap-2 font-ui-label text-ui-label font-bold text-primary group-hover:gap-4 transition-all duration-300" href="#">
+                    Read more <span class="material-symbols-outlined" data-icon="arrow_forward">arrow_forward</span>
+</a>
+</div>
+</div>
+</section>
+<!-- Filters -->
+<section class="mb-12 reveal-on-scroll">
+<div class="flex flex-wrap gap-3">
+<button class="px-6 py-2 rounded-full border border-primary bg-primary text-surface font-ui-label text-ui-label transition-all">All</button>
+<button class="px-6 py-2 rounded-full border border-outline bg-transparent text-dim-gray hover:border-dim-gray font-ui-label text-ui-label transition-all">AI Strategy</button>
+<button class="px-6 py-2 rounded-full border border-outline bg-transparent text-dim-gray hover:border-dim-gray font-ui-label text-ui-label transition-all">Design</button>
+<button class="px-6 py-2 rounded-full border border-outline bg-transparent text-dim-gray hover:border-dim-gray font-ui-label text-ui-label transition-all">Engineering</button>
+<button class="px-6 py-2 rounded-full border border-outline bg-transparent text-dim-gray hover:border-dim-gray font-ui-label text-ui-label transition-all">Case Notes</button>
+</div>
+</section>
+<!-- Article Grid -->
+<section class="grid grid-cols-1 md:grid-cols-2 gap-gutter mb-24 reveal-on-scroll">
+<!-- Card 1 -->
+<div class="group bg-surface-container border border-outline rounded-xl overflow-hidden hover-lift p-6 md:p-8">
+<div class="aspect-[16/9] mb-8 overflow-hidden rounded-lg">
+<div class="w-full h-full bg-cover bg-center transition-transform duration-700 group-hover:scale-105" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAL2dQNIyip8VzAqs6FFKZdVndB9j0KQLggAmWGycb1bBXKX3l8e3MdBWsq5nlTGLBWzaa1-iCRg9G4rv5Hyp-s8VPSUsZFzhKjyHQ_pOyeDZ70CDEghGP3PMkSio2E3DkJmaAqC9DvMVJliJamwQZPR11oPHRnhm6FZTBLCUHbV6Vt5P-rMyFoqOgZ-3LSh-HQeMv0GuobeAwYZu7jvaHM5Lp5igyK6ap_EK4wQ_RhAhcFqkP4krPkwQ')"></div>
+</div>
+<div class="space-y-4">
+<div class="font-eyebrow text-eyebrow text-dim-gray uppercase">Design · Oct 24, 2024 · 6 min read</div>
+<h3 class="font-headline-md text-[32px] text-primary leading-tight">The Architecture of Silence: Why Minimalism Wins in Enterprise UI.</h3>
+<p class="font-body-md text-body-md text-dim-gray">Exploring how reductionist design principles lead to higher cognitive throughput for complex data operations.</p>
+</div>
+</div>
+<!-- Card 2 -->
+<div class="group bg-surface-container border border-outline rounded-xl overflow-hidden hover-lift p-6 md:p-8">
+<div class="aspect-[16/9] mb-8 overflow-hidden rounded-lg">
+<div class="w-full h-full bg-cover bg-center transition-transform duration-700 group-hover:scale-105" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAdgrbFN2FkdBWQBxDx2TB-weI7YVDQLiKWUyTGgXeaFTSsO5DUwnzMfEnpfN5UddLOg6jP7AA9YQyxcf1clbJM4aGBePKIxgc2nNYvhCK0_M8nYTopiNkVmbXb9abwAo2014ouUeUwBrJQhsFcW2l_LLikrO7A3ManIlNBPicPzOobDCWFM-yKsngeZ0oDfaGplHTMkLO5ykT3IXIzXJlmpcd4Tg-DDwahLdzD2Nc1hPMOFzoCZLyR7Q')"></div>
+</div>
+<div class="space-y-4">
+<div class="font-eyebrow text-eyebrow text-dim-gray uppercase">Engineering · Oct 18, 2024 · 12 min read</div>
+<h3 class="font-headline-md text-[32px] text-primary leading-tight">Latency as a Feature: Building Real-time Generative Experiences.</h3>
+<p class="font-body-md text-body-md text-dim-gray">A deep dive into edge computing and streaming architectures for low-latency LLM responses in production.</p>
+</div>
+</div>
+<!-- Card 3 -->
+<div class="group bg-surface-container border border-outline rounded-xl overflow-hidden hover-lift p-6 md:p-8">
+<div class="aspect-[16/9] mb-8 overflow-hidden rounded-lg">
+<div class="w-full h-full bg-cover bg-center transition-transform duration-700 group-hover:scale-105" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAKR6R5Yrt7N0lBvcscc47NSAg2fx80EmrDmlXmlqIbo1svnZs1NleUiQvZiVFXOKsTStUnuRNQz8H3BkHM8YjpRNkP5ufhA3XymYp4K-XWyPOgtdJh1qith6zQQ1v4M4s16uO4euf2kXRP54wd_Lv1Zpb07kUNpeaQN94ren9U8oadTxZkUAfFVn3sIZBgwGjuHM5AAykzsmmv5oP0g6vv8FWVKOgTFjddQ2YDaiCdHIUidXRxLj_Iow')"></div>
+</div>
+<div class="space-y-4">
+<div class="font-eyebrow text-eyebrow text-dim-gray uppercase">Case Notes · Oct 12, 2024 · 5 min read</div>
+<h3 class="font-headline-md text-[32px] text-primary leading-tight">Refining the Signal: How AXEN optimized Vector Search for FinTech.</h3>
+<p class="font-body-md text-body-md text-dim-gray">Removing the noise from 10M+ documents to achieve 99.8% retrieval accuracy for a leading global bank.</p>
+</div>
+</div>
+<!-- Card 4 -->
+<div class="group bg-surface-container border border-outline rounded-xl overflow-hidden hover-lift p-6 md:p-8">
+<div class="aspect-[16/9] mb-8 overflow-hidden rounded-lg">
+<div class="w-full h-full bg-cover bg-center transition-transform duration-700 group-hover:scale-105" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDS3wndBjMzugh_7pbU_fFC0xDwNFny9ULvO1Hdi_G26LOoQFtxWSK6GzmEf2uC6u5fENbdcmBCV5uzTUZxJnlFsisw9gvVttWj2_eLSeIClSvZxrl6Q5z5b7_mpWKNlhkqP_aQZtpWiYClH9H2j9TT0rlRyBE15eZztZj9zJVcFKIdWvtMeUKE--pwHeOyMwpAORGMsLuqnXER3ByiRquDfOJdgKsmYG95Kp8FPaliPimsrEu4aDERjQ')"></div>
+</div>
+<div class="space-y-4">
+<div class="font-eyebrow text-eyebrow text-dim-gray uppercase">AI Strategy · Oct 05, 2024 · 8 min read</div>
+<h3 class="font-headline-md text-[32px] text-primary leading-tight">The Executive's Guide to Sovereign AI Infrastructure.</h3>
+<p class="font-body-md text-body-md text-dim-gray">Why leading enterprises are moving away from public APIs towards private, fine-tuned models hosted in-house.</p>
+</div>
+</div>
+<!-- Card 5 -->
+<div class="group bg-surface-container border border-outline rounded-xl overflow-hidden hover-lift p-6 md:p-8">
+<div class="aspect-[16/9] mb-8 overflow-hidden rounded-lg">
+<div class="w-full h-full bg-cover bg-center transition-transform duration-700 group-hover:scale-105" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCWDKoauUC2Vje_gFTuaKkcfQNVrBJFULXk2GsiVoiij6UkgOeJqTFy6DBHmHPFe4bV-xLPyFUJEtniyHb5pgbqwxHcvXzoWLra_0XCJiJStiKS2fw2Nth5_OhQbj-8AL0yyb8zghLVqRuGiiZ8EsFfFbZQHCBcq6kftAHZfXrCKYCre3vKzUWr1GfjqWh2EGxtb0q-ffAE4qR9u2Nilj8EB94yXhrfzgtSi9ih9fy-OPADrDlKfBu0Tw')"></div>
+</div>
+<div class="space-y-4">
+<div class="font-eyebrow text-eyebrow text-dim-gray uppercase">Engineering · Sep 28, 2024 · 10 min read</div>
+<h3 class="font-headline-md text-[32px] text-primary leading-tight">Beyond Transformers: Evaluating Next-Gen Model Architectures.</h3>
+<p class="font-body-md text-body-md text-dim-gray">A technical comparison of State Space Models and their potential to replace traditional attention mechanisms.</p>
+</div>
+</div>
+<!-- Card 6 -->
+<div class="group bg-surface-container border border-outline rounded-xl overflow-hidden hover-lift p-6 md:p-8">
+<div class="aspect-[16/9] mb-8 overflow-hidden rounded-lg">
+<div class="w-full h-full bg-cover bg-center transition-transform duration-700 group-hover:scale-105" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDUzwsEgQTcUHBdnSBrjn7SzU4-i4Cq-TCY1T8wNuxTbKtuLUftKDUq87f5y7MGYNEfLRLW_HkIeTcsCRZ0JAfNvthnsCGbhQjVAZtSGwi4S2p9rBg51Dm295tW9NnJz0_hn49DmLr9h_4VqK0mVBcZmf5E-JYkTSmlRy6PHaBCkWqWq3MtXDP8jxhzy0SGgi8jAccDN_6BJ_vjcvqZ1CqBGSG2sViMBBJaDvrmjtj4IMWTkImIcPzjIQ')"></div>
+</div>
+<div class="space-y-4">
+<div class="font-eyebrow text-eyebrow text-dim-gray uppercase">Design · Sep 21, 2024 · 7 min read</div>
+<h3 class="font-headline-md text-[32px] text-primary leading-tight">Design for Agency: Crafting UX for Non-Deterministic Systems.</h3>
+<p class="font-body-md text-body-md text-dim-gray">How to design user interfaces when the system's output is probabilistic rather than binary.</p>
+</div>
+</div>
+</section>
+<!-- Newsletter Band -->
+<section class="mb-24 py-20 border-y border-outline reveal-on-scroll">
+<div class="flex flex-col md:flex-row justify-between items-center gap-10">
+<h2 class="font-headline-md text-headline-md text-primary max-w-sm">Stay updated on engineered clarity.</h2>
+<form class="w-full max-w-md">
+<div class="flex items-end gap-4 border-b border-dim-gray pb-2 focus-within:border-primary transition-colors">
+<input class="bg-transparent border-none focus:ring-0 w-full font-body-md text-primary placeholder:text-dim-gray py-0" placeholder="Email address" type="email"/>
+<button class="font-ui-label text-ui-label font-bold text-primary uppercase tracking-widest hover:opacity-70 transition-opacity" type="submit">Subscribe</button>
+</div>
+</form>
+</div>
+</section>
+<!-- CTA Banner -->
+<section class="mb-24 text-center reveal-on-scroll">
+<h2 class="font-headline-md text-headline-md text-primary mb-8">Have a project in mind?</h2>
+<button class="bg-primary text-surface px-10 py-4 rounded-full font-ui-label text-ui-label font-bold text-lg hover:scale-105 transition-transform">Let's Talk</button>
+</section>
+</main>
+<!-- Footer -->
+<footer class="w-full px-margin-mobile md:px-margin-desktop py-20 max-w-max-width mx-auto grid grid-cols-1 md:grid-cols-4 gap-gutter border-t border-outline">
+<div class="md:col-span-1 space-y-6">
+<div class="font-headline-md text-headline-md text-primary">AXEN</div>
+<p class="font-body-md text-body-md text-dim-gray">© 2024 AXEN. Engineered for clarity.</p>
+</div>
+<div class="flex flex-col gap-4">
+<span class="font-ui-label text-ui-label font-bold text-primary uppercase tracking-widest mb-2">Navigation</span>
+<a class="text-dim-gray hover:text-primary transition-colors duration-300" href="#">Work</a>
+<a class="text-dim-gray hover:text-primary transition-colors duration-300" href="#">Services</a>
+<a class="text-dim-gray hover:text-primary transition-colors duration-300" href="#">About</a>
+<a class="text-primary" href="#">Insights</a>
+<a class="text-dim-gray hover:text-primary transition-colors duration-300" href="#">Contact</a>
+</div>
+<div class="flex flex-col gap-4">
+<span class="font-ui-label text-ui-label font-bold text-primary uppercase tracking-widest mb-2">Legal</span>
+<a class="text-dim-gray hover:text-primary transition-colors duration-300" href="#">Privacy Policy</a>
+<a class="text-dim-gray hover:text-primary transition-colors duration-300" href="#">Terms of Service</a>
+</div>
+<div class="flex flex-col gap-4">
+<span class="font-ui-label text-ui-label font-bold text-primary uppercase tracking-widest mb-2">Social</span>
+<a class="text-dim-gray hover:text-primary transition-colors duration-300" href="#">LinkedIn</a>
+<a class="text-dim-gray hover:text-primary transition-colors duration-300" href="#">X / Twitter</a>
+</div>
+</footer>
+<script>
+    // Scroll Reveal Logic
+    const observerOptions = {
+        threshold: 0.1,
+        rootMargin: '0px 0px -50px 0px'
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('visible');
+            }
+        });
+    }, observerOptions);
+
+    document.querySelectorAll('.reveal-on-scroll').forEach(el => observer.observe(el));
+
+    // Dropdown Toggle Logic
+    const menuToggle = document.getElementById('menu-toggle');
+    const menuDropdown = document.getElementById('menu-dropdown');
+
+    menuToggle.addEventListener('click', (e) => {
+        e.stopPropagation();
+        menuDropdown.classList.toggle('hidden-custom');
+        const icon = menuToggle.querySelector('.material-symbols-outlined');
+        if (!menuDropdown.classList.contains('hidden-custom')) {
+            icon.innerText = 'close';
+            menuToggle.classList.add('bg-primary', 'text-surface');
+        } else {
+            icon.innerText = 'menu';
+            menuToggle.classList.remove('bg-primary', 'text-surface');
+        }
+    });
+
+    document.addEventListener('click', (e) => {
+        if (!menuDropdown.contains(e.target) && !menuToggle.contains(e.target)) {
+            menuDropdown.classList.add('hidden-custom');
+            menuToggle.querySelector('.material-symbols-outlined').innerText = 'menu';
+            menuToggle.classList.remove('bg-primary', 'text-surface');
+        }
+    });
+
+    // Magnetic Cursor Effect (Micro-interaction)
+    document.querySelectorAll('.hover-lift').forEach(btn => {
+        btn.addEventListener('mousemove', (e) => {
+            const rect = btn.getBoundingClientRect();
+            const x = e.clientX - rect.left - rect.width / 2;
+            const y = e.clientY - rect.top - rect.height / 2;
+            btn.style.transform = `translate(${x * 0.05}px, ${y * 0.05}px) translateY(-4px)`;
+        });
+        btn.addEventListener('mouseleave', () => {
+            btn.style.transform = '';
+        });
+    });
+</script>
+</body></html>
