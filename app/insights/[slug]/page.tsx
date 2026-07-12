@@ -14,7 +14,7 @@ export default function InsightArticlePage({ params }: { params: { slug: string 
   }
 
   return (
-    <div className="w-full bg-canvas text-text-primary px-6 md:px-16 py-12 md:py-24">
+    <div className="w-full bg-transparent text-text-primary px-6 md:px-16 py-12 md:py-24">
       <div className="mx-auto max-w-4xl">
         
         {/* Navigation Breadcrumb */}

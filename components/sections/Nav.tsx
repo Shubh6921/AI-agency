@@ -28,9 +28,11 @@ export default function Nav() {
         
         {/* Logo */}
         <Link href="/" className="group flex items-center gap-2">
-          <span className="font-display text-2xl font-black uppercase tracking-widest text-text-primary">
-            AXEN
-          </span>
+          <img
+            src="/logo-text.png"
+            alt="AXEN"
+            className="h-12 w-auto object-contain transition-transform duration-300 group-hover:scale-[1.02] mix-blend-screen"
+          />
         </Link>
 
         {/* Navigation Links */}

@@ -8,11 +8,24 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { ArrowRight, Play } from "lucide-react";
 import MicroLabel from "@/components/ui/MicroLabel";
 import Button from "@/components/ui/Button";
+import { motion, useScroll, useSpring } from "framer-motion";
 
 gsap.registerPlugin(ScrollTrigger);
 
 export default function Home() {
   const containerRef = useRef<HTMLDivElement>(null);
+  const processContainerRef = useRef<HTMLDivElement>(null);
+
+  const { scrollYProgress } = useScroll({
+    target: processContainerRef,
+    offset: ["start center", "end center"],
+  });
+
+  const pathLength = useSpring(scrollYProgress, {
+    stiffness: 100,
+    damping: 30,
+    restDelta: 0.001,
+  });
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -41,6 +54,135 @@ export default function Home() {
             },
           }
         );
+      });
+
+      // Alternating timeline card entrance animations (Left cards: Step 1 & 3)
+      gsap.utils.toArray(".timeline-card-left").forEach((card: unknown) => {
+        const el = card as HTMLElement;
+        gsap.fromTo(
+          el,
+          { opacity: 0, x: -60 },
+          {
+            opacity: 1,
+            x: 0,
+            duration: 0.8,
+            ease: "power3.out",
+            scrollTrigger: {
+              trigger: el,
+              start: "top 85%",
+              toggleActions: "play none none none",
+            },
+          }
+        );
+
+        // Glow sync when journey line reaches the box
+        const box = el.querySelector(".timeline-box");
+        if (box) {
+          gsap.fromTo(
+            box,
+            {
+              borderColor: "rgba(35, 35, 38, 1)",
+              boxShadow: "0 0 0px rgba(38, 199, 255, 0)",
+            },
+            {
+              borderColor: "rgba(38, 199, 255, 0.28)", // Slightly more visible thin cyan border outline
+              boxShadow: "0 0 16px rgba(38, 199, 255, 0.12)", // Slightly stronger soft glow
+              duration: 0.5,
+              ease: "power2.out",
+              scrollTrigger: {
+                trigger: el,
+                start: "top center",
+                toggleActions: "play reverse play reverse",
+              },
+            }
+          );
+        }
+      });
+
+      // Alternating timeline card entrance animations (Right card: Step 2)
+      gsap.utils.toArray(".timeline-card-right").forEach((card: unknown) => {
+        const el = card as HTMLElement;
+        gsap.fromTo(
+          el,
+          { opacity: 0, x: 60 },
+          {
+            opacity: 1,
+            x: 0,
+            duration: 0.8,
+            ease: "power3.out",
+            scrollTrigger: {
+              trigger: el,
+              start: "top 85%",
+              toggleActions: "play none none none",
+            },
+          }
+        );
+
+        // Glow sync when journey line reaches the box
+        const box = el.querySelector(".timeline-box");
+        if (box) {
+          gsap.fromTo(
+            box,
+            {
+              borderColor: "rgba(35, 35, 38, 1)",
+              boxShadow: "0 0 0px rgba(38, 199, 255, 0)",
+            },
+            {
+              borderColor: "rgba(38, 199, 255, 0.28)", // Slightly more visible thin cyan border outline
+              boxShadow: "0 0 16px rgba(38, 199, 255, 0.12)", // Slightly stronger soft glow
+              duration: 0.5,
+              ease: "power2.out",
+              scrollTrigger: {
+                trigger: el,
+                start: "top center",
+                toggleActions: "play reverse play reverse",
+              },
+            }
+          );
+        }
+      });
+
+      // Mobile timeline card animations
+      gsap.utils.toArray(".timeline-card-mobile").forEach((card: unknown) => {
+        const el = card as HTMLElement;
+        gsap.fromTo(
+          el,
+          { opacity: 0, y: 30 },
+          {
+            opacity: 1,
+            y: 0,
+            duration: 0.6,
+            ease: "power3.out",
+            scrollTrigger: {
+              trigger: el,
+              start: "top 90%",
+              toggleActions: "play none none none",
+            },
+          }
+        );
+
+        // Glow sync on mobile
+        const box = el.querySelector(".timeline-box");
+        if (box) {
+          gsap.fromTo(
+            box,
+            {
+              borderColor: "rgba(35, 35, 38, 1)",
+              boxShadow: "0 0 0px rgba(38, 199, 255, 0)",
+            },
+            {
+              borderColor: "rgba(38, 199, 255, 0.24)",
+              boxShadow: "0 0 12px rgba(38, 199, 255, 0.08)",
+              duration: 0.4,
+              ease: "power2.out",
+              scrollTrigger: {
+                trigger: el,
+                start: "top center",
+                toggleActions: "play reverse play reverse",
+              },
+            }
+          );
+        }
       });
 
       // Stats Count-Up Animation
@@ -187,38 +329,155 @@ export default function Home() {
       </section>
 
       {/* 4. PROCESS / TIMELINE */}
-      <section className="reveal-up py-32 px-6 md:px-16 border-t border-hairline relative z-10 bg-canvas/30 backdrop-blur-sm">
+      <section ref={processContainerRef} className="py-32 px-6 md:px-16 border-t border-hairline relative z-10 bg-canvas/30 backdrop-blur-sm">
         <div className="mx-auto max-w-7xl space-y-16">
-          <MicroLabel>Our Process</MicroLabel>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {/* Step 1 */}
-            <div className="border border-hairline rounded-2xl p-10 bg-surface-base/30 backdrop-blur-sm hover:border-text-secondary/40 transition-colors duration-500 space-y-6">
-              <span className="font-display text-xl font-bold text-text-tertiary">01 /</span>
-              <h3 className="text-2xl font-bold uppercase tracking-tight font-display text-text-primary">Understand</h3>
-              <p className="text-text-secondary text-sm leading-relaxed">
-                We dive deep into your workflow, architectures, and objectives to pinpoint intelligence bottle-necks.
-              </p>
-            </div>
-
-            {/* Step 2 */}
-            <div className="border border-hairline rounded-2xl p-10 bg-surface-base/30 backdrop-blur-sm hover:border-text-secondary/40 transition-colors duration-500 space-y-6">
-              <span className="font-display text-xl font-bold text-text-tertiary">02 /</span>
-              <h3 className="text-2xl font-bold uppercase tracking-tight font-display text-text-primary">Design & Build</h3>
-              <p className="text-text-secondary text-sm leading-relaxed">
-                We develop and design tailormade AI pipelines, responsive platforms, and automations.
-              </p>
-            </div>
-
-            {/* Step 3 */}
-            <div className="border border-hairline rounded-2xl p-10 bg-surface-base/30 backdrop-blur-sm hover:border-text-secondary/40 transition-colors duration-500 space-y-6">
-              <span className="font-display text-xl font-bold text-text-tertiary">03 /</span>
-              <h3 className="text-2xl font-bold uppercase tracking-tight font-display text-text-primary">Refine & Evolve</h3>
-              <p className="text-text-secondary text-sm leading-relaxed">
-                Continuous optimization loops ensure your systems stay fast, secure, and ahead of the curve.
-              </p>
-            </div>
+          <div className="text-center md:text-left">
+            <MicroLabel>Our Process</MicroLabel>
           </div>
+
+          {/* DESKTOP TIMELINE (Alternating layout with curved path) */}
+          <div className="hidden md:block relative w-full min-h-[850px] py-10">
+            
+            {/* Centered Curved SVG Scroll Line */}
+            <div className="absolute inset-0 pointer-events-none flex justify-center">
+              <div className="w-full max-w-3xl h-full relative">
+                <svg
+                  className="absolute inset-0 w-full h-full overflow-visible"
+                  preserveAspectRatio="none"
+                  viewBox="0 0 1000 800"
+                >
+                  {/* Background Track Line (Inactive) */}
+                  <path
+                    d="M 500,0 C 500,100 250,100 250,220 C 250,340 750,340 750,460 C 750,580 250,580 250,700 L 250,800"
+                    fill="none"
+                    stroke="#232326"
+                    strokeWidth="2"
+                    strokeDasharray="4 4"
+                  />
+
+                  {/* Active Animated Drawing Path */}
+                  <motion.path
+                    d="M 500,0 C 500,100 250,100 250,220 C 250,340 750,340 750,460 C 750,580 250,580 250,700 L 250,800"
+                    fill="none"
+                    stroke="#26C7ff"
+                    strokeWidth="2.5"
+                    style={{ pathLength, filter: "drop-shadow(0 0 8px rgba(38, 199, 255, 0.4))" }}
+                  />
+                </svg>
+              </div>
+            </div>
+
+            {/* Alternating Cards Grid */}
+            <div className="relative z-10 w-full space-y-24">
+              
+              {/* Step 1: Left */}
+              <div className="grid grid-cols-12 gap-8 items-center min-h-[220px]">
+                <div className="col-span-5 timeline-card-left">
+                  <div className="timeline-box border border-hairline rounded-2xl p-10 bg-surface-base/30 backdrop-blur-sm transition-all duration-500 space-y-4">
+                    <span className="font-display text-base font-bold text-text-tertiary">01 /</span>
+                    <h3 className="text-2xl font-bold uppercase tracking-tight font-display text-text-primary">Understand</h3>
+                    <p className="text-text-secondary text-sm leading-relaxed">
+                      We dive deep into your workflow, architectures, and objectives to pinpoint intelligence bottle-necks.
+                    </p>
+                  </div>
+                </div>
+                <div className="col-span-2" />
+                <div className="col-span-5" />
+              </div>
+
+              {/* Step 2: Right */}
+              <div className="grid grid-cols-12 gap-8 items-center min-h-[220px]">
+                <div className="col-span-5" />
+                <div className="col-span-2" />
+                <div className="col-span-5 timeline-card-right">
+                  <div className="timeline-box border border-hairline rounded-2xl p-10 bg-surface-base/30 backdrop-blur-sm transition-all duration-500 space-y-4">
+                    <span className="font-display text-base font-bold text-text-tertiary">02 /</span>
+                    <h3 className="text-2xl font-bold uppercase tracking-tight font-display text-text-primary">Design & Build</h3>
+                    <p className="text-text-secondary text-sm leading-relaxed">
+                      We develop and design tailormade AI pipelines, responsive platforms, and automations.
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              {/* Step 3: Left */}
+              <div className="grid grid-cols-12 gap-8 items-center min-h-[220px]">
+                <div className="col-span-5 timeline-card-left">
+                  <div className="timeline-box border border-hairline rounded-2xl p-10 bg-surface-base/30 backdrop-blur-sm transition-all duration-500 space-y-4">
+                    <span className="font-display text-base font-bold text-text-tertiary">03 /</span>
+                    <h3 className="text-2xl font-bold uppercase tracking-tight font-display text-text-primary">Refine & Evolve</h3>
+                    <p className="text-text-secondary text-sm leading-relaxed">
+                      Continuous optimization loops ensure your systems stay fast, secure, and ahead of the curve.
+                    </p>
+                  </div>
+                </div>
+                <div className="col-span-2" />
+                <div className="col-span-5" />
+              </div>
+
+            </div>
+
+          </div>
+
+          {/* MOBILE TIMELINE (Left-aligned straight line) */}
+          <div className="block md:hidden relative pl-8 space-y-12">
+            
+            {/* Straight line for mobile layout */}
+            <div className="absolute left-2.5 top-3 bottom-3 w-[2px]">
+              <svg
+                className="absolute inset-0 h-full w-full overflow-visible"
+                preserveAspectRatio="none"
+                viewBox="0 0 2 100"
+              >
+                <line
+                  x1="1"
+                  y1="0"
+                  x2="1"
+                  y2="100"
+                  stroke="#232326"
+                  strokeWidth="2"
+                  strokeDasharray="4 4"
+                />
+                <motion.path
+                  d="M 1,0 L 1,100"
+                  stroke="#26C7ff"
+                  strokeWidth="2"
+                  fill="none"
+                  style={{ pathLength, filter: "drop-shadow(0 0 6px rgba(38, 199, 255, 0.5))" }}
+                />
+              </svg>
+            </div>
+
+            {[
+              {
+                step: "01",
+                title: "Understand",
+                desc: "We dive deep into your workflow, architectures, and objectives to pinpoint intelligence bottle-necks."
+              },
+              {
+                step: "02",
+                title: "Design & Build",
+                desc: "We develop and design tailormade AI pipelines, responsive platforms, and automations."
+              },
+              {
+                step: "03",
+                title: "Refine & Evolve",
+                desc: "Continuous optimization loops ensure your systems stay fast, secure, and ahead of the curve."
+              }
+            ].map((item, idx) => (
+              <div key={idx} className="relative group space-y-3 timeline-card-mobile">
+                <div className="timeline-box border border-hairline rounded-2xl p-8 bg-surface-base/30 backdrop-blur-sm transition-all duration-500 space-y-4">
+                  <span className="font-display text-base font-bold text-text-tertiary">{item.step} /</span>
+                  <h3 className="text-xl font-bold uppercase tracking-tight font-display text-text-primary">{item.title}</h3>
+                  <p className="text-text-secondary text-sm leading-relaxed">
+                    {item.desc}
+                  </p>
+                </div>
+              </div>
+            ))}
+
+          </div>
+
         </div>
       </section>
     </div>

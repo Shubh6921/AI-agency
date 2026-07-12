@@ -47,10 +47,12 @@ export default function HighlightText({ children, className = "", parallaxSpeed 
       tl.fromTo(
         textRef.current,
         {
-          color: "rgb(250, 250, 250)", // foreground color
+          color: "rgb(250, 250, 250)",
+          textShadow: "0 0 0px rgba(38, 199, 255, 0)",
         },
         {
-          color: "#000000", // color when highlighted
+          color: "#FFFFFF", // Keep text white
+          textShadow: "0 0 8px rgba(38, 199, 255, 0.95), 0 0 16px rgba(255, 255, 255, 0.7)", // Cyan and white glow
           duration: 0.6,
           ease: "power2.out",
         },
@@ -85,7 +87,7 @@ export default function HighlightText({ children, className = "", parallaxSpeed 
     <span ref={containerRef} className={`relative inline-block ${className}`}>
       <span
         ref={highlightRef}
-        className="absolute inset-0 bg-white"
+        className="absolute inset-0 bg-[#26C7ff]"
         style={{
           left: "-0.1em",
           right: "-0.1em",

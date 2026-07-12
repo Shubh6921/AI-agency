@@ -20,7 +20,7 @@ export default function CaseStudyPage({ params }: { params: { slug: string } }) 
   const nextProject = projectsData[(currentIndex + 1) % projectsData.length];
 
   return (
-    <div className="w-full bg-canvas text-text-primary px-6 md:px-16 py-12 md:py-24">
+    <div className="w-full bg-transparent text-text-primary px-6 md:px-16 py-12 md:py-24">
       <div className="mx-auto max-w-7xl">
         
         {/* Navigation Breadcrumb */}

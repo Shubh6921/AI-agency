@@ -23,9 +23,11 @@ export default function Footer() {
           
           {/* Column 1: Brand Info */}
           <div className="md:col-span-2 space-y-6">
-            <span className="font-display text-3xl font-black uppercase tracking-widest text-text-primary">
-              AXEN
-            </span>
+            <img
+              src="/logo-text.png"
+              alt="AXEN"
+              className="h-16 w-auto object-contain mix-blend-screen"
+            />
             <p className="max-w-sm text-sm text-text-secondary leading-relaxed">
               We combine AI engineering with premium UI/UX design to build websites and products that feel years ahead of the competition.
             </p>

@@ -3,6 +3,7 @@ import { Manrope, Orbitron } from "next/font/google";
 import "./globals.css";
 import SmoothScroll from "@/components/providers/smooth-scroll";
 import DrawerProvider from "@/components/providers/drawer-context";
+import LoaderProvider from "@/components/providers/loader-provider";
 import CustomCursor from "@/components/ui/CustomCursor";
 import Nav from "@/components/sections/Nav";
 import EnquiryDrawer from "@/components/sections/EnquiryDrawer";
@@ -45,24 +46,26 @@ export default function RootLayout({
             {/* Interactive 3D Background */}
             <Background3D />
             
-            {/* Header / Nav */}
-            <Nav />
+            <LoaderProvider>
+              {/* Header / Nav */}
+              <Nav />
 
-            {/* Slide-out Drawer */}
-            <EnquiryDrawer />
+              {/* Slide-out Drawer */}
+              <EnquiryDrawer />
 
-            {/* Page content wrapper */}
-            <div className="relative min-h-screen flex flex-col justify-between pt-28">
-              <main className="flex-grow">
-                {children}
-              </main>
-              
-              {/* Footer CTA & Sitemap */}
-              <div className="w-full">
-                <CTABand />
-                <Footer />
+              {/* Page content wrapper */}
+              <div className="relative min-h-screen flex flex-col justify-between pt-28">
+                <main className="flex-grow">
+                  {children}
+                </main>
+                
+                {/* Footer CTA & Sitemap */}
+                <div className="w-full">
+                  <CTABand />
+                  <Footer />
+                </div>
               </div>
-            </div>
+            </LoaderProvider>
           </SmoothScroll>
         </DrawerProvider>
       </body>
