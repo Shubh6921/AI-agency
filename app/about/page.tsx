@@ -129,6 +129,7 @@ function ValueCard({ title, desc, idx }: ValueCardProps) {
 
 export default function AboutPage() {
   const containerRef = useRef<HTMLDivElement>(null);
+  const nameRef = useRef<HTMLHeadingElement>(null);
   const pathname = usePathname();
   const lenis = useSmoothScroll();
 
@@ -144,6 +145,28 @@ export default function AboutPage() {
 
   useEffect(() => {
     const ctx = gsap.context(() => {
+      // Animate Shubham Rana name chars
+      const nameChars = gsap.utils.toArray(".name-char");
+      if (nameChars.length > 0) {
+        gsap.fromTo(
+          nameChars,
+          { opacity: 0, y: 15, rotateX: 60 },
+          {
+            opacity: 1,
+            y: 0,
+            rotateX: 0,
+            duration: 0.8,
+            stagger: 0.035,
+            ease: "power4.out",
+            scrollTrigger: {
+              trigger: nameRef.current,
+              start: "top 88%",
+              toggleActions: "play none none none",
+            },
+          }
+        );
+      }
+
       // Staggered reveal for cards
       const cards = gsap.utils.toArray(".value-card-reveal");
       if (cards.length > 0) {
@@ -280,8 +303,24 @@ export default function AboutPage() {
 
             <div className="md:col-span-7 space-y-6">
               <MicroLabel>Leadership</MicroLabel>
-              <h3 className="font-display text-3xl font-black uppercase tracking-tight text-text-primary">
-                Shubham Rana
+              <h3
+                ref={nameRef}
+                className="font-display text-3xl font-black uppercase tracking-tight text-text-primary flex flex-wrap gap-x-[0.25em]"
+                style={{ perspective: 1000, transformStyle: "preserve-3d" }}
+              >
+                {"Shubham Rana".split(" ").map((word, wIdx) => (
+                  <span key={wIdx} className="inline-block whitespace-nowrap">
+                    {word.split("").map((char, cIdx) => (
+                      <span
+                        key={cIdx}
+                        className="name-char inline-block"
+                        style={{ transformOrigin: "bottom center" }}
+                      >
+                        {char}
+                      </span>
+                    ))}
+                  </span>
+                ))}
               </h3>
               <p className="text-xs text-text-tertiary uppercase tracking-wider font-semibold">
                 ✦ Founder & Head of AI Systems
