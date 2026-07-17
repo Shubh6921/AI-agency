@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { ArrowUp } from "lucide-react";
 import { useMagnetic } from "@/hooks/use-magnetic";
 
@@ -23,9 +24,11 @@ export default function Footer() {
           
           {/* Column 1: Brand Info */}
           <div className="md:col-span-2 space-y-6">
-            <img
+            <Image
               src="/logo-text.png"
               alt="AXEN"
+              width={160}
+              height={64}
               className="h-16 w-auto object-contain mix-blend-screen"
             />
             <p className="max-w-sm text-sm text-text-secondary leading-relaxed">

@@ -51,7 +51,7 @@ export default function LoaderProvider({ children }: LoaderProviderProps) {
         if (
           href &&
           href.startsWith("/") &&
-          !href.startsWith("#") &&
+          !href.includes("#") &&
           targetAttr !== "_blank" &&
           !event.defaultPrevented &&
           event.button === 0 &&

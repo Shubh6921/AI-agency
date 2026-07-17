@@ -1,26 +1,33 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { useMagnetic } from "@/hooks/use-magnetic";
 import { useDrawer } from "@/components/providers/drawer-context";
-import { cn } from "@/lib/utils";
+
+import { useSmoothScroll } from "@/components/providers/smooth-scroll";
 
 export default function Nav() {
   const pathname = usePathname();
   const { toggleDrawer } = useDrawer();
+  const lenis = useSmoothScroll();
 
   // Apply magnetic effect to the primary "Let's Talk" CTA
   const talkBtnRef = useMagnetic(40, 0.2) as React.RefObject<HTMLDivElement>;
   const menuBtnRef = useMagnetic(30, 0.25) as React.RefObject<HTMLDivElement>;
 
-  const navLinks = [
-    { label: "Work", href: "/work" },
-    { label: "Services", href: "/services" },
-    { label: "About", href: "/about" },
-    { label: "Insights", href: "/insights" },
-    { label: "Contact", href: "/contact" },
-  ];
+
+
+  const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, targetId: string) => {
+    if (pathname === "/") {
+      e.preventDefault();
+      const target = document.getElementById(targetId);
+      if (target && lenis) {
+        lenis.scrollTo(target);
+      }
+    }
+  };
 
   return (
     <header className="fixed top-0 left-0 z-50 w-full px-6 py-6 md:px-16 transition-colors duration-300 pointer-events-none">
@@ -28,37 +35,25 @@ export default function Nav() {
         
         {/* Logo */}
         <Link href="/" className="group flex items-center gap-2">
-          <img
+          <Image
             src="/logo-text.png"
             alt="AXEN"
+            width={120}
+            height={48}
+            priority
             className="h-12 w-auto object-contain transition-transform duration-300 group-hover:scale-[1.02] mix-blend-screen"
           />
         </Link>
 
-        {/* Navigation Links */}
-        <nav className="hidden md:flex items-center gap-10">
-          {navLinks.map((link) => (
-            <Link
-              key={link.href}
-              href={link.href}
-              className={cn(
-                "relative text-sm font-medium tracking-wide text-text-secondary transition-colors duration-300 hover:text-text-primary py-1 group",
-                pathname === link.href && "text-text-primary"
-              )}
-            >
-              {link.label}
-              {/* Underline wipe hover effect */}
-              <span className="absolute bottom-0 left-0 w-full h-[1px] bg-text-primary scale-x-0 origin-left transition-transform duration-300 ease-out-expo group-hover:scale-x-100" />
-            </Link>
-          ))}
-        </nav>
+
 
         {/* CTA Actions */}
         <div className="flex items-center gap-6">
           {/* Let's Talk CTA (Magnetic) */}
           <div ref={talkBtnRef} className="hidden sm:block">
             <Link
-              href="/contact"
+              href="/#contact"
+              onClick={(e) => handleNavClick(e, "contact")}
               className="inline-flex h-10 items-center justify-center rounded-full bg-text-primary px-6 text-sm font-medium text-canvas transition-colors duration-300 hover:bg-text-secondary"
             >
               Let&apos;s talk

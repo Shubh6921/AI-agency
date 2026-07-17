@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { useGSAP } from "@gsap/react";
+import Image from "next/image";
 import gsap from "gsap";
 
 interface LoaderProps {
@@ -157,9 +158,12 @@ export default function Loader({ visible }: LoaderProps) {
           <div className="absolute w-64 h-64 bg-[#0066ff]/5 rounded-full blur-3xl opacity-40 pointer-events-none" />
 
           {/* Exact Logo Image */}
-          <img
+          <Image
             src="/logo.png"
             alt="AXEN Logo"
+            width={320}
+            height={320}
+            priority
             className="w-full h-auto object-contain select-none pointer-events-none mix-blend-screen"
           />
         </div>

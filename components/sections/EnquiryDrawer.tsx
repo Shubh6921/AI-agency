@@ -7,6 +7,9 @@ import { X } from "lucide-react";
 import { useDrawer } from "@/components/providers/drawer-context";
 import { useMagnetic } from "@/hooks/use-magnetic";
 
+import { usePathname } from "next/navigation";
+import { useSmoothScroll } from "@/components/providers/smooth-scroll";
+
 const backdropVariants = {
   hidden: { opacity: 0 },
   visible: { opacity: 1 },
@@ -45,6 +48,8 @@ const itemVariants = {
 export default function EnquiryDrawer() {
   const { isOpen, closeDrawer } = useDrawer();
   const closeBtnRef = useMagnetic<HTMLButtonElement>(30, 0.25);
+  const pathname = usePathname();
+  const lenis = useSmoothScroll();
 
   // Close on Esc key
   useEffect(() => {
@@ -54,6 +59,26 @@ export default function EnquiryDrawer() {
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, [closeDrawer]);
+
+  const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, targetId: string) => {
+    if (pathname === "/") {
+      e.preventDefault();
+      closeDrawer();
+      setTimeout(() => {
+        const target = document.getElementById(targetId);
+        if (!target) return;
+        if (lenis) {
+          lenis.start(); // Ensure lenis isn't paused
+          lenis.scrollTo(target);
+        } else {
+          target.scrollIntoView({ behavior: "smooth" });
+        }
+      }, 600); // Wait for drawer exit animation to complete
+    } else {
+      // On sub-pages, close drawer and let Next.js navigate to /#section
+      closeDrawer();
+    }
+  };
 
   return (
     <AnimatePresence>
@@ -94,24 +119,26 @@ export default function EnquiryDrawer() {
 
             {/* Menu Content Links */}
             <div className="flex flex-col gap-10 my-auto">
+
+              {/* Navigation */}
               <motion.div variants={itemVariants} className="space-y-1">
                 <span className="text-[10px] font-semibold uppercase tracking-[0.2em] text-text-tertiary">
                   ✦ Navigation
                 </span>
                 <nav className="flex flex-col gap-4 text-3xl font-display font-medium">
-                  <Link href="/work" onClick={closeDrawer} className="hover:text-text-secondary transition-colors duration-300">
+                  <Link href="/#work" onClick={(e) => handleNavClick(e, "work")} className="hover:text-text-secondary transition-colors duration-300">
                     Work
                   </Link>
-                  <Link href="/services" onClick={closeDrawer} className="hover:text-text-secondary transition-colors duration-300">
+                  <Link href="/#services" onClick={(e) => handleNavClick(e, "services")} className="hover:text-text-secondary transition-colors duration-300">
                     Services
                   </Link>
-                  <Link href="/about" onClick={closeDrawer} className="hover:text-text-secondary transition-colors duration-300">
+                  <Link href="/#about" onClick={(e) => handleNavClick(e, "about")} className="hover:text-text-secondary transition-colors duration-300">
                     About
                   </Link>
-                  <Link href="/insights" onClick={closeDrawer} className="hover:text-text-secondary transition-colors duration-300">
+                  <Link href="/#insights" onClick={(e) => handleNavClick(e, "insights")} className="hover:text-text-secondary transition-colors duration-300">
                     Insights
                   </Link>
-                  <Link href="/contact" onClick={closeDrawer} className="hover:text-text-secondary transition-colors duration-300">
+                  <Link href="/#contact" onClick={(e) => handleNavClick(e, "contact")} className="hover:text-text-secondary transition-colors duration-300">
                     Contact
                   </Link>
                 </nav>

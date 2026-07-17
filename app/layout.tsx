@@ -4,11 +4,11 @@ import "./globals.css";
 import SmoothScroll from "@/components/providers/smooth-scroll";
 import DrawerProvider from "@/components/providers/drawer-context";
 import LoaderProvider from "@/components/providers/loader-provider";
+
 import CustomCursor from "@/components/ui/CustomCursor";
 import Nav from "@/components/sections/Nav";
 import EnquiryDrawer from "@/components/sections/EnquiryDrawer";
-import CTABand from "@/components/sections/CTABand";
-import Footer from "@/components/sections/Footer";
+import FooterWrapper from "@/components/sections/FooterWrapper";
 import Background3D from "@/components/Background3D";
 
 const manrope = Manrope({
@@ -40,32 +40,31 @@ export default function RootLayout({
       >
         <DrawerProvider>
           <SmoothScroll>
-            {/* Global Custom Cursor */}
-            <CustomCursor />
 
-            {/* Interactive 3D Background */}
-            <Background3D />
-            
-            <LoaderProvider>
-              {/* Header / Nav */}
-              <Nav />
+              {/* Global Custom Cursor */}
+              <CustomCursor />
 
-              {/* Slide-out Drawer */}
-              <EnquiryDrawer />
+              {/* Interactive 3D Background */}
+              <Background3D />
+              
+              <LoaderProvider>
+                {/* Header / Nav */}
+                <Nav />
 
-              {/* Page content wrapper */}
-              <div className="relative min-h-screen flex flex-col justify-between pt-28">
-                <main className="flex-grow">
-                  {children}
-                </main>
-                
-                {/* Footer CTA & Sitemap */}
-                <div className="w-full">
-                  <CTABand />
-                  <Footer />
+                {/* Slide-out Drawer */}
+                <EnquiryDrawer />
+
+                {/* Page content wrapper */}
+                <div className="relative min-h-screen flex flex-col justify-between pt-28">
+                  <main id="page-content" className="flex-grow">
+                    {children}
+                  </main>
+                  
+                  {/* Footer CTA & Sitemap */}
+                  <FooterWrapper />
                 </div>
-              </div>
-            </LoaderProvider>
+              </LoaderProvider>
+
           </SmoothScroll>
         </DrawerProvider>
       </body>

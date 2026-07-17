@@ -1,16 +1,136 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-import Image from "next/image";
+import Link from "next/link";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import MicroLabel from "@/components/ui/MicroLabel";
 import Button from "@/components/ui/Button";
 
+import { usePathname } from "next/navigation";
+import { useSmoothScroll } from "@/components/providers/smooth-scroll";
+
 gsap.registerPlugin(ScrollTrigger);
+
+interface ValueCardProps {
+  title: string;
+  desc: string;
+  idx: number;
+}
+
+function ValueCard({ title, desc, idx }: ValueCardProps) {
+  const cardRef = useRef<HTMLDivElement>(null);
+  const innerRef = useRef<HTMLDivElement>(null);
+
+  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    // Disable hover effects on mobile/touch devices
+    if (window.matchMedia("(pointer: coarse)").matches) return;
+
+    const card = cardRef.current;
+    const inner = innerRef.current;
+    if (!card || !inner) return;
+
+    const rect = card.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+
+    card.style.setProperty("--mouse-x", `${x}px`);
+    card.style.setProperty("--mouse-y", `${y}px`);
+
+    const xc = rect.width / 2;
+    const yc = rect.height / 2;
+    const rotateY = ((x - xc) / xc) * 12; // max 12deg Y rotation
+    const rotateX = -((y - yc) / yc) * 12; // max 12deg X rotation
+
+    gsap.to(inner, {
+      rotateX: rotateX,
+      rotateY: rotateY,
+      transformPerspective: 1000,
+      ease: "power2.out",
+      duration: 0.4,
+      overwrite: "auto",
+    });
+  };
+
+  const handleMouseEnter = () => {
+    if (window.matchMedia("(pointer: coarse)").matches) return;
+    const card = cardRef.current;
+    if (card) {
+      gsap.to(card, {
+        "--spotlight-opacity": 1,
+        duration: 0.3,
+      });
+    }
+  };
+
+  const handleMouseLeave = () => {
+    const card = cardRef.current;
+    const inner = innerRef.current;
+    if (!card || !inner) return;
+
+    gsap.to(inner, {
+      rotateX: 0,
+      rotateY: 0,
+      ease: "power2.out",
+      duration: 0.6,
+      overwrite: "auto",
+    });
+
+    gsap.to(card, {
+      "--spotlight-opacity": 0,
+      duration: 0.4,
+    });
+  };
+
+  return (
+    <div
+      ref={cardRef}
+      onMouseMove={handleMouseMove}
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
+      className="value-card-reveal relative group rounded-2xl p-[1px] overflow-hidden transition-all duration-300"
+      style={{
+        background: `radial-gradient(300px circle at var(--mouse-x, 0px) var(--mouse-y, 0px), rgba(38, 199, 255, calc(var(--spotlight-opacity, 0) * 0.35)), #232326 80%)`,
+      } as React.CSSProperties}
+    >
+      {/* 3D tilt inner container */}
+      <div
+        ref={innerRef}
+        className="w-full h-full bg-surface-base rounded-[15px] p-8 space-y-4 relative overflow-hidden transition-colors duration-500 hover:bg-[#0f0f11]"
+        style={{
+          transformStyle: "preserve-3d",
+          backfaceVisibility: "hidden",
+        }}
+      >
+        {/* Dynamic Inner Background Spotlight Glow */}
+        <div
+          className="absolute inset-0 pointer-events-none transition-opacity duration-300"
+          style={{
+            background: `radial-gradient(350px circle at var(--mouse-x, 0px) var(--mouse-y, 0px), rgba(38, 199, 255, calc(var(--spotlight-opacity, 0) * 0.05)), transparent 80%)`,
+          }}
+        />
+
+        {/* Content with 3D Pop (translateZ) */}
+        <div className="relative z-10 space-y-4" style={{ transform: "translateZ(25px)" }}>
+          <span className="font-display text-text-tertiary text-sm font-semibold block transition-colors duration-300 group-hover:text-[#26C7ff]/70">
+            0{idx + 1} /
+          </span>
+          <h3 className="font-display text-xl font-bold uppercase tracking-tight text-text-primary transition-colors duration-300 group-hover:text-[#FAFAFA]">
+            {title}
+          </h3>
+          <p className="text-text-secondary text-sm leading-relaxed font-sans transition-colors duration-300 group-hover:text-text-primary/80">
+            {desc}
+          </p>
+        </div>
+      </div>
+    </div>
+  );
+}
 
 export default function AboutPage() {
   const containerRef = useRef<HTMLDivElement>(null);
+  const pathname = usePathname();
+  const lenis = useSmoothScroll();
 
   const values = [
     { title: "Driven by excellence", desc: "We settle for nothing less than absolute precision in both design and code." },
@@ -21,8 +141,40 @@ export default function AboutPage() {
     { title: "Experience & adaptability", desc: "A seasoned remote team that integrates seamlessly to ship fast." },
   ];
 
+
   useEffect(() => {
     const ctx = gsap.context(() => {
+      // Staggered reveal for cards
+      const cards = gsap.utils.toArray(".value-card-reveal");
+      if (cards.length > 0) {
+        gsap.fromTo(
+          cards,
+          {
+            opacity: 0,
+            y: 80,
+            scale: 0.92,
+            rotateX: 12,
+            transformPerspective: 1200,
+            transformOrigin: "top center",
+          },
+          {
+            opacity: 1,
+            y: 0,
+            scale: 1,
+            rotateX: 0,
+            duration: 1.2,
+            ease: "power4.out",
+            stagger: 0.12,
+            scrollTrigger: {
+              trigger: ".values-grid-trigger",
+              start: "top 82%",
+              toggleActions: "play none none none",
+            },
+          }
+        );
+      }
+
+      // Standard reveal up for other sections
       gsap.utils.toArray(".reveal-up").forEach((sec: unknown) => {
         const el = sec as HTMLElement;
         gsap.fromTo(
@@ -35,7 +187,7 @@ export default function AboutPage() {
             ease: "power3.out",
             scrollTrigger: {
               trigger: el,
-              start: "top 80%",
+              start: "top 85%",
               toggleActions: "play none none none",
             },
           }
@@ -66,22 +218,18 @@ export default function AboutPage() {
         </section>
 
         {/* 2. VALUES GRID */}
-        <section className="reveal-up border-t border-hairline pt-20 mb-24 md:mb-32 space-y-12">
-          <MicroLabel>Our Values</MicroLabel>
+        <section className="border-t border-hairline pt-20 mb-24 md:mb-32 space-y-12 values-grid-trigger">
+          <div className="reveal-up">
+            <MicroLabel>Our Values</MicroLabel>
+          </div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {values.map((v, idx) => (
-              <div
+              <ValueCard
                 key={v.title}
-                className="border border-hairline rounded-2xl p-8 bg-surface-base hover:border-text-secondary/40 transition-colors duration-500 space-y-4"
-              >
-                <span className="font-display text-text-tertiary text-sm font-semibold">0{idx + 1} /</span>
-                <h3 className="font-display text-xl font-bold uppercase tracking-tight text-text-primary">
-                  {v.title}
-                </h3>
-                <p className="text-text-secondary text-sm leading-relaxed font-sans">
-                  {v.desc}
-                </p>
-              </div>
+                title={v.title}
+                desc={v.desc}
+                idx={idx}
+              />
             ))}
           </div>
         </section>
@@ -90,20 +238,50 @@ export default function AboutPage() {
         <section className="reveal-up border-t border-hairline pt-20 mb-24 md:mb-32">
           <div className="grid grid-cols-1 md:grid-cols-12 gap-12 items-center">
             
-            <div className="md:col-span-5 relative aspect-square w-full rounded-2xl overflow-hidden border border-hairline bg-surface-base">
-              <Image
-                src="https://lh3.googleusercontent.com/aida-public/AB6AXuBRyV3nWgJgmlcNpcz5TXh40gLX4eVOtc5WsccVKDlPHh5rzlV1Qkrm3QXTlvNoGSn_ysj3JWhgoSg5b0ssg2fNK-y4PHHywNateW3eJfgfma493yksy1UHuQhot9fHmsa6-ZV_lnVaeNGm206m1YGnir5SbzAW6GpRzC-OikIoAY0S4RuZvvo2Uy5ReUmsveSl8oI64A7_6XwT9-Xh6OZ6iX6j1ROJ0VoN5x3wBaT59GcDzW3kgNjRyw"
-                alt="Founder Spotlight"
-                fill
-                sizes="(max-width: 768px) 100vw, 35vw"
-                className="object-cover grayscale pointer-events-none"
-              />
+            <div className="md:col-span-5 aspect-square w-full rounded-2xl border border-hairline bg-black p-4 flex flex-col justify-center items-center overflow-hidden">
+              <pre 
+                className="font-mono text-[5px] sm:text-[6px] md:text-[5px] lg:text-[6px] xl:text-[7px] leading-[1.05] text-[#26C7ff] select-none text-center"
+                style={{ textShadow: "0 0 6px rgba(38, 199, 255, 0.5)" }}
+              >
+{`                                                             
+..                                                          
+                                                             
+                                                             
+                        ......:::+*+.        ...............
+.......................,;*??%SSS%**%SS*.....................
+,,,,,,,,,,,,,,,,,,,,,,:%##SS###SSSSSSSSSS+,................,
+,,,,,,,,,,,,,,,,,,,,.,S####S#@##SSSS#SSSS##?,               
+                     S#####SS##SSS##SS##@SS#?,              
+                    ;@#@@##S%SS**%%##S#######+              
+                    *@@@S?+;:. ;+;*?###@#####.              
+                    #@@%*?%?;;...,;?#@@@##@@;               
+                     ;@;:;+?%*,  +%%%*++?@@S                
+                    .+%..:;;:,.  ,;++;,.;S;                 
+                     .;.                :;.                 
+                      .;.               .+:                  
+                       .,    ;%??*    .:                    
+                        ,:.++*;:;***..:                     
+                         :+:,,...,,,;;                      
+                          *;::++;:,:+                       
+                         ,:+*,...,+++                       
+                    ..?@?::,:;***;:::?#:                    
+          .;*???*+%@@##@+,,,,,::::,::%@#@@%S@@@@@@?.        
+       ;#@###########@#@@*,,.,,,,,,:S@##@@##########@%.     
+     %@####################+.....,?##################S@?    
+   ;@####################SSS###S###SS####################.  
+ .###########################SSSS##################S####S@; 
+?###################################################@####S#+
+@#@@@@@#@@@@@@@#@@@@@@@##@@@#@@@@@@####@@#######@@@#@#######`}
+              </pre>
+              <div className="mt-4 font-mono text-[9px] text-[#26C7ff]/75 tracking-[0.25em] uppercase">
+                SYS.LOG // SHUBHAM_RANA.EXE
+              </div>
             </div>
 
             <div className="md:col-span-7 space-y-6">
               <MicroLabel>Leadership</MicroLabel>
               <h3 className="font-display text-3xl font-black uppercase tracking-tight text-text-primary">
-                Marcus Vance
+                Shubham Rana
               </h3>
               <p className="text-xs text-text-tertiary uppercase tracking-wider font-semibold">
                 ✦ Founder & Head of AI Systems
@@ -137,6 +315,27 @@ export default function AboutPage() {
         </section>
 
       </div>
+
+      {/* Link to Insights */}
+      <div className="h-[16vh] flex flex-col items-center justify-center gap-4 border-t border-hairline/20 mt-16">
+        <span className="font-mono text-[10px] tracking-[0.3em] text-text-tertiary uppercase">Next Chapter</span>
+        <Link
+          href="/insights"
+          onClick={(e) => {
+            if (pathname === "/") {
+              e.preventDefault();
+              const target = document.getElementById("insights");
+              if (target && lenis) {
+                lenis.scrollTo(target);
+              }
+            }
+          }}
+          className="font-display text-xl md:text-2xl font-extralight tracking-widest uppercase text-text-secondary hover:text-[#26C7ff] transition-colors duration-300"
+        >
+          Insights &amp; Ideas →
+        </Link>
+      </div>
+
     </div>
   );
 }

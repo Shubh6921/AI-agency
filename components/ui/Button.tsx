@@ -5,11 +5,12 @@ import Link from "next/link";
 import { useMagnetic } from "@/hooks/use-magnetic";
 import { cn } from "@/lib/utils";
 
-interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+interface ButtonProps extends React.ComponentPropsWithoutRef<"button"> {
   variant?: "solid" | "ghost";
   magnetic?: boolean;
   href?: string;
   children: React.ReactNode;
+  onClick?: (e: React.MouseEvent<HTMLElement>) => void;
 }
 
 export default function Button({
@@ -18,6 +19,7 @@ export default function Button({
   href,
   className,
   children,
+  onClick,
   ...props
 }: ButtonProps) {
   const magneticRef = useMagnetic(40, 0.2);
@@ -38,14 +40,14 @@ export default function Button({
     if (magnetic) {
       return (
         <div ref={magneticRef as React.RefObject<HTMLDivElement>}>
-          <Link href={href} className={cn(baseStyles, variantStyles, className)}>
+          <Link href={href} onClick={onClick} className={cn(baseStyles, variantStyles, className)}>
             {content}
           </Link>
         </div>
       );
     }
     return (
-      <Link href={href} className={cn(baseStyles, variantStyles, className)}>
+      <Link href={href} onClick={onClick} className={cn(baseStyles, variantStyles, className)}>
         {content}
       </Link>
     );
@@ -54,7 +56,7 @@ export default function Button({
   if (magnetic) {
     return (
       <div ref={magneticRef as React.RefObject<HTMLDivElement>}>
-        <button className={cn(baseStyles, variantStyles, className)} {...props}>
+        <button className={cn(baseStyles, variantStyles, className)} onClick={onClick} {...props}>
           {content}
         </button>
       </div>
@@ -62,7 +64,7 @@ export default function Button({
   }
 
   return (
-    <button className={cn(baseStyles, variantStyles, className)} {...props}>
+    <button className={cn(baseStyles, variantStyles, className)} onClick={onClick} {...props}>
       {content}
     </button>
   );

@@ -6,8 +6,13 @@ import Link from "next/link";
 import MicroLabel from "@/components/ui/MicroLabel";
 import { insightsData } from "@/lib/insights-data";
 
+import { usePathname } from "next/navigation";
+import { useSmoothScroll } from "@/components/providers/smooth-scroll";
+
 export default function InsightsPage() {
   const [activeCategory, setActiveCategory] = useState<string>("All");
+  const pathname = usePathname();
+  const lenis = useSmoothScroll();
 
   const categories = ["All", "AI Strategy", "Design", "Engineering", "Case Notes"];
 
@@ -93,6 +98,27 @@ export default function InsightsPage() {
         </section>
 
       </div>
+
+      {/* Link to Contact */}
+      <div className="h-[16vh] flex flex-col items-center justify-center gap-4 border-t border-hairline/20 mt-16">
+        <span className="font-mono text-[10px] tracking-[0.3em] text-text-tertiary uppercase">Ready to Build?</span>
+        <Link
+          href="/contact"
+          onClick={(e) => {
+            if (pathname === "/") {
+              e.preventDefault();
+              const target = document.getElementById("contact");
+              if (target && lenis) {
+                lenis.scrollTo(target);
+              }
+            }
+          }}
+          className="font-display text-xl md:text-2xl font-extralight tracking-widest uppercase text-text-secondary hover:text-[#26C7ff] transition-colors duration-300"
+        >
+          Start a Project →
+        </Link>
+      </div>
+
     </div>
   );
 }

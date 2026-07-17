@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-
 import { motion, AnimatePresence } from "framer-motion";
 import { ChevronDown, ArrowRight, ArrowLeft, Check } from "lucide-react";
 import MicroLabel from "@/components/ui/MicroLabel";
@@ -22,6 +21,7 @@ export default function ContactPage() {
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState("");
   const [activeFaq, setActiveFaq] = useState<number | null>(null);
+
 
   const [formData, setFormData] = useState<FormData>({
     name: "",
@@ -361,6 +361,76 @@ export default function ContactPage() {
         </section>
 
       </div>
+
+      {/* ── FOOTER ── */}
+      <footer className="border-t border-hairline/20 mt-16 py-16 px-6 md:px-16">
+        <div className="mx-auto max-w-7xl">
+          {/* Top row */}
+          <div className="flex flex-col md:flex-row justify-between items-start gap-12 mb-14">
+            {/* Brand */}
+            <div className="space-y-4 max-w-xs">
+              <span className="font-display text-2xl font-black uppercase tracking-wider text-white">AXEN</span>
+              <p className="text-sm text-text-secondary leading-relaxed font-sans">
+                AI-native digital products built for ambitious brands operating at the edge of possibility.
+              </p>
+              <div className="flex gap-4 pt-2">
+                {["X", "LI", "GH"].map((s) => (
+                  <a
+                    key={s}
+                    href="#"
+                    className="w-9 h-9 rounded-full border border-hairline/30 flex items-center justify-center font-mono text-[10px] text-text-tertiary hover:border-[#26C7ff]/60 hover:text-[#26C7ff] transition-all duration-200"
+                  >
+                    {s}
+                  </a>
+                ))}
+              </div>
+            </div>
+
+            {/* Navigation columns */}
+            <div className="grid grid-cols-2 md:grid-cols-3 gap-10 text-sm">
+              <div className="space-y-3">
+                <p className="font-mono text-[9px] tracking-[0.25em] uppercase text-text-tertiary mb-4">Navigation</p>
+                {[
+                  ["Work", "/work"],
+                  ["Services", "/services"],
+                  ["About", "/about"],
+                  ["Insights", "/insights"],
+                  ["Contact", "/contact"],
+                ].map(([label, href]) => (
+                  <a key={label} href={href} className="block text-text-secondary hover:text-white transition-colors duration-200 font-sans">
+                    {label}
+                  </a>
+                ))}
+              </div>
+              <div className="space-y-3">
+                <p className="font-mono text-[9px] tracking-[0.25em] uppercase text-text-tertiary mb-4">Services</p>
+                {["AI Automation", "Web Platforms", "Brand Identity", "Creative Studio", "Growth Systems"].map((s) => (
+                  <span key={s} className="block text-text-secondary font-sans text-sm">{s}</span>
+                ))}
+              </div>
+              <div className="space-y-3">
+                <p className="font-mono text-[9px] tracking-[0.25em] uppercase text-text-tertiary mb-4">Contact</p>
+                <a href="mailto:hello@axennode.com" className="block text-text-secondary hover:text-white transition-colors duration-200 font-sans">hello@axennode.com</a>
+                <span className="block text-text-secondary font-sans text-sm">Mumbai, India</span>
+                <span className="block text-text-secondary font-sans text-sm">Remote Worldwide</span>
+              </div>
+            </div>
+          </div>
+
+          {/* Divider */}
+          <div className="h-[1px] bg-gradient-to-r from-transparent via-hairline/40 to-transparent mb-8" />
+
+          {/* Bottom row */}
+          <div className="flex flex-col md:flex-row justify-between items-center gap-4 text-[11px] font-mono text-text-tertiary tracking-wider uppercase">
+            <span>© {new Date().getFullYear()} AXEN NODE — All rights reserved</span>
+            <div className="flex gap-6">
+              <a href="#" className="hover:text-white transition-colors duration-200">Privacy Policy</a>
+              <a href="#" className="hover:text-white transition-colors duration-200">Terms</a>
+            </div>
+          </div>
+        </div>
+      </footer>
+
     </div>
   );
 }

@@ -9,10 +9,18 @@ import { ArrowRight, Play } from "lucide-react";
 import MicroLabel from "@/components/ui/MicroLabel";
 import Button from "@/components/ui/Button";
 import { motion, useScroll, useSpring } from "framer-motion";
+import { useSmoothScroll } from "@/components/providers/smooth-scroll";
+
+import WorkPage from "./work/page";
+import ServicesPage from "./services/page";
+import AboutPage from "./about/page";
+import InsightsPage from "./insights/page";
+import ContactPage from "./contact/page";
 
 gsap.registerPlugin(ScrollTrigger);
 
 export default function Home() {
+  const lenis = useSmoothScroll();
   const containerRef = useRef<HTMLDivElement>(null);
   const processContainerRef = useRef<HTMLDivElement>(null);
 
@@ -27,170 +35,198 @@ export default function Home() {
     restDelta: 0.001,
   });
 
+  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    const card = e.currentTarget;
+    const rect = card.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+    card.style.setProperty("--mouse-x", `${x}px`);
+    card.style.setProperty("--mouse-y", `${y}px`);
+  };
+
   useEffect(() => {
     const ctx = gsap.context(() => {
-      // Hero entrance animations
-      gsap.fromTo(
-        ".hero-reveal",
-        { opacity: 0, y: 40 },
-        { opacity: 1, y: 0, duration: 1.2, ease: "power4.out", stagger: 0.15 }
-      );
+      const mm = gsap.matchMedia();
 
-      // Section triggers for scroll reveal
-      gsap.utils.toArray(".reveal-up").forEach((section: unknown) => {
-        const el = section as HTMLElement;
+      // Mobile / Tablet reveal triggers (max-width: 1023px)
+      mm.add("(max-width: 1023px)", () => {
         gsap.fromTo(
-          el,
-          { opacity: 0, y: 50 },
-          {
-            opacity: 1,
-            y: 0,
-            duration: 1,
-            ease: "power3.out",
-            scrollTrigger: {
-              trigger: el,
-              start: "top 80%",
-              toggleActions: "play none none none",
-            },
-          }
-        );
-      });
-
-      // Alternating timeline card entrance animations (Left cards: Step 1 & 3)
-      gsap.utils.toArray(".timeline-card-left").forEach((card: unknown) => {
-        const el = card as HTMLElement;
-        gsap.fromTo(
-          el,
-          { opacity: 0, x: -60 },
-          {
-            opacity: 1,
-            x: 0,
-            duration: 0.8,
-            ease: "power3.out",
-            scrollTrigger: {
-              trigger: el,
-              start: "top 85%",
-              toggleActions: "play none none none",
-            },
-          }
-        );
-
-        // Glow sync when journey line reaches the box
-        const box = el.querySelector(".timeline-box");
-        if (box) {
-          gsap.fromTo(
-            box,
-            {
-              borderColor: "rgba(35, 35, 38, 1)",
-              boxShadow: "0 0 0px rgba(38, 199, 255, 0)",
-            },
-            {
-              borderColor: "rgba(38, 199, 255, 0.28)", // Slightly more visible thin cyan border outline
-              boxShadow: "0 0 16px rgba(38, 199, 255, 0.12)", // Slightly stronger soft glow
-              duration: 0.5,
-              ease: "power2.out",
-              scrollTrigger: {
-                trigger: el,
-                start: "top center",
-                toggleActions: "play reverse play reverse",
-              },
-            }
-          );
-        }
-      });
-
-      // Alternating timeline card entrance animations (Right card: Step 2)
-      gsap.utils.toArray(".timeline-card-right").forEach((card: unknown) => {
-        const el = card as HTMLElement;
-        gsap.fromTo(
-          el,
-          { opacity: 0, x: 60 },
-          {
-            opacity: 1,
-            x: 0,
-            duration: 0.8,
-            ease: "power3.out",
-            scrollTrigger: {
-              trigger: el,
-              start: "top 85%",
-              toggleActions: "play none none none",
-            },
-          }
-        );
-
-        // Glow sync when journey line reaches the box
-        const box = el.querySelector(".timeline-box");
-        if (box) {
-          gsap.fromTo(
-            box,
-            {
-              borderColor: "rgba(35, 35, 38, 1)",
-              boxShadow: "0 0 0px rgba(38, 199, 255, 0)",
-            },
-            {
-              borderColor: "rgba(38, 199, 255, 0.28)", // Slightly more visible thin cyan border outline
-              boxShadow: "0 0 16px rgba(38, 199, 255, 0.12)", // Slightly stronger soft glow
-              duration: 0.5,
-              ease: "power2.out",
-              scrollTrigger: {
-                trigger: el,
-                start: "top center",
-                toggleActions: "play reverse play reverse",
-              },
-            }
-          );
-        }
-      });
-
-      // Mobile timeline card animations
-      gsap.utils.toArray(".timeline-card-mobile").forEach((card: unknown) => {
-        const el = card as HTMLElement;
-        gsap.fromTo(
-          el,
+          ".hero-reveal",
           { opacity: 0, y: 30 },
-          {
-            opacity: 1,
-            y: 0,
-            duration: 0.6,
-            ease: "power3.out",
-            scrollTrigger: {
-              trigger: el,
-              start: "top 90%",
-              toggleActions: "play none none none",
-            },
-          }
+          { opacity: 1, y: 0, duration: 1.2, ease: "power4.out", stagger: 0.15 }
         );
 
-        // Glow sync on mobile
-        const box = el.querySelector(".timeline-box");
-        if (box) {
+        // General scroll reveals for mobile
+        gsap.utils.toArray(".reveal-up-mobile, .reveal-up").forEach((section: unknown) => {
+          const el = section as HTMLElement;
           gsap.fromTo(
-            box,
+            el,
+            { opacity: 0, y: 40 },
             {
-              borderColor: "rgba(35, 35, 38, 1)",
-              boxShadow: "0 0 0px rgba(38, 199, 255, 0)",
-            },
-            {
-              borderColor: "rgba(38, 199, 255, 0.24)",
-              boxShadow: "0 0 12px rgba(38, 199, 255, 0.08)",
-              duration: 0.4,
-              ease: "power2.out",
+              opacity: 1,
+              y: 0,
+              duration: 1,
+              ease: "power3.out",
               scrollTrigger: {
                 trigger: el,
-                start: "top center",
-                toggleActions: "play reverse play reverse",
+                start: "top 85%",
+                toggleActions: "play none none none",
               },
             }
           );
-        }
+        });
+
+        // Mobile process timeline glow
+        gsap.utils.toArray(".timeline-card-mobile").forEach((card: unknown) => {
+          const el = card as HTMLElement;
+          const box = el.querySelector(".timeline-box");
+          if (box) {
+            gsap.fromTo(
+              box,
+              { borderColor: "rgba(35, 35, 38, 1)", boxShadow: "0 0 0px rgba(38, 199, 255, 0)" },
+              {
+                borderColor: "rgba(38, 199, 255, 0.24)",
+                boxShadow: "0 0 12px rgba(38, 199, 255, 0.08)",
+                duration: 0.4,
+                ease: "power2.out",
+                scrollTrigger: {
+                  trigger: el,
+                  start: "top center",
+                  toggleActions: "play reverse play reverse",
+                },
+              }
+            );
+          }
+        });
       });
 
-      // Stats Count-Up Animation
+      // Desktop immersive pinned transitions: ONLY Hero -> About (min-width: 1024px)
+      mm.add("(min-width: 1024px)", () => {
+        // Pinned Story Wrapper for Hero & About
+        const sections = gsap.utils.toArray(".scroll-section") as HTMLElement[];
+        const masterTimeline = gsap.timeline({
+          scrollTrigger: {
+            trigger: ".scroll-story-wrapper",
+            start: "top top",
+            end: "+=150%", // 150vh scroll duration for premium slow feel
+            scrub: 1.2,
+            pin: true,
+            anticipatePin: 1,
+          },
+        });
+
+        // Initial setup for About Section (index 1)
+        if (sections[1]) {
+          gsap.set(sections[1], { opacity: 0, scale: 1.04, y: 80, filter: "blur(20px)" });
+        }
+
+        // Hero -> About transition
+        if (sections[0] && sections[1]) {
+          // Outgoing Hero
+          masterTimeline.to(
+            sections[0],
+            {
+              opacity: 0,
+              scale: 0.97,
+              filter: "blur(12px)",
+              duration: 1,
+              ease: "power4.inOut",
+            },
+            0
+          );
+
+          // Incoming About
+          masterTimeline.to(
+            sections[1],
+            {
+              opacity: 1,
+              scale: 1,
+              y: 0,
+              filter: "blur(0px)",
+              duration: 1,
+              ease: "power4.inOut",
+            },
+            0.15
+          );
+
+          // Parallax layers on Hero
+          const heroBg = sections[0].querySelector(".parallax-bg");
+          const heroDeco = sections[0].querySelector(".parallax-deco");
+          const heroFg = sections[0].querySelector(".parallax-fg");
+
+          if (heroBg) masterTimeline.to(heroBg, { y: -80, scale: 1.08, duration: 1.2, ease: "none" }, 0);
+          if (heroDeco) masterTimeline.to(heroDeco, { y: -150, duration: 1.2, ease: "none" }, 0);
+          if (heroFg) masterTimeline.to(heroFg, { y: -30, duration: 1.2, ease: "none" }, 0);
+
+          // Progressive reveals on About Section
+          const aboutHeading = sections[1].querySelector(".reveal-heading");
+          const aboutText = sections[1].querySelector(".reveal-text");
+          const aboutButtons = sections[1].querySelector(".reveal-buttons");
+
+          if (aboutHeading) {
+            gsap.set(aboutHeading, { opacity: 0, y: 25 });
+            masterTimeline.to(aboutHeading, { opacity: 1, y: 0, duration: 0.6, ease: "power3.out" }, 0.4);
+          }
+          if (aboutText) {
+            gsap.set(aboutText, { opacity: 0, y: 20 });
+            masterTimeline.to(aboutText, { opacity: 1, y: 0, duration: 0.6, ease: "power3.out" }, 0.5);
+          }
+          if (aboutButtons) {
+            gsap.set(aboutButtons, { opacity: 0, y: 15 });
+            masterTimeline.to(aboutButtons, { opacity: 1, y: 0, duration: 0.5, ease: "power3.out" }, 0.7);
+          }
+        }
+
+        // Standard Scroll reveals for subsequent normal flow sections (Bento & Process)
+        gsap.utils.toArray(".reveal-up").forEach((section: unknown) => {
+          const el = section as HTMLElement;
+          gsap.fromTo(
+            el,
+            { opacity: 0, y: 50 },
+            {
+              opacity: 1,
+              y: 0,
+              duration: 1,
+              ease: "power3.out",
+              scrollTrigger: {
+                trigger: el,
+                start: "top 80%",
+                toggleActions: "play none none none",
+              },
+            }
+          );
+        });
+
+        // Desktop process cards glow triggers
+        gsap.utils.toArray(".timeline-card-left, .timeline-card-right").forEach((card: unknown) => {
+          const el = card as HTMLElement;
+          const box = el.querySelector(".timeline-box");
+          if (box) {
+            gsap.fromTo(
+              box,
+              { borderColor: "rgba(35, 35, 38, 1)", boxShadow: "0 0 0px rgba(38, 199, 255, 0)" },
+              {
+                borderColor: "rgba(38, 199, 255, 0.28)",
+                boxShadow: "0 0 16px rgba(38, 199, 255, 0.12)",
+                duration: 0.5,
+                ease: "power2.out",
+                scrollTrigger: {
+                  trigger: el,
+                  start: "top center",
+                  toggleActions: "play reverse play reverse",
+                },
+              }
+            );
+          }
+        });
+      });
+
+      // Stats count-up triggers
       gsap.utils.toArray(".count-up").forEach((stat: unknown) => {
         const el = stat as HTMLElement;
         const target = parseInt(el.getAttribute("data-target") || "0", 10);
         const suffix = el.getAttribute("data-suffix") || "";
-        
+
         gsap.fromTo(
           el,
           { textContent: "0" },
@@ -218,76 +254,107 @@ export default function Home() {
   }, []);
 
   return (
-    <div ref={containerRef} className="relative min-h-screen bg-transparent text-text-primary overflow-x-hidden">
+    <div ref={containerRef} className="relative min-h-screen bg-transparent text-text-primary overflow-x-clip">
       
-      {/* 1. HERO SECTION */}
-      <section className="relative min-h-[90vh] flex flex-col justify-start px-6 md:px-16 pt-36 pb-16 overflow-hidden bg-transparent">
-        <div className="mx-auto max-w-7xl w-full grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
-          
-          <div className="z-10 space-y-8 text-left">
-            <div className="hero-reveal">
-              <MicroLabel>UNDERSTAND · BUILD · SCALE</MicroLabel>
-            </div>
-            
-            <h1 className="hero-reveal font-display text-[40px] sm:text-[56px] md:text-[72px] leading-[1] md:leading-[0.9] font-extralight tracking-tight uppercase max-w-xl bg-gradient-to-r from-white/20 via-white/70 to-white bg-clip-text text-transparent">
-              Where AI Builds<br />Business &bull;
-            </h1>
-            
-            <p className="hero-reveal text-sm text-white max-w-md leading-relaxed font-light">
-              AI agents, automations, websites, and digital systems built for clarity, scale, and high-growth impact.
-            </p>
-            
-            <div className="hero-reveal flex flex-wrap gap-4 pt-4">
-              <Button href="/contact" variant="solid" magnetic>
-                Build With AXEN
-              </Button>
-              <Button href="/work" variant="ghost" magnetic>
-                See Work
-              </Button>
-            </div>
-          </div>
+      {/* 1 & 2: Pinned Story Wrapper (Hero -> About) */}
+      <div className="scroll-story-wrapper relative w-full lg:h-[200vh] bg-transparent">
+        <div className="lg:sticky lg:top-0 lg:left-0 lg:w-full lg:h-screen lg:overflow-hidden bg-transparent">
 
-          {/* Transparent Blank Placeholder Column to let background shine through */}
-          <div className="hero-reveal relative w-full aspect-video lg:aspect-square flex items-center justify-center pointer-events-none bg-transparent"></div>
+          {/* 1. HERO SECTION */}
+          <section className="scroll-section scroll-section-1 relative min-h-[90vh] lg:h-screen flex flex-col justify-center px-6 md:px-16 pt-36 pb-16 overflow-hidden bg-transparent lg:absolute lg:inset-0 lg:z-40">
+            <div className="parallax-bg absolute inset-0 bg-transparent pointer-events-none" />
+
+            <div className="mx-auto max-w-7xl w-full grid grid-cols-1 lg:grid-cols-2 gap-12 items-center relative z-10 parallax-fg">
+              <div className="space-y-8 text-left">
+                <div className="hero-reveal">
+                  <MicroLabel>UNDERSTAND · BUILD · SCALE</MicroLabel>
+                </div>
+                
+                <h1 className="hero-reveal font-display text-[40px] sm:text-[56px] md:text-[72px] leading-[1] md:leading-[0.9] font-extralight tracking-tight uppercase max-w-xl bg-gradient-to-r from-white/20 via-white/70 to-white bg-clip-text text-transparent">
+                  Where AI Builds<br />Business &bull;
+                </h1>
+                
+                <p className="hero-reveal text-sm text-white max-w-md leading-relaxed font-light">
+                  AI agents, automations, websites, and digital systems built for clarity, scale, and high-growth impact.
+                </p>
+                
+                <div className="hero-reveal flex flex-wrap gap-4 pt-4">
+                  <Button
+                    href="/#contact"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      const target = document.getElementById("contact");
+                      if (target && lenis) lenis.scrollTo(target);
+                    }}
+                    variant="solid"
+                    magnetic
+                  >
+                    Build With AXEN
+                  </Button>
+                  <Button
+                    href="/#work"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      const target = document.getElementById("work");
+                      if (target && lenis) lenis.scrollTo(target);
+                    }}
+                    variant="ghost"
+                    magnetic
+                  >
+                    See Work
+                  </Button>
+                </div>
+              </div>
+
+              <div className="hero-reveal relative w-full aspect-video lg:aspect-square flex items-center justify-center pointer-events-none bg-transparent" />
+            </div>
+
+            <div className="absolute bottom-6 right-16 hidden md:block hero-reveal z-10 parallax-deco">
+              <p className="font-sans text-xs text-text-tertiary">Est. 2026 — building AI systems</p>
+            </div>
+          </section>
+
+          {/* 2. ABOUT TEASER */}
+          <section className="scroll-section scroll-section-2 py-32 px-6 md:px-16 border-t border-hairline relative bg-canvas/30 backdrop-blur-md lg:h-screen lg:absolute lg:inset-0 lg:z-30 lg:flex lg:flex-col lg:justify-center lg:border-t-0">
+            <div className="parallax-bg absolute inset-0 bg-transparent pointer-events-none" />
+
+            <div className="mx-auto max-w-7xl w-full relative z-10 parallax-fg">
+              <div className="grid grid-cols-1 md:grid-cols-12 gap-8 items-center">
+                <div className="md:col-span-4 reveal-heading">
+                  <MicroLabel>About AXEN</MicroLabel>
+                </div>
+                <div className="md:col-span-8 space-y-8">
+                  <h2 className="reveal-text font-sans text-2xl md:text-4xl text-text-primary font-medium leading-relaxed">
+                    We bridge the gap between complex engineering and human clarity. AXEN builds the intelligent infrastructure that allows visionary teams to scale without friction.
+                  </h2>
+                  <div className="reveal-buttons">
+                    <Link
+                      href="/#about"
+                      onClick={(e) => {
+                        e.preventDefault();
+                        const target = document.getElementById("about");
+                        if (target && lenis) lenis.scrollTo(target);
+                      }}
+                      className="inline-flex items-center gap-2 text-sm font-semibold tracking-wider text-text-primary uppercase group"
+                    >
+                      more about us 
+                      <ArrowRight size={16} className="transition-transform duration-300 group-hover:translate-x-2" />
+                    </Link>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
 
         </div>
+      </div>
 
-        <div className="absolute bottom-6 right-16 hidden md:block hero-reveal">
-          <p className="font-sans text-xs text-text-tertiary">Est. 2026 — building AI systems</p>
-        </div>
-      </section>
-
-      {/* 2. ABOUT TEASER */}
-      <section className="reveal-up py-32 px-6 md:px-16 border-t border-hairline relative z-10 bg-canvas/30 backdrop-blur-sm">
-        <div className="mx-auto max-w-7xl">
-          <div className="grid grid-cols-1 md:grid-cols-12 gap-8">
-            <div className="md:col-span-4">
-              <MicroLabel>About AXEN</MicroLabel>
-            </div>
-            <div className="md:col-span-8 space-y-8">
-              <h2 className="font-sans text-2xl md:text-4xl text-text-primary font-medium leading-relaxed">
-                We bridge the gap between complex engineering and human clarity. AXEN builds the intelligent infrastructure that allows visionary teams to scale without friction.
-              </h2>
-              <Link
-                href="/about"
-                className="inline-flex items-center gap-2 text-sm font-semibold tracking-wider text-text-primary uppercase group"
-              >
-                more about us 
-                <ArrowRight size={16} className="transition-transform duration-300 group-hover:translate-x-2" />
-              </Link>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* 3. KEY FACTS / BENTO GRID */}
-      <section className="reveal-up py-32 px-6 md:px-16 bg-surface-base/30 backdrop-blur-sm border-t border-hairline relative z-10">
-        <div className="mx-auto max-w-7xl space-y-12">
-          
+      {/* 3. KEY FACTS / BENTO GRID (Normal Document Flow) */}
+      <section className="reveal-up py-32 px-6 md:px-16 bg-surface-base/30 backdrop-blur-md border-t border-hairline relative z-10">
+        <div className="mx-auto max-w-7xl space-y-12 w-full">
           <MicroLabel>Key Facts</MicroLabel>
           
           <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
-            
             {/* Stat 1 */}
             <div className="bg-surface-raised/40 backdrop-blur-sm border border-hairline rounded-2xl p-10 flex flex-col justify-between hover:border-text-secondary/40 transition-colors duration-500 min-h-[220px]">
               <span className="font-display text-6xl font-black text-text-primary leading-none count-up" data-target="50" data-suffix="+">
@@ -323,41 +390,35 @@ export default function Home() {
               </span>
               <p className="text-sm font-medium tracking-wide text-text-secondary">client retention</p>
             </div>
-
           </div>
         </div>
       </section>
 
-      {/* 4. PROCESS / TIMELINE */}
-      <section ref={processContainerRef} className="py-32 px-6 md:px-16 border-t border-hairline relative z-10 bg-canvas/30 backdrop-blur-sm">
-        <div className="mx-auto max-w-7xl space-y-16">
+      {/* 4. PROCESS / TIMELINE (Normal Document Flow) */}
+      <section ref={processContainerRef} className="reveal-up py-32 px-6 md:px-16 border-t border-hairline relative z-10 bg-canvas/30 backdrop-blur-md">
+        <div className="mx-auto max-w-7xl space-y-16 w-full">
           <div className="text-center md:text-left">
             <MicroLabel>Our Process</MicroLabel>
           </div>
 
-          {/* DESKTOP TIMELINE (Alternating layout with curved path) */}
-          <div className="hidden md:block relative w-full min-h-[850px] py-10">
-            
-            {/* Centered Curved SVG Scroll Line */}
+          {/* DESKTOP TIMELINE */}
+          <div className="hidden md:block relative w-full min-h-[500px] py-2">
             <div className="absolute inset-0 pointer-events-none flex justify-center">
               <div className="w-full max-w-3xl h-full relative">
                 <svg
                   className="absolute inset-0 w-full h-full overflow-visible"
                   preserveAspectRatio="none"
-                  viewBox="0 0 1000 800"
+                  viewBox="0 0 1000 500"
                 >
-                  {/* Background Track Line (Inactive) */}
                   <path
-                    d="M 500,0 C 500,100 250,100 250,220 C 250,340 750,340 750,460 C 750,580 250,580 250,700 L 250,800"
+                    d="M 500,0 C 500,80 250,80 250,180 C 250,280 750,280 750,380 L 750,500"
                     fill="none"
                     stroke="#232326"
                     strokeWidth="2"
                     strokeDasharray="4 4"
                   />
-
-                  {/* Active Animated Drawing Path */}
                   <motion.path
-                    d="M 500,0 C 500,100 250,100 250,220 C 250,340 750,340 750,460 C 750,580 250,580 250,700 L 250,800"
+                    d="M 500,0 C 500,80 250,80 250,180 C 250,280 750,280 750,380 L 750,500"
                     fill="none"
                     stroke="#26C7ff"
                     strokeWidth="2.5"
@@ -367,33 +428,34 @@ export default function Home() {
               </div>
             </div>
 
-            {/* Alternating Cards Grid */}
-            <div className="relative z-10 w-full space-y-24">
-              
+            <div className="relative z-10 w-full space-y-12">
               {/* Step 1: Left */}
-              <div className="grid grid-cols-12 gap-8 items-center min-h-[220px]">
+              <div className="grid grid-cols-12 gap-8 items-center min-h-[160px]">
                 <div className="col-span-5 timeline-card-left">
-                  <div className="timeline-box border border-hairline rounded-2xl p-10 bg-surface-base/30 backdrop-blur-sm transition-all duration-500 space-y-4">
+                  <div 
+                    onMouseMove={handleMouseMove}
+                    className="timeline-box border border-hairline rounded-2xl p-8 bg-surface-base/30 backdrop-blur-sm transition-all duration-500 space-y-3"
+                  >
                     <span className="font-display text-base font-bold text-text-tertiary">01 /</span>
-                    <h3 className="text-2xl font-bold uppercase tracking-tight font-display text-text-primary">Understand</h3>
-                    <p className="text-text-secondary text-sm leading-relaxed">
-                      We dive deep into your workflow, architectures, and objectives to pinpoint intelligence bottle-necks.
+                    <h3 className="text-xl font-bold uppercase tracking-tight font-display text-text-primary">Understand</h3>
+                    <p className="text-text-secondary text-xs leading-relaxed">
+                      We dive deep into your workflow, architectures, and objectives to pinpoint intelligence bottlenecks.
                     </p>
                   </div>
                 </div>
-                <div className="col-span-2" />
-                <div className="col-span-5" />
               </div>
 
               {/* Step 2: Right */}
-              <div className="grid grid-cols-12 gap-8 items-center min-h-[220px]">
-                <div className="col-span-5" />
-                <div className="col-span-2" />
+              <div className="grid grid-cols-12 gap-8 items-center min-h-[160px]">
+                <div className="col-span-7" />
                 <div className="col-span-5 timeline-card-right">
-                  <div className="timeline-box border border-hairline rounded-2xl p-10 bg-surface-base/30 backdrop-blur-sm transition-all duration-500 space-y-4">
+                  <div 
+                    onMouseMove={handleMouseMove}
+                    className="timeline-box border border-hairline rounded-2xl p-8 bg-surface-base/30 backdrop-blur-sm transition-all duration-500 space-y-3"
+                  >
                     <span className="font-display text-base font-bold text-text-tertiary">02 /</span>
-                    <h3 className="text-2xl font-bold uppercase tracking-tight font-display text-text-primary">Design & Build</h3>
-                    <p className="text-text-secondary text-sm leading-relaxed">
+                    <h3 className="text-xl font-bold uppercase tracking-tight font-display text-text-primary">Design & Build</h3>
+                    <p className="text-text-secondary text-xs leading-relaxed">
                       We develop and design tailormade AI pipelines, responsive platforms, and automations.
                     </p>
                   </div>
@@ -401,43 +463,28 @@ export default function Home() {
               </div>
 
               {/* Step 3: Left */}
-              <div className="grid grid-cols-12 gap-8 items-center min-h-[220px]">
+              <div className="grid grid-cols-12 gap-8 items-center min-h-[160px]">
                 <div className="col-span-5 timeline-card-left">
-                  <div className="timeline-box border border-hairline rounded-2xl p-10 bg-surface-base/30 backdrop-blur-sm transition-all duration-500 space-y-4">
+                  <div 
+                    onMouseMove={handleMouseMove}
+                    className="timeline-box border border-hairline rounded-2xl p-8 bg-surface-base/30 backdrop-blur-sm transition-all duration-500 space-y-3"
+                  >
                     <span className="font-display text-base font-bold text-text-tertiary">03 /</span>
-                    <h3 className="text-2xl font-bold uppercase tracking-tight font-display text-text-primary">Refine & Evolve</h3>
-                    <p className="text-text-secondary text-sm leading-relaxed">
+                    <h3 className="text-xl font-bold uppercase tracking-tight font-display text-text-primary">Refine & Evolve</h3>
+                    <p className="text-text-secondary text-xs leading-relaxed">
                       Continuous optimization loops ensure your systems stay fast, secure, and ahead of the curve.
                     </p>
                   </div>
                 </div>
-                <div className="col-span-2" />
-                <div className="col-span-5" />
               </div>
-
             </div>
-
           </div>
 
-          {/* MOBILE TIMELINE (Left-aligned straight line) */}
+          {/* MOBILE TIMELINE */}
           <div className="block md:hidden relative pl-8 space-y-12">
-            
-            {/* Straight line for mobile layout */}
             <div className="absolute left-2.5 top-3 bottom-3 w-[2px]">
-              <svg
-                className="absolute inset-0 h-full w-full overflow-visible"
-                preserveAspectRatio="none"
-                viewBox="0 0 2 100"
-              >
-                <line
-                  x1="1"
-                  y1="0"
-                  x2="1"
-                  y2="100"
-                  stroke="#232326"
-                  strokeWidth="2"
-                  strokeDasharray="4 4"
-                />
+              <svg className="absolute inset-0 h-full w-full overflow-visible" preserveAspectRatio="none" viewBox="0 0 2 100">
+                <line x1="1" y1="0" x2="1" y2="100" stroke="#232326" strokeWidth="2" strokeDasharray="4 4" />
                 <motion.path
                   d="M 1,0 L 1,100"
                   stroke="#26C7ff"
@@ -452,7 +499,7 @@ export default function Home() {
               {
                 step: "01",
                 title: "Understand",
-                desc: "We dive deep into your workflow, architectures, and objectives to pinpoint intelligence bottle-necks."
+                desc: "We dive deep into your workflow, architectures, and objectives to pinpoint intelligence bottlenecks."
               },
               {
                 step: "02",
@@ -466,7 +513,10 @@ export default function Home() {
               }
             ].map((item, idx) => (
               <div key={idx} className="relative group space-y-3 timeline-card-mobile">
-                <div className="timeline-box border border-hairline rounded-2xl p-8 bg-surface-base/30 backdrop-blur-sm transition-all duration-500 space-y-4">
+                <div 
+                  onMouseMove={handleMouseMove}
+                  className="timeline-box border border-hairline rounded-2xl p-8 bg-surface-base/30 backdrop-blur-sm transition-all duration-500 space-y-4"
+                >
                   <span className="font-display text-base font-bold text-text-tertiary">{item.step} /</span>
                   <h3 className="text-xl font-bold uppercase tracking-tight font-display text-text-primary">{item.title}</h3>
                   <p className="text-text-secondary text-sm leading-relaxed">
@@ -475,11 +525,67 @@ export default function Home() {
                 </div>
               </div>
             ))}
-
           </div>
 
         </div>
       </section>
+
+
+
+      {/* 5. WORK SECTION */}
+      <div id="work" className="border-t border-hairline/20">
+        <WorkPage />
+      </div>
+
+      {/* 6. SERVICES SECTION */}
+      <div id="services" className="border-t border-hairline/20">
+        <ServicesPage />
+      </div>
+
+      {/* 7. ABOUT SECTION */}
+      <div id="about" className="border-t border-hairline/20">
+        <AboutPage />
+      </div>
+
+      {/* 8. INSIGHTS SECTION */}
+      <div id="insights" className="border-t border-hairline/20">
+        <InsightsPage />
+      </div>
+
+      {/* 9. CONTACT SECTION */}
+      <div id="contact" className="border-t border-[#232326]">
+        <ContactPage />
+      </div>
+
+      <style>{`
+        .timeline-box {
+          position: relative;
+        }
+        .timeline-box::before {
+          content: "";
+          position: absolute;
+          inset: 0;
+          border-radius: inherit;
+          padding: 1.5px;
+          background: radial-gradient(
+            220px circle at var(--mouse-x, 0px) var(--mouse-y, 0px),
+            rgba(38, 199, 255, 0.45),
+            transparent 80%
+          );
+          -webkit-mask: 
+            linear-gradient(#fff 0 0) content-box, 
+            linear-gradient(#fff 0 0);
+          -webkit-mask-composite: xor;
+                  mask-composite: exclude;
+          pointer-events: none;
+          opacity: 0;
+          transition: opacity 0.4s ease;
+          z-index: 2;
+        }
+        .timeline-box:hover::before {
+          opacity: 1;
+        }
+      `}</style>
     </div>
   );
 }
