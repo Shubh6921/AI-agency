@@ -7,8 +7,8 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import MicroLabel from "@/components/ui/MicroLabel";
 import Button from "@/components/ui/Button";
 
-import { usePathname } from "next/navigation";
-import { useSmoothScroll } from "@/components/providers/smooth-scroll";
+
+
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -130,8 +130,7 @@ function ValueCard({ title, desc, idx }: ValueCardProps) {
 export default function AboutPage() {
   const containerRef = useRef<HTMLDivElement>(null);
   const nameRef = useRef<HTMLHeadingElement>(null);
-  const pathname = usePathname();
-  const lenis = useSmoothScroll();
+
 
   const values = [
     { title: "Driven by excellence", desc: "We settle for nothing less than absolute precision in both design and code." },
@@ -355,23 +354,14 @@ export default function AboutPage() {
 
       </div>
 
-      {/* Link to Insights */}
+      {/* Link to Contact */}
       <div className="h-[16vh] flex flex-col items-center justify-center gap-4 border-t border-hairline/20 mt-16">
         <span className="font-mono text-[10px] tracking-[0.3em] text-text-tertiary uppercase">Next Chapter</span>
         <Link
-          href="/insights"
-          onClick={(e) => {
-            if (pathname === "/") {
-              e.preventDefault();
-              const target = document.getElementById("insights");
-              if (target && lenis) {
-                lenis.scrollTo(target);
-              }
-            }
-          }}
+          href="/contact"
           className="font-display text-xl md:text-2xl font-extralight tracking-widest uppercase text-text-secondary hover:text-[#26C7ff] transition-colors duration-300"
         >
-          Insights &amp; Ideas →
+          Get In Touch →
         </Link>
       </div>
 

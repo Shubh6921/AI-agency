@@ -132,11 +132,8 @@ export default function EnquiryDrawer() {
                   <Link href="/#services" onClick={(e) => handleNavClick(e, "services")} className="hover:text-text-secondary transition-colors duration-300">
                     Services
                   </Link>
-                  <Link href="/#about" onClick={(e) => handleNavClick(e, "about")} className="hover:text-text-secondary transition-colors duration-300">
+                  <Link href="/about" onClick={() => closeDrawer()} className="hover:text-text-secondary transition-colors duration-300">
                     About
-                  </Link>
-                  <Link href="/#insights" onClick={(e) => handleNavClick(e, "insights")} className="hover:text-text-secondary transition-colors duration-300">
-                    Insights
                   </Link>
                   <Link href="/#contact" onClick={(e) => handleNavClick(e, "contact")} className="hover:text-text-secondary transition-colors duration-300">
                     Contact

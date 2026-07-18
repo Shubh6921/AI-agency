@@ -1,16 +1,20 @@
 "use client";
 
-import { useRef, useEffect, Suspense } from "react";
-import Spline from "@splinetool/react-spline/next";
+import { useRef, useEffect, Suspense, useState, lazy } from "react";
+
+const Spline = lazy(() => import("./SplineClient"));
 
 export default function Background3D() {
   const splineRef = useRef<unknown>(null);
+  const [isMounted, setIsMounted] = useState(false);
 
   function onLoad(splineApp: unknown) {
     splineRef.current = splineApp;
   }
 
   useEffect(() => {
+    setIsMounted(true);
+
     const handleMouseMove = (e: MouseEvent) => {
       if (!splineRef.current) return;
 
@@ -45,11 +49,13 @@ export default function Background3D() {
   return (
     <div className="fixed inset-y-0 right-0 w-full lg:w-[50vw] -z-10 pointer-events-none opacity-80">
       <Suspense fallback={null}>
-        <Spline
-          scene="https://prod.spline.design/TLMw5vq3CXat145W/scene.splinecode"
-          className="w-full h-full"
-          onLoad={onLoad}
-        />
+        {isMounted && (
+          <Spline
+            scene="https://prod.spline.design/TLMw5vq3CXat145W/scene.splinecode"
+            className="w-full h-full"
+            onLoad={onLoad}
+          />
+        )}
       </Suspense>
       {/* Overlay pill to cover the 'Built with Spline' logo watermark */}
       <div 

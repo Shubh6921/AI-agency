@@ -8,25 +8,25 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { ArrowRight, Play } from "lucide-react";
 import MicroLabel from "@/components/ui/MicroLabel";
 import Button from "@/components/ui/Button";
-import { motion, useScroll, useSpring } from "framer-motion";
+import { motion, useScroll, useSpring, useTransform } from "framer-motion";
 import { useSmoothScroll } from "@/components/providers/smooth-scroll";
+
 
 import WorkPage from "./work/page";
 import ServicesPage from "./services/page";
-import AboutPage from "./about/page";
-import InsightsPage from "./insights/page";
 import ContactPage from "./contact/page";
 
 gsap.registerPlugin(ScrollTrigger);
 
 export default function Home() {
   const lenis = useSmoothScroll();
+
   const containerRef = useRef<HTMLDivElement>(null);
   const processContainerRef = useRef<HTMLDivElement>(null);
 
   const { scrollYProgress } = useScroll({
     target: processContainerRef,
-    offset: ["start center", "end center"],
+    offset: ["start start", "end end"],
   });
 
   const pathLength = useSpring(scrollYProgress, {
@@ -34,6 +34,18 @@ export default function Home() {
     damping: 30,
     restDelta: 0.001,
   });
+
+  // Box slide-in values synced with beam pathLength progress
+  // Beam path: top(0) → curves left at ~0.33 → curves right at ~0.66 → bottom(1)
+  // Box 1 (left):  beam arrives ~0.1, fully revealed by 0.3
+  // Box 2 (right): beam arrives ~0.4, fully revealed by 0.6
+  // Box 3 (left):  beam arrives ~0.7, fully revealed by 0.9
+  const box1X       = useTransform(pathLength, [0.0, 0.28], [-60, 0]);
+  const box1Opacity = useTransform(pathLength, [0.0, 0.28], [0, 1]);
+  const box2X       = useTransform(pathLength, [0.35, 0.62], [60, 0]);
+  const box2Opacity = useTransform(pathLength, [0.35, 0.62], [0, 1]);
+  const box3X       = useTransform(pathLength, [0.68, 0.95], [-60, 0]);
+  const box3Opacity = useTransform(pathLength, [0.68, 0.95], [0, 1]);
 
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
     const card = e.currentTarget;
@@ -117,7 +129,10 @@ export default function Home() {
 
         // Initial setup for About Section (index 1)
         if (sections[1]) {
-          gsap.set(sections[1], { opacity: 0, scale: 1.04, y: 80, filter: "blur(20px)" });
+          gsap.set(sections[1], { opacity: 0, scale: 1.04, y: 80, filter: "blur(20px)", pointerEvents: "none" });
+        }
+        if (sections[0]) {
+          gsap.set(sections[0], { pointerEvents: "auto" });
         }
 
         // Hero -> About transition
@@ -131,6 +146,7 @@ export default function Home() {
               filter: "blur(12px)",
               duration: 1,
               ease: "power4.inOut",
+              pointerEvents: "none",
             },
             0
           );
@@ -145,6 +161,7 @@ export default function Home() {
               filter: "blur(0px)",
               duration: 1,
               ease: "power4.inOut",
+              pointerEvents: "auto",
             },
             0.15
           );
@@ -257,8 +274,8 @@ export default function Home() {
     <div ref={containerRef} className="relative min-h-screen bg-transparent text-text-primary overflow-x-clip">
       
       {/* 1 & 2: Pinned Story Wrapper (Hero -> About) */}
-      <div className="scroll-story-wrapper relative w-full lg:h-[200vh] bg-transparent">
-        <div className="lg:sticky lg:top-0 lg:left-0 lg:w-full lg:h-screen lg:overflow-hidden bg-transparent">
+      <div className="scroll-story-wrapper relative w-full lg:h-screen bg-transparent">
+        <div className="lg:relative lg:w-full lg:h-screen lg:overflow-hidden bg-transparent">
 
           {/* 1. HERO SECTION */}
           <section className="scroll-section scroll-section-1 relative min-h-[90vh] lg:h-screen flex flex-col justify-center px-6 md:px-16 pt-36 pb-16 overflow-hidden bg-transparent lg:absolute lg:inset-0 lg:z-40">
@@ -325,16 +342,11 @@ export default function Home() {
                 </div>
                 <div className="md:col-span-8 space-y-8">
                   <h2 className="reveal-text font-sans text-2xl md:text-4xl text-text-primary font-medium leading-relaxed">
-                    We bridge the gap between complex engineering and human clarity. AXEN builds the intelligent infrastructure that allows visionary teams to scale without friction.
+                    At AXEN, we build digital experiences that help ambitious businesses move faster, scale smarter, and create lasting impact.
                   </h2>
                   <div className="reveal-buttons">
                     <Link
-                      href="/#about"
-                      onClick={(e) => {
-                        e.preventDefault();
-                        const target = document.getElementById("about");
-                        if (target && lenis) lenis.scrollTo(target);
-                      }}
+                      href="/about"
                       className="inline-flex items-center gap-2 text-sm font-semibold tracking-wider text-text-primary uppercase group"
                     >
                       more about us 
@@ -394,14 +406,16 @@ export default function Home() {
         </div>
       </section>
 
-      {/* 4. PROCESS / TIMELINE (Normal Document Flow) */}
-      <section ref={processContainerRef} className="reveal-up py-32 px-6 md:px-16 border-t border-hairline relative z-10 bg-canvas/30 backdrop-blur-md">
-        <div className="mx-auto max-w-7xl space-y-16 w-full">
-          <div className="text-center md:text-left">
-            <MicroLabel>Our Process</MicroLabel>
-          </div>
+      {/* 4. PROCESS / TIMELINE — Sticky pinned: 300vh outer keeps section locked
+          to viewport while beam + boxes animate. Pin releases at scroll end. */}
+      <div ref={processContainerRef} style={{ height: "300vh" }} className="relative z-10">
+        <section className="sticky top-0 h-screen flex flex-col justify-center px-6 md:px-16 border-t border-hairline bg-canvas/30 backdrop-blur-md overflow-hidden">
+          <div className="mx-auto max-w-7xl space-y-12 w-full">
+            <div className="text-center md:text-left">
+              <MicroLabel>Our Process</MicroLabel>
+            </div>
 
-          {/* DESKTOP TIMELINE */}
+            {/* DESKTOP TIMELINE */}
           <div className="hidden md:block relative w-full min-h-[500px] py-2">
             <div className="absolute inset-0 pointer-events-none flex justify-center">
               <div className="w-full max-w-3xl h-full relative">
@@ -429,10 +443,13 @@ export default function Home() {
             </div>
 
             <div className="relative z-10 w-full space-y-12">
-              {/* Step 1: Left */}
+              {/* Step 1: Left — slides in from LEFT as beam arrives */}
               <div className="grid grid-cols-12 gap-8 items-center min-h-[160px]">
-                <div className="col-span-5 timeline-card-left">
-                  <div 
+                <motion.div
+                  className="col-span-5 timeline-card-left"
+                  style={{ x: box1X, opacity: box1Opacity }}
+                >
+                  <div
                     onMouseMove={handleMouseMove}
                     className="timeline-box border border-hairline rounded-2xl p-8 bg-surface-base/30 backdrop-blur-sm transition-all duration-500 space-y-3"
                   >
@@ -442,14 +459,17 @@ export default function Home() {
                       We dive deep into your workflow, architectures, and objectives to pinpoint intelligence bottlenecks.
                     </p>
                   </div>
-                </div>
+                </motion.div>
               </div>
 
-              {/* Step 2: Right */}
+              {/* Step 2: Right — slides in from RIGHT as beam arrives */}
               <div className="grid grid-cols-12 gap-8 items-center min-h-[160px]">
                 <div className="col-span-7" />
-                <div className="col-span-5 timeline-card-right">
-                  <div 
+                <motion.div
+                  className="col-span-5 timeline-card-right"
+                  style={{ x: box2X, opacity: box2Opacity }}
+                >
+                  <div
                     onMouseMove={handleMouseMove}
                     className="timeline-box border border-hairline rounded-2xl p-8 bg-surface-base/30 backdrop-blur-sm transition-all duration-500 space-y-3"
                   >
@@ -459,12 +479,15 @@ export default function Home() {
                       We develop and design tailormade AI pipelines, responsive platforms, and automations.
                     </p>
                   </div>
-                </div>
+                </motion.div>
               </div>
 
-              {/* Step 3: Left */}
+              {/* Step 3: Left — slides in from LEFT as beam arrives */}
               <div className="grid grid-cols-12 gap-8 items-center min-h-[160px]">
-                <div className="col-span-5 timeline-card-left">
+                <motion.div
+                  className="col-span-5 timeline-card-left"
+                  style={{ x: box3X, opacity: box3Opacity }}
+                >
                   <div 
                     onMouseMove={handleMouseMove}
                     className="timeline-box border border-hairline rounded-2xl p-8 bg-surface-base/30 backdrop-blur-sm transition-all duration-500 space-y-3"
@@ -475,7 +498,7 @@ export default function Home() {
                       Continuous optimization loops ensure your systems stay fast, secure, and ahead of the curve.
                     </p>
                   </div>
-                </div>
+                </motion.div>
               </div>
             </div>
           </div>
@@ -527,34 +550,28 @@ export default function Home() {
             ))}
           </div>
 
+          </div>
+        </section>
+      </div>
+
+
+
+      {/* SOLID WRAPPER FOR SECTIONS BELOW PROCESS — Slides over sticky section cleanly */}
+      <div className="relative z-20 bg-canvas">
+        {/* 5. WORK SECTION */}
+        <div id="work" className="border-t border-hairline/20">
+          <WorkPage />
         </div>
-      </section>
 
+        {/* 6. SERVICES SECTION */}
+        <div id="services" className="border-t border-hairline/20">
+          <ServicesPage />
+        </div>
 
-
-      {/* 5. WORK SECTION */}
-      <div id="work" className="border-t border-hairline/20">
-        <WorkPage />
-      </div>
-
-      {/* 6. SERVICES SECTION */}
-      <div id="services" className="border-t border-hairline/20">
-        <ServicesPage />
-      </div>
-
-      {/* 7. ABOUT SECTION */}
-      <div id="about" className="border-t border-hairline/20">
-        <AboutPage />
-      </div>
-
-      {/* 8. INSIGHTS SECTION */}
-      <div id="insights" className="border-t border-hairline/20">
-        <InsightsPage />
-      </div>
-
-      {/* 9. CONTACT SECTION */}
-      <div id="contact" className="border-t border-[#232326]">
-        <ContactPage />
+        {/* 9. CONTACT SECTION */}
+        <div id="contact" className="border-t border-[#232326]">
+          <ContactPage />
+        </div>
       </div>
 
       <style>{`

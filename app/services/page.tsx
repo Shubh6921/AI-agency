@@ -11,8 +11,8 @@ import Link from "next/link";
 import { motion, useScroll, useSpring, AnimatePresence } from "framer-motion";
 import { cn } from "@/lib/utils";
 
-import { usePathname } from "next/navigation";
-import { useSmoothScroll } from "@/components/providers/smooth-scroll";
+
+
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -21,8 +21,7 @@ export default function ServicesPage() {
   const listRef = useRef<HTMLDivElement>(null);
   const [activeAccordion, setActiveAccordion] = useState<number | null>(null);
   const [activeSection, setActiveSection] = useState<string>("ai-automation");
-  const pathname = usePathname();
-  const lenis = useSmoothScroll();
+
 
   const disciplines = [
     {
@@ -48,30 +47,6 @@ export default function ServicesPage() {
       subCategories: ["Next.js Frontends", "API Implementations", "Serverless Edge"],
       tags: ["Next.js", "TypeScript", "Tailwind CSS", "GSAP ScrollTrigger"],
       image: "/services/web-platforms.png",
-    },
-    {
-      id: "brand-identity",
-      name: "Brand Identity",
-      desc: "Crafted identities that stand out and stay remembered.",
-      subCategories: ["Logos & Guidelines", "Design Systems", "Visual Strategy"],
-      tags: ["Brand Strategy", "Figma Systems", "Visual Guidelines", "Typography"],
-      image: "/services/brand-identity.png",
-    },
-    {
-      id: "creative-studio",
-      name: "Creative Studio",
-      desc: "Visual storytelling that captivates and converts.",
-      subCategories: ["Interactive Design", "Motion & 3D", "Micro-Animations"],
-      tags: ["UX Research", "Figma Layouts", "GSAP Animations", "WebGL"],
-      image: "/services/creative-studio.png",
-    },
-    {
-      id: "growth-systems",
-      name: "Growth Systems",
-      desc: "Data-driven strategies that drive measurable growth.",
-      subCategories: ["SEO Optimization", "Conversion Optimization", "Analytics Funnels"],
-      tags: ["Technical SEO", "CRO", "Analytics Tracking", "Funnel Mapping"],
-      image: "/services/growth-systems.png",
     },
   ];
 
@@ -328,15 +303,6 @@ export default function ServicesPage() {
           <span className="font-mono text-[10px] tracking-[0.3em] text-text-tertiary uppercase">Next Chapter</span>
           <Link
             href="/about"
-            onClick={(e) => {
-              if (pathname === "/") {
-                e.preventDefault();
-                const target = document.getElementById("about");
-                if (target && lenis) {
-                  lenis.scrollTo(target);
-                }
-              }
-            }}
             className="font-display text-xl md:text-2xl font-extralight tracking-widest uppercase text-text-secondary hover:text-[#26C7ff] transition-colors duration-300"
           >
             About Our Team →

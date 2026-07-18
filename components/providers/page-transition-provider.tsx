@@ -22,7 +22,10 @@ const PageTransitionContext = createContext<PageTransitionContextType | null>(nu
 export const usePageTransition = () => {
   const context = useContext(PageTransitionContext);
   if (!context) {
-    throw new Error("usePageTransition must be used within a PageTransitionProvider");
+    return {
+      triggerTransition: () => {},
+      isTransitioning: false,
+    };
   }
   return context;
 };
@@ -64,8 +67,7 @@ export function PageTransitionProvider({ children }: { children: React.ReactNode
     if (to === "/work") return { style: "zoom-fade", labelText: "02 // PORTFOLIO" };
     if (to === "/services") return { style: "split-vertical", labelText: "03 // SERVICES" };
     if (to === "/about") return { style: "split-vertical", labelText: "04 // ABOUT US" };
-    if (to === "/insights") return { style: "split-vertical", labelText: "05 // INSIGHTS" };
-    if (to === "/contact") return { style: "grid-matrix", labelText: "06 // CONTACT" };
+    if (to === "/contact") return { style: "grid-matrix", labelText: "05 // CONTACT" };
     return { style: "zoom-fade", labelText: "01 // AXEN NODE" };
   };
 

@@ -5,6 +5,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { ChevronDown, ArrowRight, ArrowLeft, Check } from "lucide-react";
 import MicroLabel from "@/components/ui/MicroLabel";
 
+
 interface FormData {
   name: string;
   email: string;
@@ -33,7 +34,7 @@ export default function ContactPage() {
     message: "",
   });
 
-  const projectOptions = ["AI Automation", "Web Development", "Product Design", "Branding", "Other"];
+  const projectOptions = ["AI Automation", "AI Agents", "Web Platforms", "Other"];
   const budgetOptions = ["$10k - $25k", "$25k - $50k", "$50k - $100k", "$100k+"];
   const timelineOptions = ["ASAP", "1 - 3 months", "Flexible"];
 
@@ -394,7 +395,6 @@ export default function ContactPage() {
                   ["Work", "/work"],
                   ["Services", "/services"],
                   ["About", "/about"],
-                  ["Insights", "/insights"],
                   ["Contact", "/contact"],
                 ].map(([label, href]) => (
                   <a key={label} href={href} className="block text-text-secondary hover:text-white transition-colors duration-200 font-sans">
@@ -404,7 +404,7 @@ export default function ContactPage() {
               </div>
               <div className="space-y-3">
                 <p className="font-mono text-[9px] tracking-[0.25em] uppercase text-text-tertiary mb-4">Services</p>
-                {["AI Automation", "Web Platforms", "Brand Identity", "Creative Studio", "Growth Systems"].map((s) => (
+                 {["AI Automation", "AI Agents", "Web Platforms"].map((s) => (
                   <span key={s} className="block text-text-secondary font-sans text-sm">{s}</span>
                 ))}
               </div>

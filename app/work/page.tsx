@@ -8,7 +8,6 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { ArrowRight } from "lucide-react";
 import MicroLabel from "@/components/ui/MicroLabel";
 import { projectsData } from "@/lib/projects-data";
-
 import { usePathname } from "next/navigation";
 import { useSmoothScroll } from "@/components/providers/smooth-scroll";
 
@@ -17,59 +16,137 @@ gsap.registerPlugin(ScrollTrigger);
 const useIsomorphicLayoutEffect = typeof window !== "undefined" ? useLayoutEffect : useEffect;
 
 export default function WorkPage() {
-  const containerRef = useRef<HTMLDivElement>(null);
+  const outerContainerRef = useRef<HTMLDivElement>(null);
   const trackRef = useRef<HTMLDivElement>(null);
+  const headerRef = useRef<HTMLDivElement>(null);
   const pathname = usePathname();
   const lenis = useSmoothScroll();
 
   useIsomorphicLayoutEffect(() => {
     const ctx = gsap.context(() => {
       const timer = setTimeout(() => {
-        if (!trackRef.current || !containerRef.current) return;
+        if (!trackRef.current || !outerContainerRef.current || !headerRef.current) return;
 
         const track = trackRef.current;
-        const container = containerRef.current;
+        const outerContainer = outerContainerRef.current;
+        const header = headerRef.current;
 
         ScrollTrigger.refresh();
 
         const scrollWidth = track.scrollWidth;
         const xVal = -(scrollWidth - window.innerWidth + (window.innerWidth > 768 ? 128 : 48));
 
-        gsap.to(track, {
-          x: xVal,
-          ease: "none",
+        // Create the master timeline that pins the entire WorkPage container
+        const tl = gsap.timeline({
           scrollTrigger: {
-            trigger: container,
+            trigger: outerContainer,
             pin: true,
-            scrub: 0.8,
+            scrub: 1.0,
             start: "top top",
-            end: () => `+=${scrollWidth}`,
+            end: () => `+=${scrollWidth + window.innerHeight * 1.5}`,
             invalidateOnRefresh: true,
           },
         });
+
+        // Set initial states for elements
+        // Header elements start from the left, gallery starts from the right
+        gsap.set(header.querySelectorAll(".work-label"), { x: -150, opacity: 0 });
+        gsap.set(header.querySelectorAll(".work-title-word"), { x: -150, opacity: 0 });
+        gsap.set(header.querySelectorAll(".work-desc"), { x: -150, opacity: 0 });
+        gsap.set(".gallery-container", { x: window.innerWidth > 768 ? 600 : 200, opacity: 0 });
+
+        // Timeline Flow:
+        // 1. Slide header label in from left
+        tl.to(header.querySelectorAll(".work-label"), {
+          x: 0,
+          opacity: 1,
+          duration: 0.8,
+          ease: "power3.out",
+        });
+
+        // 2. Slide title words in from left
+        tl.to(
+          header.querySelectorAll(".work-title-word"),
+          {
+            x: 0,
+            opacity: 1,
+            stagger: 0.12,
+            duration: 0.8,
+            ease: "power3.out",
+          },
+          "-=0.5"
+        );
+
+        // 3. Slide description in from left
+        tl.to(
+          header.querySelectorAll(".work-desc"),
+          {
+            x: 0,
+            opacity: 1,
+            duration: 0.8,
+            ease: "power3.out",
+          },
+          "-=0.5"
+        );
+
+        // 4. Slide gallery in from right
+        tl.to(
+          ".gallery-container",
+          {
+            x: 0,
+            opacity: 1,
+            duration: 1.2,
+            ease: "power4.out",
+          },
+          "-=0.4"
+        );
+
+        // 5. Scroll gallery horizontally
+        tl.to(
+          track,
+          {
+            x: xVal,
+            ease: "none",
+            duration: 3.5,
+          },
+          "+=0.1"
+        );
       }, 300);
 
       return () => clearTimeout(timer);
-    }, containerRef);
+    }, outerContainerRef);
 
     return () => ctx.revert();
   }, []);
 
   return (
-    <div className="w-full bg-transparent text-text-primary py-12 md:py-24">
-      {/* HERO SECTION */}
-      <section className="mb-16 space-y-6 mx-auto max-w-7xl px-6 md:px-16">
-        <MicroLabel>Our Portfolio</MicroLabel>
-        <h1 className="font-display text-5xl md:text-7xl font-black uppercase tracking-tight leading-[1.1]">
-          Our Work
+    <div
+      ref={outerContainerRef}
+      className="w-full bg-transparent text-text-primary h-screen flex flex-col justify-center relative overflow-hidden"
+    >
+      <div ref={headerRef} className="space-y-4 mx-auto max-w-7xl w-full px-6 md:px-16 mb-8 md:mb-12">
+        {/* Label */}
+        <div className="work-label inline-block">
+          <MicroLabel>Our Portfolio</MicroLabel>
+        </div>
+
+        {/* Split title words */}
+        <h1 className="font-display text-4xl sm:text-5xl md:text-7xl font-black uppercase tracking-tight leading-[1.1] flex flex-wrap gap-x-[0.3em]">
+          {["Our", "Work"].map((word, wIdx) => (
+            <span key={wIdx} className="work-title-word inline-block will-change-transform">
+              {word}
+            </span>
+          ))}
         </h1>
-        <p className="text-text-secondary text-lg max-w-xl leading-relaxed font-sans">
+
+        {/* Description */}
+        <p className="work-desc text-text-secondary text-sm md:text-base max-w-xl leading-relaxed font-sans">
           A curated showcase of digital platforms, custom AI integrations, and premium websites built to operate at the edge of possibility.
         </p>
-      </section>
+      </div>
 
       {/* STICKY HORIZONTAL GALLERY CONTAINER */}
-      <section ref={containerRef} className="relative w-full h-screen overflow-hidden flex items-center">
+      <div className="gallery-container w-full overflow-hidden flex items-center will-change-transform">
         <div ref={trackRef} className="flex gap-12 md:gap-16 px-6 md:px-16 w-max">
           {projectsData.map((project) => (
             <Link
@@ -135,7 +212,7 @@ export default function WorkPage() {
             </span>
           </Link>
         </div>
-      </section>
+      </div>
     </div>
   );
 }
