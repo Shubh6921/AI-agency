@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { ChevronDown } from "lucide-react";
+import { ChevronDown, ArrowRight } from "lucide-react";
 import MicroLabel from "@/components/ui/MicroLabel";
 import Button from "@/components/ui/Button";
 import Link from "next/link";
@@ -14,23 +14,76 @@ import { cn } from "@/lib/utils";
 
 
 
+import AIWorkflowAnimation from "@/components/sections/AIWorkflowAnimation";
+
 gsap.registerPlugin(ScrollTrigger);
 
 export default function ServicesPage() {
   const containerRef = useRef<HTMLDivElement>(null);
   const listRef = useRef<HTMLDivElement>(null);
+  const heroRef = useRef<HTMLElement>(null);
   const [activeAccordion, setActiveAccordion] = useState<number | null>(null);
   const [activeSection, setActiveSection] = useState<string>("ai-automation");
+  const [heroVisible, setHeroVisible] = useState(false);
+
+  // Native IntersectionObserver — works with Lenis and all loaders
+  useEffect(() => {
+    const el = heroRef.current;
+    if (!el) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setHeroVisible(true);
+          observer.disconnect();
+        }
+      },
+      { threshold: 0.05 }
+    );
+    // Delay observer attachment so loader overlay has cleared
+    const timer = setTimeout(() => observer.observe(el), 500);
+    return () => {
+      clearTimeout(timer);
+      observer.disconnect();
+    };
+  }, []);
 
 
-  const disciplines = [
+  const disciplines: Array<{
+    id: string;
+    name: string;
+    desc: string;
+    subCategories: string[];
+    whatWeAutomate?: string[];
+    businessImpact?: string[];
+    idealFor?: string[];
+    tags: string[];
+    image?: string;
+  }> = [
     {
       id: "ai-automation",
       name: "AI Automation",
-      desc: "Intelligent workflows that eliminate manual work.",
+      desc: "Automate repetitive workflows across your business.",
       subCategories: ["Workflow Pipelines", "Automated DBs", "Tool Integration"],
+      whatWeAutomate: [
+        "Lead Capture",
+        "CRM",
+        "Email",
+        "WhatsApp",
+        "Reports",
+        "Payments",
+      ],
+      businessImpact: [
+        "Save 20+ hours/week",
+        "Zero missed leads",
+        "Faster operations",
+      ],
+      idealFor: [
+        "Healthcare",
+        "Real Estate",
+        "Agencies",
+        "E-commerce",
+      ],
       tags: ["n8n", "Make.com", "Zapier", "API Integration", "Data Sync"],
-      image: "/services/ai-automation.png",
     },
     {
       id: "ai-agents",
@@ -118,21 +171,46 @@ export default function ServicesPage() {
     <div ref={containerRef} className="w-full bg-transparent text-text-primary px-6 md:px-16 py-12 md:py-24">
       <div className="mx-auto max-w-7xl">
         
-        {/* HERO SECTION */}
-        <section className="reveal-up mb-24 md:mb-36 space-y-8">
-          <MicroLabel>What We Do Best</MicroLabel>
+        {/* HERO SECTION — Framer Motion slide-in on scroll */}
+        <section ref={heroRef} className="mb-24 md:mb-36 space-y-8">
+
+          {/* Micro-label: slides in cleanly from left */}
+          <motion.div
+            initial={{ opacity: 0, x: -50 }}
+            animate={heroVisible ? { opacity: 1, x: 0 } : {}}
+            transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+            className="inline-block"
+          >
+            <MicroLabel>What We Do Best</MicroLabel>
+          </motion.div>
+
           <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-8">
-            <h1 className="font-display text-5xl md:text-7xl font-black uppercase tracking-tight leading-[1.1] max-w-3xl">
+
+            {/* Main heading: slides in cleanly from left with stagger */}
+            <motion.h1
+              initial={{ opacity: 0, x: -80 }}
+              animate={heroVisible ? { opacity: 1, x: 0 } : {}}
+              transition={{ duration: 1.0, ease: [0.16, 1, 0.3, 1], delay: 0.1 }}
+              className="font-display text-5xl md:text-7xl font-black uppercase tracking-tight leading-[1.1] max-w-3xl"
+            >
               Area of Expertise
-            </h1>
-            <div className="flex flex-wrap gap-4">
+            </motion.h1>
+
+            {/* Buttons: slide in cleanly from right */}
+            <motion.div
+              initial={{ opacity: 0, x: 50 }}
+              animate={heroVisible ? { opacity: 1, x: 0 } : {}}
+              transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1], delay: 0.2 }}
+              className="flex flex-wrap gap-4"
+            >
               <Button href="/work" variant="ghost" magnetic>
                 View projects
               </Button>
               <Button href="/contact" variant="solid" magnetic>
                 Let&apos;s connect
               </Button>
-            </div>
+            </motion.div>
+
           </div>
         </section>
 
@@ -237,29 +315,123 @@ export default function ServicesPage() {
               <div
                 key={d.id}
                 id={d.id}
-                className="reveal-up grid grid-cols-1 md:grid-cols-2 gap-12 items-center border-t border-hairline pt-12"
+                className={cn(
+                  "reveal-up border-t border-hairline pt-12",
+                  d.image
+                    ? "grid grid-cols-1 md:grid-cols-2 gap-12 items-center"
+                    : "space-y-6 max-w-3xl"
+                )}
               >
                 {/* Text Content */}
-                <div className={`space-y-6 ${index % 2 === 1 ? "md:order-2" : ""}`}>
-                  <span className="text-xs font-semibold text-text-tertiary">0{index + 1} /</span>
-                  <h3 className="font-display text-2xl md:text-3xl font-black uppercase tracking-tight text-text-primary">
-                    {d.name}
-                  </h3>
-                  <p className="text-text-secondary text-sm leading-relaxed leading-6 font-sans">
-                    {d.desc}
-                  </p>
+                <div className={cn("space-y-6", d.image ? (index % 2 === 1 ? "md:order-2" : "") : "w-full")}>
+                  <div className="space-y-3">
+                    <span className="text-xs font-semibold text-text-tertiary">0{index + 1} /</span>
+                    <h3 className="font-display text-3xl md:text-4xl font-black uppercase tracking-tight text-text-primary">
+                      {d.name}
+                    </h3>
+                    <p className="text-text-secondary text-base leading-relaxed font-sans">
+                      {d.desc}
+                    </p>
+                  </div>
+
+                  {/* What We Automate */}
+                  {d.whatWeAutomate && (
+                    <>
+                      <div className="w-full border-t border-hairline/60 my-6" />
+                      <div className="space-y-3">
+                        <h4 className="font-mono text-xs uppercase tracking-widest text-[#26C7ff] font-bold">
+                          What we automate
+                        </h4>
+                        <ul className="grid grid-cols-2 sm:grid-cols-3 gap-3">
+                          {d.whatWeAutomate.map((item) => (
+                            <li key={item} className="flex items-center gap-2 text-sm text-text-primary font-medium">
+                              <span className="text-[#26C7ff] font-bold">•</span>
+                              <span>{item}</span>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    </>
+                  )}
+
+                  {/* Business Impact */}
+                  {d.businessImpact && (
+                    <>
+                      <div className="w-full border-t border-hairline/60 my-6" />
+                      <div className="space-y-3">
+                        <h4 className="font-mono text-xs uppercase tracking-widest text-[#26C7ff] font-bold">
+                          Business Impact
+                        </h4>
+                        <ul className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                          {d.businessImpact.map((item) => (
+                            <li key={item} className="flex items-center gap-2 text-sm text-text-primary font-medium">
+                              <span className="text-[#26C7ff] font-bold">✓</span>
+                              <span>{item}</span>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    </>
+                  )}
+
+                  {/* Ideal For */}
+                  {d.idealFor && (
+                    <>
+                      <div className="w-full border-t border-hairline/60 my-6" />
+                      <div className="space-y-3">
+                        <h4 className="font-mono text-xs uppercase tracking-widest text-[#26C7ff] font-bold">
+                          Ideal For
+                        </h4>
+                        <div className="flex flex-wrap gap-2.5">
+                          {d.idealFor.map((item) => (
+                            <span
+                              key={item}
+                              className="px-3.5 py-1.5 rounded-full text-xs font-mono tracking-wider bg-surface-raised/60 border border-hairline text-text-primary"
+                            >
+                              {item}
+                            </span>
+                          ))}
+                        </div>
+                      </div>
+                    </>
+                  )}
+
+                  {/* Interactive AI Workflow Animation component */}
+                  {d.id === "ai-automation" && (
+                    <div className="pt-6">
+                      <AIWorkflowAnimation />
+                    </div>
+                  )}
+
+                  {/* Learn More Button/Link */}
+                  {(d.whatWeAutomate || d.businessImpact) && (
+                    <>
+                      <div className="w-full border-t border-hairline/60 my-6" />
+                      <div className="pt-2">
+                        <Link
+                          href={d.id === "ai-automation" ? "/services/ai-automation" : "/contact"}
+                          className="inline-flex items-center gap-2 text-sm font-bold uppercase tracking-wider text-text-primary hover:text-[#26C7ff] transition-colors group"
+                        >
+                          Learn More
+                          <ArrowRight size={16} className="transition-transform duration-300 group-hover:translate-x-1" />
+                        </Link>
+                      </div>
+                    </>
+                  )}
                 </div>
 
-                {/* Cover Image */}
-                <div className="relative aspect-video md:aspect-square w-full rounded-2xl overflow-hidden border border-hairline bg-surface-base group">
-                  <Image
-                    src={d.image}
-                    alt={d.name}
-                    fill
-                    sizes="(max-width: 768px) 100vw, 40vw"
-                    className="object-cover transition-transform duration-700 group-hover:scale-[1.04] pointer-events-none"
-                  />
-                </div>
+                {/* Cover Image (only rendered if d.image exists) */}
+                {d.image && (
+                  <div className="relative aspect-video md:aspect-square w-full rounded-2xl overflow-hidden border border-hairline bg-surface-base group">
+                    <Image
+                      src={d.image}
+                      alt={d.name}
+                      fill
+                      sizes="(max-width: 768px) 100vw, 40vw"
+                      className="object-cover transition-transform duration-700 group-hover:scale-[1.04] pointer-events-none"
+                    />
+                  </div>
+                )}
               </div>
             ))}
           </div>

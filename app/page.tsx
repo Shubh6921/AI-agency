@@ -26,7 +26,7 @@ export default function Home() {
 
   const { scrollYProgress } = useScroll({
     target: processContainerRef,
-    offset: ["start start", "end end"],
+    offset: ["start end", "end end"],
   });
 
   const pathLength = useSpring(scrollYProgress, {
@@ -35,17 +35,27 @@ export default function Home() {
     restDelta: 0.001,
   });
 
-  // Box slide-in values synced with beam pathLength progress
-  // Beam path: top(0) → curves left at ~0.33 → curves right at ~0.66 → bottom(1)
-  // Box 1 (left):  beam arrives ~0.1, fully revealed by 0.3
-  // Box 2 (right): beam arrives ~0.4, fully revealed by 0.6
-  // Box 3 (left):  beam arrives ~0.7, fully revealed by 0.9
-  const box1X       = useTransform(pathLength, [0.0, 0.28], [-60, 0]);
-  const box1Opacity = useTransform(pathLength, [0.0, 0.28], [0, 1]);
-  const box2X       = useTransform(pathLength, [0.35, 0.62], [60, 0]);
-  const box2Opacity = useTransform(pathLength, [0.35, 0.62], [0, 1]);
-  const box3X       = useTransform(pathLength, [0.68, 0.95], [-60, 0]);
-  const box3Opacity = useTransform(pathLength, [0.68, 0.95], [0, 1]);
+  // Box slide-in and glow values synced with beam pathLength progress
+  // progress 0.0: Top enters viewport bottom.
+  // progress 0.33: Section sticks at top. Box 1 is fully transitioned, Box 2 is at half opacity.
+  // progress 0.33 → 1.0: Section is sticky. Box 2 completes, Box 3 transitions.
+  const box1X       = useTransform(pathLength, [0.05, 0.28], [-40, 0]);
+  const box1Opacity = useTransform(pathLength, [0.05, 0.28], [0, 1]);
+  const box1Border  = useTransform(pathLength, [0.05, 0.25], ["rgba(35, 35, 38, 1)", "rgba(38, 199, 255, 0.28)"]);
+  const box1Shadow  = useTransform(pathLength, [0.05, 0.25], ["0 0 0px rgba(38, 199, 255, 0)", "0 0 16px rgba(38, 199, 255, 0.12)"]);
+
+  const box2X       = useTransform(pathLength, [0.15, 0.33, 0.60], [40, 20, 0]);
+  const box2Opacity = useTransform(pathLength, [0.15, 0.33, 0.60], [0, 0.5, 1]);
+  const box2Border  = useTransform(pathLength, [0.15, 0.33, 0.60], ["rgba(35, 35, 38, 1)", "rgba(38, 199, 255, 0.14)", "rgba(38, 199, 255, 0.28)"]);
+  const box2Shadow  = useTransform(pathLength, [0.15, 0.33, 0.60], ["0 0 0px rgba(38, 199, 255, 0)", "0 0 8px rgba(38, 199, 255, 0.06)", "0 0 16px rgba(38, 199, 255, 0.12)"]);
+
+  const box3X       = useTransform(pathLength, [0.50, 0.75], [-40, 0]);
+  const box3Opacity = useTransform(pathLength, [0.50, 0.75], [0, 1]);
+  const box3Border  = useTransform(pathLength, [0.50, 0.75], ["rgba(35, 35, 38, 1)", "rgba(38, 199, 255, 0.28)"]);
+  const box3Shadow  = useTransform(pathLength, [0.50, 0.75], ["0 0 0px rgba(38, 199, 255, 0)", "0 0 16px rgba(38, 199, 255, 0.12)"]);
+
+  // Fade out entire process section to black/blank page at the end of scroll
+  const sectionOpacity = useTransform(pathLength, [0.93, 0.99], [1, 0]);
 
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
     const card = e.currentTarget;
@@ -88,28 +98,7 @@ export default function Home() {
           );
         });
 
-        // Mobile process timeline glow
-        gsap.utils.toArray(".timeline-card-mobile").forEach((card: unknown) => {
-          const el = card as HTMLElement;
-          const box = el.querySelector(".timeline-box");
-          if (box) {
-            gsap.fromTo(
-              box,
-              { borderColor: "rgba(35, 35, 38, 1)", boxShadow: "0 0 0px rgba(38, 199, 255, 0)" },
-              {
-                borderColor: "rgba(38, 199, 255, 0.24)",
-                boxShadow: "0 0 12px rgba(38, 199, 255, 0.08)",
-                duration: 0.4,
-                ease: "power2.out",
-                scrollTrigger: {
-                  trigger: el,
-                  start: "top center",
-                  toggleActions: "play reverse play reverse",
-                },
-              }
-            );
-          }
-        });
+        // Mobile process timeline glow is now handled dynamically by Framer Motion
       });
 
       // Desktop immersive pinned transitions: ONLY Hero -> About (min-width: 1024px)
@@ -214,28 +203,7 @@ export default function Home() {
           );
         });
 
-        // Desktop process cards glow triggers
-        gsap.utils.toArray(".timeline-card-left, .timeline-card-right").forEach((card: unknown) => {
-          const el = card as HTMLElement;
-          const box = el.querySelector(".timeline-box");
-          if (box) {
-            gsap.fromTo(
-              box,
-              { borderColor: "rgba(35, 35, 38, 1)", boxShadow: "0 0 0px rgba(38, 199, 255, 0)" },
-              {
-                borderColor: "rgba(38, 199, 255, 0.28)",
-                boxShadow: "0 0 16px rgba(38, 199, 255, 0.12)",
-                duration: 0.5,
-                ease: "power2.out",
-                scrollTrigger: {
-                  trigger: el,
-                  start: "top center",
-                  toggleActions: "play reverse play reverse",
-                },
-              }
-            );
-          }
-        });
+        // Desktop process cards glow triggers are now handled dynamically by Framer Motion
       });
 
       // Stats count-up triggers
@@ -267,7 +235,15 @@ export default function Home() {
       });
     }, containerRef);
 
-    return () => ctx.revert();
+    // Delay ScrollTrigger recalculation to allow child components (Work, Services) to settle and render their triggers
+    const refreshTimer = setTimeout(() => {
+      ScrollTrigger.refresh();
+    }, 600);
+
+    return () => {
+      ctx.revert();
+      clearTimeout(refreshTimer);
+    };
   }, []);
 
   return (
@@ -409,7 +385,7 @@ export default function Home() {
       {/* 4. PROCESS / TIMELINE — Sticky pinned: 300vh outer keeps section locked
           to viewport while beam + boxes animate. Pin releases at scroll end. */}
       <div ref={processContainerRef} style={{ height: "300vh" }} className="relative z-10">
-        <section className="sticky top-0 h-screen flex flex-col justify-center px-6 md:px-16 border-t border-hairline bg-canvas/30 backdrop-blur-md overflow-hidden">
+        <motion.section style={{ opacity: sectionOpacity }} className="sticky top-0 h-screen flex flex-col justify-center px-6 md:px-16 border-t border-hairline bg-canvas/30 backdrop-blur-md overflow-hidden">
           <div className="mx-auto max-w-7xl space-y-12 w-full">
             <div className="text-center md:text-left">
               <MicroLabel>Our Process</MicroLabel>
@@ -449,16 +425,17 @@ export default function Home() {
                   className="col-span-5 timeline-card-left"
                   style={{ x: box1X, opacity: box1Opacity }}
                 >
-                  <div
+                  <motion.div
                     onMouseMove={handleMouseMove}
-                    className="timeline-box border border-hairline rounded-2xl p-8 bg-surface-base/30 backdrop-blur-sm transition-all duration-500 space-y-3"
+                    style={{ borderColor: box1Border, boxShadow: box1Shadow }}
+                    className="timeline-box border rounded-2xl p-8 bg-surface-base/30 backdrop-blur-sm transition-all duration-500 space-y-3"
                   >
                     <span className="font-display text-base font-bold text-text-tertiary">01 /</span>
                     <h3 className="text-xl font-bold uppercase tracking-tight font-display text-text-primary">Understand</h3>
                     <p className="text-text-secondary text-xs leading-relaxed">
                       We dive deep into your workflow, architectures, and objectives to pinpoint intelligence bottlenecks.
                     </p>
-                  </div>
+                  </motion.div>
                 </motion.div>
               </div>
 
@@ -469,16 +446,17 @@ export default function Home() {
                   className="col-span-5 timeline-card-right"
                   style={{ x: box2X, opacity: box2Opacity }}
                 >
-                  <div
+                  <motion.div
                     onMouseMove={handleMouseMove}
-                    className="timeline-box border border-hairline rounded-2xl p-8 bg-surface-base/30 backdrop-blur-sm transition-all duration-500 space-y-3"
+                    style={{ borderColor: box2Border, boxShadow: box2Shadow }}
+                    className="timeline-box border rounded-2xl p-8 bg-surface-base/30 backdrop-blur-sm transition-all duration-500 space-y-3"
                   >
                     <span className="font-display text-base font-bold text-text-tertiary">02 /</span>
                     <h3 className="text-xl font-bold uppercase tracking-tight font-display text-text-primary">Design & Build</h3>
                     <p className="text-text-secondary text-xs leading-relaxed">
                       We develop and design tailormade AI pipelines, responsive platforms, and automations.
                     </p>
-                  </div>
+                  </motion.div>
                 </motion.div>
               </div>
 
@@ -488,16 +466,17 @@ export default function Home() {
                   className="col-span-5 timeline-card-left"
                   style={{ x: box3X, opacity: box3Opacity }}
                 >
-                  <div 
+                  <motion.div 
                     onMouseMove={handleMouseMove}
-                    className="timeline-box border border-hairline rounded-2xl p-8 bg-surface-base/30 backdrop-blur-sm transition-all duration-500 space-y-3"
+                    style={{ borderColor: box3Border, boxShadow: box3Shadow }}
+                    className="timeline-box border rounded-2xl p-8 bg-surface-base/30 backdrop-blur-sm transition-all duration-500 space-y-3"
                   >
                     <span className="font-display text-base font-bold text-text-tertiary">03 /</span>
                     <h3 className="text-xl font-bold uppercase tracking-tight font-display text-text-primary">Refine & Evolve</h3>
                     <p className="text-text-secondary text-xs leading-relaxed">
                       Continuous optimization loops ensure your systems stay fast, secure, and ahead of the curve.
                     </p>
-                  </div>
+                  </motion.div>
                 </motion.div>
               </div>
             </div>
@@ -522,36 +501,53 @@ export default function Home() {
               {
                 step: "01",
                 title: "Understand",
-                desc: "We dive deep into your workflow, architectures, and objectives to pinpoint intelligence bottlenecks."
+                desc: "We dive deep into your workflow, architectures, and objectives to pinpoint intelligence bottlenecks.",
+                x: box1X,
+                opacity: box1Opacity,
+                border: box1Border,
+                shadow: box1Shadow
               },
               {
                 step: "02",
                 title: "Design & Build",
-                desc: "We develop and design tailormade AI pipelines, responsive platforms, and automations."
+                desc: "We develop and design tailormade AI pipelines, responsive platforms, and automations.",
+                x: box2X,
+                opacity: box2Opacity,
+                border: box2Border,
+                shadow: box2Shadow
               },
               {
                 step: "03",
                 title: "Refine & Evolve",
-                desc: "Continuous optimization loops ensure your systems stay fast, secure, and ahead of the curve."
+                desc: "Continuous optimization loops ensure your systems stay fast, secure, and ahead of the curve.",
+                x: box3X,
+                opacity: box3Opacity,
+                border: box3Border,
+                shadow: box3Shadow
               }
             ].map((item, idx) => (
-              <div key={idx} className="relative group space-y-3 timeline-card-mobile">
-                <div 
+              <motion.div
+                key={idx}
+                style={{ x: item.x, opacity: item.opacity }}
+                className="relative group space-y-3 timeline-card-mobile"
+              >
+                <motion.div 
                   onMouseMove={handleMouseMove}
-                  className="timeline-box border border-hairline rounded-2xl p-8 bg-surface-base/30 backdrop-blur-sm transition-all duration-500 space-y-4"
+                  style={{ borderColor: item.border, boxShadow: item.shadow }}
+                  className="timeline-box border rounded-2xl p-8 bg-surface-base/30 backdrop-blur-sm transition-all duration-500 space-y-4"
                 >
                   <span className="font-display text-base font-bold text-text-tertiary">{item.step} /</span>
                   <h3 className="text-xl font-bold uppercase tracking-tight font-display text-text-primary">{item.title}</h3>
                   <p className="text-text-secondary text-sm leading-relaxed">
                     {item.desc}
                   </p>
-                </div>
-              </div>
+                </motion.div>
+              </motion.div>
             ))}
           </div>
 
           </div>
-        </section>
+        </motion.section>
       </div>
 
 
